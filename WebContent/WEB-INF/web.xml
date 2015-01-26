@@ -24,6 +24,7 @@
 	</context-param>
 
 
+	<!--  
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Private Pages</web-resource-name>
@@ -54,5 +55,6 @@
 	<security-role>
 		<role-name>OPE</role-name>
 	</security-role>
+	-->
 
 </web-app>
