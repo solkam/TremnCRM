@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+
+<h:head>
+	<link rel="shortcut icon" href="http://www.tremn.com.br/wp-content/themes/tremn/favicon.ico" type="image/x-icon" />
+
+	<h:outputStylesheet library="css" name="tremn-style.css" />
+
+	<style type="text/css">
+		body {
+			  font-family: Verdana, Arial, Helvetica, sans-serif;
+			  font-size: 12px;
+			  margin: 0;
+			  padding: 0;
+		}
+		#header {
+			padding: 0px;
+			border: 1px solid #eee;
+		}
+		#menu {
+			padding: 0;
+			margin: 0;
+			border: 1px solid #ddd;
+			text-align: center;
+			vertical-align: middle;
+		}
+		#content {
+			padding: 10px;
+			border: 1px solid #eee;
+		}
+	</style>
+</h:head>
+
+
+<h:body>
+
+	<div id="header">
+		<ui:include src="/WEB-INF/design/header.xhtml" />
+	</div>
+	
+	<div id="menu">
+		<ui:insert name="menu" >
+			<ui:include src="/WEB-INF/design/menu.xhtml" />
+		</ui:insert>
+	</div>
+	
+	<div id="content">
+		<ui:insert name="content" />
+	</div>
+
+</h:body>
+
+</html>

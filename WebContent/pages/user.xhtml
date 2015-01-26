@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components"
+      template="/WEB-INF/design/_template-main.xhtml">
+       
+<ui:define name="content">
+
+	<h:form>
+		<h:panelGrid columns="4" cellpadding="10">
+			<h:panelGrid>
+				<p:outputLabel value="Nome" />
+				<p:inputText value="#{userBean.filterName}" />
+			</h:panelGrid>
+
+			<h:panelGrid>
+				<p:outputLabel value="Email" />
+				<p:inputText value="#{userBean.filterEmail}" />
+			</h:panelGrid>
+
+			<h:panelGrid>
+				<p:outputLabel value="Perfil" />
+				<p:selectOneMenu value="#{userBean.filterName}" >
+					<f:selectItems value="#{enumHelper.profiles}" var="profileVar"
+						itemValue="#{profileVar}" itemLabel="#{profileVar.description}" />				
+				</p:selectOneMenu>
+			</h:panelGrid>
+			
+			<p:commandButton icon="ui-icon-search" value="Pesquisar"
+				action="#{userBean.search()}"
+				update=":formUsers" 
+				/>
+		</h:panelGrid>
+	</h:form>
+	
+	
+	<p:separator />
+	
+	
+	<h:form id="formUsers">
+		<tremn:globalMessages />
+		
+		<p:commandButton icon="ui-icon-plus" value="Novo Usuário"
+			process="@this"
+			action="#{userBean.reset()}" 
+			update=":formUser"
+			/>
+			
+		<p:dataTable value="#{userBean.users}" var="userVar"
+			rendered="#{not empty userBean.users}">
+			
+			<p:column headerText="Nome">
+				#{userVar.contact.name}
+			</p:column>
+
+			<p:column headerText="Email">
+				#{userVar.contact.email}
+			</p:column>
+
+			<p:column headerText="Perfil">
+				#{userVar.profile.description}
+			</p:column>
+			
+			<p:column styleClass="col5p">
+				<p:commandButton icon="ui-icon-pencil"
+					process="@this"
+					action="#{userBean.manage(userVar)}"
+					update=":formUser"
+					/>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+	
+	
+	
+	<p:dialog widgetVar="DialogUser" header="Usuário" 
+		modal="true" dynamic="true" closeOnEscape="true" maximizable="true" 
+		position="top" width="80%" height="80%">
+		
+		<h:form id="formUser">
+			<h:panelGrid columns="2">
+				<h:panelGrid>
+					<p:outputLabel for="inProfile" value="Perfil" styleClass="req" />
+					<p:selectOneMenu value="#{userBean.user.profile}" >
+						<f:selectItems id="inProfile" value="#{enumHelper.profiles}" var="profileVar" 
+							itemValue="#{profileVar}" itemLabel="#{profileVar.description}" />
+					</p:selectOneMenu>
+					<p:message for="inProfile" />
+				</h:panelGrid>
+			
+			</h:panelGrid>
+			
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton icon="ui-icon-check" value="Salvar Usuário"
+						action="#{userBean.save()}"
+						update="@form :formUsers" 
+						/>
+				</p:toolbarGroup>
+			
+				<p:toolbarGroup align="right">
+					<p:menuButton rendered="#{not userBean.user.transient}">
+						<p:menuitem icon="ui-icon-trash" value="Sim, remover"
+							process="@this"
+							action="#{userBean.remove()}"
+							oncomplete="DialogUser.hide();" 
+							/>
+						<p:menuitem icon="ui-icon-close" value="Não"
+							process="@none"
+							global="false" 
+							/>
+					</p:menuButton>
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+	</p:dialog>
+	
+	
+</ui:define>
+</ui:composition>

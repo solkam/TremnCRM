@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="/WEB-INF/design/_template-main.xhtml">
+       
+      
+<ui:define name="content">
+	<h:form>
+		<center>
+			<p:panel header="Login" style="width:50%">
+				<h:panelGrid cellpadding="10" >
+					
+					<p:messages globalOnly="true" />
+				
+					<h:panelGrid>
+						<p:outputLabel for="inEmail" value="Email"  />
+						<p:inputText id="inEmail" size="20" required="true" value="#{loginBean.email}" />
+						<p:message for="inEmail" />
+					</h:panelGrid>
+					
+					<h:panelGrid>
+						<p:outputLabel for="inPass" value="Senha" />
+						<p:password id="inPass" size="20" feedback="false" required="true" value="#{loginBean.pass}" />
+						<p:message for="inPass" />
+					</h:panelGrid>
+					
+					<p:commandButton icon="ui-icon-key" value="Entrar"
+						action="#{loginBean.doLogin}"
+						update="@form" />
+					
+				</h:panelGrid>
+				
+				<f:facet name="footer">
+					<h:outputText value="Tremn CRM 2015 - Todos os direitos reservados - versão 0.0.1" styleClass="less2" />
+				</f:facet>
+			</p:panel>
+		</center>
+	</h:form>
+</ui:define>
+</ui:composition>
