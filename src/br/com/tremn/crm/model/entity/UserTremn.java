@@ -1,6 +1,8 @@
 package br.com.tremn.crm.model.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,7 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.sun.istack.internal.NotNull;
 
@@ -25,22 +31,42 @@ import br.com.tremn.crm.model.entity.enumeration.Profile;
 @SequenceGenerator(name="UserTremSeq", sequenceName="UserTremSeq")
 public class UserTremn implements Serializable {
 	
-
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UserTremSeq")
 	private Long id;
-	
-	@NotNull
-	private String password;
-	
-	
-	@Enumerated(EnumType.STRING)
-	@NotNull
-	private Profile profile;
 	
 	
 	@OneToOne
 	@NotNull
 	private Contact contact;
+
+	
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	private Profile profile;
+	
+
+	
+	@NotNull
+	private String password;
+	
+	
+	//log
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar createDate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar updateDate;
+	
+	
+	//listener
+	@PrePersist void onPersist() {
+		this.createDate = new GregorianCalendar();
+	}
+	
+	@PreUpdate void onUpdate() {
+		this.updateDate = new GregorianCalendar();
+	}
+	
 
 
 	
@@ -69,6 +95,18 @@ public class UserTremn implements Serializable {
 	}
 	public void setProfile(Profile profile) {
 		this.profile = profile;
+	}
+	public Calendar getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Calendar createDate) {
+		this.createDate = createDate;
+	}
+	public Calendar getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Calendar updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	@Override

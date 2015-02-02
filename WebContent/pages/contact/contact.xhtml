@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components"
+      template="/WEB-INF/design/_template-main.xhtml">
+       
+<ui:define name="title">Contatos</ui:define>       
+       
+<ui:define name="content">
+
+	<h:form>
+		<p:fieldset legend="Pesquisa" toggleable="true">
+		
+			<h:panelGrid columns="4">
+				<h:panelGrid>
+					<p:outputLabel value="Nome" />
+					<p:inputText value="#{contactMB.filterName}" size="40" />
+				</h:panelGrid>
+			
+				<h:panelGrid>
+					<p:outputLabel value="Email" />
+					<p:inputText value="#{contactMB.filterEmail}" size="40" />
+				</h:panelGrid>
+				
+				<h:panelGrid>
+					<p:outputLabel value="Cidade" />
+					<p:inputText value="#{contactMB.filterCity}" size="30" />
+				</h:panelGrid>
+				
+				<p:commandButton id="btnSearch" icon="ui-icon-search" value="Pesquisar" style="font-size:1.5em;" 
+					action="#{contactMB.search()}"
+					update=":formContacts"
+					/>
+			</h:panelGrid>
+		
+		</p:fieldset>
+	</h:form>
+
+	<p:spacer height="10" />
+
+	<h:form id="formContacts">
+		<p:panel>
+			<tremn:globalMessages />
+			
+			<p:commandButton id="btnNew" icon="ui-icon-plus" value="Novo Contato" style="font-size:1.5em" 
+				process="@this"
+				action="#{contactMB.reset()}"
+				oncomplete="PF('DialogContact').show();"
+				update=":regionContact"
+				/>
+			
+			<p:dataTable value="#{contactMB.contacts}" var="contactVar"
+				rendered="#{not empty contactMB.contacts}">
+				
+				<p:column headerText="Nome">
+					<h:outputText value="#{contactVar.name}" styleClass="destak2" />
+				</p:column>
+				
+				<p:column headerText="Email">
+					#{contactVar.email}
+				</p:column>
+				
+				<p:column headerText="Cidade">
+					#{contactVar.address.addressCity}
+				</p:column>
+				
+				<p:column headerText="Data Nascimento" styleClass="colCenter">
+					<h:outputText value="#{contactVar.birthday}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Idade" styleClass="colCenter">
+					<h:outputText value="#{contactVar.age}" />
+				</p:column>
+
+				<p:column headerText="Sexo" styleClass="colCenter">
+					<h:outputText value="#{contactVar.gender.description}" />
+				</p:column>
+
+				<p:column styleClass="col5p colCenter">
+					<p:commandButton id="btnEdit" icon="ui-icon-pencil" 
+						process="@this"
+						action="#{contactMB.manager(contactVar)}"
+						oncomplete="PF('DialogContact').show();"
+						update=":regionContact"
+						/>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	
+	
+	<!-- dialog contact -->
+	<p:dialog widgetVar="DialogContact" header="Contato"
+		modal="true" dynamic="true" closeOnEscape="true" maximizable="true"
+		position="top" width="70%" height="50%">
+		
+		<p:outputPanel id="regionContact">
+		
+			<p:panelGrid columns="6" rendered="#{not contactMB.contact.transient}">
+				<h:outputText value="Nome" />
+				<h:outputText value="Email" />
+				<h:outputText value="Cidade" />
+				<h:outputText value="Data Nascimento" />
+				<h:outputText value="Idade" />
+				<h:outputText value="Sexo" />
+				
+				<h:outputText value="#{contactMB.contact.name}" styleClass="destak2" />
+				<h:outputText value="#{contactMB.contact.email}" styleClass="destak2" />
+				<h:outputText value="#{contactMB.contact.address.addressCity}" styleClass="destak2" />
+				<tremn:outputDate value="#{contactMB.contact.birthday}" styleClass="destak2" />
+				<h:outputText value="#{contactMB.contact.age}" styleClass="destak2" />
+				<h:outputText value="#{contactMB.contact.gender.description}" styleClass="destak2" />
+			</p:panelGrid>
+			
+			<p:tabView>
+				<p:tab title="Principal">
+					<ui:include src="/pages/contact/contact-frag-principal.xhtml" />
+				</p:tab>
+				
+				<p:tab title="Vínculos" rendered="#{not contactMB.contact.transient}">
+					em construcao
+				</p:tab>
+			</p:tabView>
+			
+		</p:outputPanel>
+	</p:dialog>
+
+	
+</ui:define>
+</ui:composition>

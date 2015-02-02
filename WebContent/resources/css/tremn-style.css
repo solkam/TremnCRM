@@ -23,7 +23,17 @@
 
 .destak1 {
 	font-weight: bold;
+	font-size: 1.5em;
+}
+
+.destak2 {
+	font-weight: bold;
 	font-size: 1.3em;
+}
+
+.destak3 {
+	font-weight: bold;
+	font-size: 1.0em;
 }
 
 

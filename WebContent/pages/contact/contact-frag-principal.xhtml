@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components">
+       
+<h:form id="formContact">
+	<p:panel>
+
+		<tremn:globalMessages />
+
+		<fieldset>
+			<legend>Básicos</legend>
+			
+				<h:panelGrid columns="4" cellpadding="5">
+					<h:panelGrid>
+						<p:outputLabel for="inName" value="Nome" styleClass="req" />
+						<p:inputText id="inName" value="#{contactMB.contact.name}" size="40" required="true" />
+						<p:message for="inName" />
+					</h:panelGrid>
+				
+					<h:panelGrid>
+						<p:outputLabel for="inEmail" value="Email" styleClass="req" />
+						<p:inputText id="inEmail" value="#{contactMB.contact.email}" size="30" required="true" />
+						<p:message for="inEmail" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inBirth" value="Data Nascimento" styleClass="req" />
+						<p:inputMask id="inBirth" mask="99/99/9999" value="#{contactMB.contact.birthday}" size="10" required="true" >
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
+						</p:inputMask>
+						<p:message for="inBirth" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inGender" value="Sexo" styleClass="req" />
+						<p:selectOneRadio id="inGender" value="#{contactMB.contact.gender}" required="true" >
+							<f:selectItems value="#{enumHelper.genders}" var="genderVar" 
+								itemValue="#{genderVar}" itemLabel="#{genderVar.description}" />
+						</p:selectOneRadio>
+						<p:message for="inGender" />
+					</h:panelGrid>
+
+				</h:panelGrid>
+		</fieldset>
+
+		<p:spacer height="10" />
+
+		<fieldset>
+			<legend>Endereço</legend>
+			
+			<h:panelGrid columns="3" cellpadding="5">
+					<h:panelGrid>
+						<p:outputLabel for="inStreet" value="Rua" styleClass="req" />
+						<p:inputText id="inStreet" value="#{contactMB.contact.address.addressStreet}" size="50" required="true" />
+						<p:message for="inStreet" />
+					</h:panelGrid>
+			
+					<h:panelGrid>
+						<p:outputLabel for="inNumber" value="Número" styleClass="req" />
+						<p:inputText id="inNumber" value="#{contactMB.contact.address.addressNumber}" size="10" required="true" />
+						<p:message for="inNumber" />
+					</h:panelGrid>
+			
+					<h:panelGrid>
+						<p:outputLabel for="inComp" value="Complemento"  />
+						<p:inputText id="inComp" value="#{contactMB.contact.address.addressComplement}" size="20"  />
+						<p:message for="inComp" />
+					</h:panelGrid>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="4" cellpadding="5">
+					<h:panelGrid>
+						<p:outputLabel for="inDistrict" value="Bairro" />
+						<p:inputText id="inDistrict" value="#{contactMB.contact.address.addressDistrict}" size="30" />
+						<p:message for="inDistrict" />
+					</h:panelGrid>
+			
+					<h:panelGrid>
+						<p:outputLabel for="inCity" value="Cidade" styleClass="req" />
+						<p:inputText id="inCity" value="#{contactMB.contact.address.addressCity}" size="30" required="true" />
+						<p:message for="inCity" />
+					</h:panelGrid>
+			
+					<h:panelGrid>
+						<p:outputLabel for="inState" value="Estado"  />
+						<p:inputText id="inState" value="#{contactMB.contact.address.addressState}" size="20"  />
+						<p:message for="inState" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inZip" value="CEP"  />
+						<p:inputText id="inZip" value="#{contactMB.contact.address.addressZipcode}" size="10"  />
+						<p:message for="inZip" />
+					</h:panelGrid>
+			</h:panelGrid>
+		
+		</fieldset>
+
+		<p:spacer height="10" />
+
+		<fieldset>
+			<legend>Telefones</legend>
+			
+			<h:panelGrid columns="3" cellpadding="5">
+				<h:panelGrid>
+					<p:outputLabel for="inMobile" value="Celular"  />
+					<p:inputText id="inMobile" value="#{contactMB.contact.telephone.telephoneMobile}" size="20"  />
+					<p:message for="inMobile" />
+				</h:panelGrid>
+			
+				<h:panelGrid>
+					<p:outputLabel for="inRes" value="Residencial"  />
+					<p:inputText id="inRes" value="#{contactMB.contact.telephone.telephoneResidential}" size="20"  />
+					<p:message for="inRes" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel for="inComm" value="Comercial"  />
+					<p:inputText id="inComm" value="#{contactMB.contact.telephone.telephoneCommercial}" size="20"  />
+					<p:message for="inComm" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</fieldset>
+	
+
+		<p:spacer height="10" />
+
+		<fieldset>
+			<legend>Documentos</legend>
+			
+			<h:panelGrid columns="3" cellpadding="5">
+				<h:panelGrid>
+					<p:outputLabel for="inCpf" value="CPF" />
+					<p:inputMask id="inCpf" mask="999.999.999-99" value="#{contactMB.contact.document.documentCPF}" size="15" />
+					<p:message for="inCpf" />
+				</h:panelGrid>
+			
+				<h:panelGrid>
+					<p:outputLabel for="inRG" value="RG"  />
+					<p:inputText id="inRG" value="#{contactMB.contact.document.documentRG}" size="20"  />
+					<p:message for="inRG" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel for="inPass" value="Passaporte"  />
+					<p:inputText id="inPass" value="#{contactMB.contact.document.documentPassport}" size="20"  />
+					<p:message for="inPass" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</fieldset>
+
+		<p:spacer height="10" />
+
+		<fieldset>
+			<legend>Outros</legend>
+			
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:panelGrid>
+					<p:outputLabel for="inProf" value="Profissão" />
+					<p:inputText id="inProf" value="#{contactMB.contact.profession}" size="50" />
+					<p:message for="inProf" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel for="inObs" value="Observações"  />
+					<p:inputTextarea id="inObs" value="#{contactMB.contact.observation}" rows="2" cols="50" />
+					<p:message for="inObs" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</fieldset>
+
+	</p:panel>
+
+	<p:toolbar>
+		<p:toolbarGroup>
+			<p:commandButton icon="ui-icon-check" value="Salvar Contato" style="font-size:1.5em"
+				action="#{contactMB.save()}"
+				update="@form :formContacts :regionContact"
+				oncomplete="if (args.sucessOnly) PF('DialogContact').hide();"
+				/>
+		</p:toolbarGroup>
+		
+		<p:toolbarGroup align="right" rendered="#{not contactMB.contact.transient}">
+			<p:menuButton value="remover?">
+				<p:menuitem icon="ui-icon-trash" value="Sim, remover" 
+					process="@this"
+					action="#{contactMB.remove()}"
+					update="@form :formContacts :regionContact"
+					oncomplete="if (args.sucessOnly) PF('DialogContact').hide();"
+					/>
+				<p:menuitem icon="ui-icon-close" value="Não" 
+					process="@none"
+					global="false"
+					/>
+			</p:menuButton>
+		</p:toolbarGroup>
+	</p:toolbar>
+</h:form>
+
+</ui:fragment>

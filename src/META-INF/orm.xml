@@ -3,6 +3,8 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
 
+	<!-- Usuario -->
+
 	<named-query name="findUserTremnByEmailAndPassword">
 		<query>
 			select u
@@ -10,6 +12,33 @@
 				join u.contact c
 			where u.password = :pPassword
 			and   c.email    = :pEmail
+		</query>
+	</named-query>
+	
+	<named-query name="findUserTremnByContact">
+		<query>
+			select u
+			from UserTremn u
+			where u.contact = :pContact
+		</query>
+	</named-query>
+	
+	
+	<!-- Contact -->
+	
+	<named-query name="searchContact">
+		<query>
+			select c
+			from Contact c
+			order by c.name
+		</query>
+	</named-query>
+	
+	<named-query name="findContactByEmail">
+		<query>
+			select c
+			from Contact c
+			where c.email = :pEmail
 		</query>
 	</named-query>
 

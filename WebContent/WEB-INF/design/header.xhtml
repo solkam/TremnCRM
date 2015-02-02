@@ -12,11 +12,18 @@
 			</h:panelGrid>
 		</p:toolbarGroup>
 		
-		<p:toolbarGroup align="right">
-			<h:panelGrid columns="3" cellpadding="10" cellspacing="0">
-				<p:commandButton icon="ui-icon-key" />
-				<p:commandButton icon="ui-icon-power" value="Sair" />
-			</h:panelGrid>
+		<p:toolbarGroup align="right" rendered="#{loginBean.logged}">
+			<h:form>
+				<h:panelGrid columns="3" cellpadding="10" cellspacing="0">
+					<p:commandButton icon="ui-icon-key" />
+					
+					<p:commandButton icon="ui-icon-power" value="Sair"
+						action="#{loginBean.doLogout()}"
+						process="@this" 
+						ajax="false"
+						/>
+				</h:panelGrid>
+			</h:form>
 		</p:toolbarGroup>
 	</p:toolbar>
 	

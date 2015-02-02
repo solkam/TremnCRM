@@ -9,6 +9,9 @@
 		<mapping-file>META-INF/orm.xml</mapping-file>
 		<class>br.com.tremn.crm.model.entity.UserTremn</class>
 		<class>br.com.tremn.crm.model.entity.Contact</class>
+		<class>br.com.tremn.crm.model.entity.Address</class>
+		<class>br.com.tremn.crm.model.entity.DocumentIdentity</class>
+		<class>br.com.tremn.crm.model.entity.Telephone</class>
 		
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />

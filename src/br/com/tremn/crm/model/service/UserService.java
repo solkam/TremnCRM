@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.entity.UserTremn;
 
 /**
@@ -76,6 +77,24 @@ public class UserService {
 		
 		criteria.where( conjunction );
 		return manager.createQuery(criteria).getResultList();
+	}
+	
+	
+	/**
+	 * Busca usuario pelo contato.
+	 * (usado ao remover contato)
+	 * @param contact
+	 * @return
+	 */
+	public UserTremn findUserTremnByContact(Contact contact) {
+		try {
+			return manager.createNamedQuery("findUserTremnByContact", UserTremn.class)
+					.setParameter("pContact", contact)
+					.getSingleResult()
+					;
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 }

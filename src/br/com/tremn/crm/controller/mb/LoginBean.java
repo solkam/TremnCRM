@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.UserTremn;
+import br.com.tremn.crm.model.exception.InfraException;
 import br.com.tremn.crm.model.service.UserService;
 
 /**
@@ -46,7 +47,19 @@ public class LoginBean implements Serializable {
 		
 		} else {//autenticacao falhou
 			JSFUtil.addErroMessage("Email ou senha inválidos");
-			return null;
+			return gotoLoginPage();
+		}
+	}
+	
+	public void doLogout() {
+		try {
+			JSFUtil.getHttpServletRequest().logout();
+			JSFUtil.getHttpSession().invalidate();
+			putUserOnSession( null );
+			gotoLoginPage();
+			
+		} catch (ServletException e) {
+			throw new InfraException(e);
 		}
 	}
 
@@ -59,14 +72,18 @@ public class LoginBean implements Serializable {
 		return "home";
 	}
 	
+	private String gotoLoginPage() {
+		return "login";
+	}
+	
 	/**
 	 * Verifica se o container JAAS autentica o
 	 * email e senha
 	 * @return
 	 */
-	public boolean isAuthenticated() {
+	private boolean isAuthenticated() {
 		try {
-			HttpServletRequest request = JSFUtil.getRequest();
+			HttpServletRequest request = JSFUtil.getHttpServletRequest();
 			request.login(email, pass);
 			return true;
 			
@@ -74,6 +91,13 @@ public class LoginBean implements Serializable {
 			return false;
 		}
 	}
+	
+	
+	public boolean isLogged() {
+		return getUserOnSession()!=null;
+	}
+	
+	
 
 	
 	
@@ -81,11 +105,11 @@ public class LoginBean implements Serializable {
 	
 	//util
 	private void putUserOnSession(UserTremn user) {
-		JSFUtil.getSession().setAttribute(USER_KEY, user);
+		JSFUtil.getHttpSession().setAttribute(USER_KEY, user);
 	}
 	
 	public UserTremn getUserOnSession() {
-		return (UserTremn) JSFUtil.getSession().getAttribute(USER_KEY);
+		return (UserTremn) JSFUtil.getHttpSession().getAttribute(USER_KEY);
 	}
 	
 	
