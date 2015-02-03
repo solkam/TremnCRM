@@ -8,17 +8,10 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-
-
-
-
-
-
-import org.primefaces.context.RequestContext;
-
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.UserTremn;
 import br.com.tremn.crm.model.entity.enumeration.Profile;
+import br.com.tremn.crm.model.exception.BusinessException;
 import br.com.tremn.crm.model.service.UserService;
 
 /**
@@ -26,9 +19,9 @@ import br.com.tremn.crm.model.service.UserService;
  * @author Solkam
  * @since 26 JAN 2015
  */
-@ManagedBean(name="userBean")
+@ManagedBean(name="userMB")
 @ViewScoped
-public class UserBean implements Serializable {
+public class UserMB implements Serializable {
 	
 	@EJB UserService service;
 	
@@ -37,38 +30,61 @@ public class UserBean implements Serializable {
 	private List<UserTremn> users;
 	
 	//filtros
-	private String filterName;
 	private String filterEmail;
-	private Profile filterProfile;
+	private Profile filterProfile = Profile.ADM;
+	
+	//senhas
+	private String pass1;
+	private String pass2;
 	
 	
 	@PostConstruct void init() {
 		search();
 	}
 	
+	private void populateUsers() {
+		users = service.searchUserTremnByFilters(filterEmail, filterProfile);
+	}
 	
 	public void search() {
-		users = service.searchUserTremnByFilters();
+		populateUsers();
+		JSFUtil.addMessageAboutResult(users);
 	}
 	
 	public void reset() {
 		user = new UserTremn();
-		RequestContext.getCurrentInstance().openDialog("DialogUser");
 	}
 	
 	public void manage(UserTremn selectedUser) {
 		this.user = selectedUser;
-		RequestContext.getCurrentInstance().openDialog("DialogUser");
 	}
 	
 	public void save() {
 		user = service.saveUserTremn(user);
+		populateUsers();
 		JSFUtil.addInfoMessage("Usuário salvo com sucesso");
 		
 	}
+	
 	public void remove() {
 		service.removeUserTremn(user);
+		populateUsers();
 		JSFUtil.addInfoMessage("Usuário removido");
+	}
+	
+	public void savePassword() {
+		validatePasswords();
+		user.setPassword( pass1 );
+		service.saveUserTremn(user);
+		JSFUtil.addInfoMessage("Senha salva com sucesso");
+	}
+	
+	
+	//util
+	private void validatePasswords() {
+		if (!pass1.equals(pass2)) {
+			throw new BusinessException("Senhas não conferem");
+		}
 	}
 
 	
@@ -83,35 +99,33 @@ public class UserBean implements Serializable {
 	public List<UserTremn> getUsers() {
 		return users;
 	}
-
-
-	public String getFilterName() {
-		return filterName;
-	}
-
-
-	public void setFilterName(String filterName) {
-		this.filterName = filterName;
-	}
-
-
 	public String getFilterEmail() {
 		return filterEmail;
 	}
-
-
 	public void setFilterEmail(String filterEmail) {
 		this.filterEmail = filterEmail;
 	}
-
-
 	public Profile getFilterProfile() {
 		return filterProfile;
 	}
-
-
 	public void setFilterProfile(Profile filterProfile) {
 		this.filterProfile = filterProfile;
+	}
+
+	public String getPass1() {
+		return pass1;
+	}
+
+	public void setPass1(String pass1) {
+		this.pass1 = pass1;
+	}
+
+	public String getPass2() {
+		return pass2;
+	}
+
+	public void setPass2(String pass2) {
+		this.pass2 = pass2;
 	}
 	
 }

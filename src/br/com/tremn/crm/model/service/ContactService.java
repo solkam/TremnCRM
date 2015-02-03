@@ -17,7 +17,6 @@ import javax.persistence.criteria.Root;
 
 import br.com.tremn.crm.model.entity.Address;
 import br.com.tremn.crm.model.entity.Contact;
-import br.com.tremn.crm.model.entity.UserTremn;
 import br.com.tremn.crm.model.exception.BusinessException;
 
 /**
@@ -70,11 +69,6 @@ public class ContactService {
 	 * @param c
 	 */
 	private void verifyContactAssociations(Contact c) {
-		//1.usuario
-		UserTremn user = userService.findUserTremnByContact(c);
-		if (user!=null) {
-			throw new BusinessException("Impossível remover Contato pois existe Usuário associado");
-		}
 		
 	}
 

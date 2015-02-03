@@ -9,17 +9,8 @@
 		<query>
 			select u
 			from UserTremn u
-				join u.contact c
 			where u.password = :pPassword
-			and   c.email    = :pEmail
-		</query>
-	</named-query>
-	
-	<named-query name="findUserTremnByContact">
-		<query>
-			select u
-			from UserTremn u
-			where u.contact = :pContact
+			and   u.email    = :pEmail
 		</query>
 	</named-query>
 	

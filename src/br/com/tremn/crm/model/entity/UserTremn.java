@@ -10,34 +10,35 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.sun.istack.internal.NotNull;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import br.com.tremn.crm.model.entity.enumeration.Profile;
 
 /**
- * Representa o usuario do sistema, sua senha, perfil e 
- * seus dados de contato
+ * Representa o usuario do sistema: seu email, sua senha e perfil
  * @author Solkam
  * @since 21 JAN 2015
  */
 @Entity
-@SequenceGenerator(name="UserTremSeq", sequenceName="UserTremSeq")
 public class UserTremn implements Serializable {
 	
-	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UserTremSeq")
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	
-	@OneToOne
 	@NotNull
-	private Contact contact;
+	@Size(max=100)
+	private String email;
+
+
+	@Size(max=100)
+	private String password;
+
 
 	
 	@Enumerated(EnumType.STRING)
@@ -46,8 +47,6 @@ public class UserTremn implements Serializable {
 	
 
 	
-	@NotNull
-	private String password;
 	
 	
 	//log
@@ -84,11 +83,11 @@ public class UserTremn implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Contact getContact() {
-		return contact;
+	public String getEmail() {
+		return email;
 	}
-	public void setContact(Contact contact) {
-		this.contact = contact;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public Profile getProfile() {
 		return profile;

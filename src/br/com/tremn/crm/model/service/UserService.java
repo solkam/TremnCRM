@@ -2,6 +2,7 @@ package br.com.tremn.crm.model.service;
 
 import java.util.List;
 
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -13,6 +14,8 @@ import javax.persistence.criteria.Root;
 
 import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.entity.UserTremn;
+import br.com.tremn.crm.model.entity.enumeration.Profile;
+import static br.com.tremn.crm.model.util.QueryUtil.*;
 
 /**
  * Serviços de negocio para Usuario
@@ -66,35 +69,45 @@ public class UserService {
 	 * Pesquisar usuario pelos filtros usando criteria
 	 * @return
 	 */
-	public List<UserTremn> searchUserTremnByFilters() {
+	public List<UserTremn> searchUserTremnByFilters(String email, Profile profile) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<UserTremn> criteria = builder.createQuery(UserTremn.class);
 		Root<UserTremn> root = criteria.from(UserTremn.class);
 		
 		Predicate conjunction = builder.conjunction();
-		//1.
-		
-		
+		//1.email
+		if (isNotBlank(email)) {
+			conjunction = builder.and(conjunction, 
+					builder.like(root.<String>get("email"), toLikeMatchModeANY(email))
+				);
+		}
+		//2.profile
+		if (isNotNull(profile)) {
+			conjunction = builder.and(conjunction, 
+					builder.equal(root.<Profile>get("profile"), profile)
+				);
+		}
 		criteria.where( conjunction );
+		criteria.orderBy( builder.asc(root.<String>get("email")) );
 		return manager.createQuery(criteria).getResultList();
 	}
 	
 	
-	/**
-	 * Busca usuario pelo contato.
-	 * (usado ao remover contato)
-	 * @param contact
-	 * @return
-	 */
-	public UserTremn findUserTremnByContact(Contact contact) {
-		try {
-			return manager.createNamedQuery("findUserTremnByContact", UserTremn.class)
-					.setParameter("pContact", contact)
-					.getSingleResult()
-					;
-		} catch (NoResultException e) {
-			return null;
-		}
-	}
+//	/**
+//	 * Busca usuario pelo contato.
+//	 * (usado ao remover contato)
+//	 * @param contact
+//	 * @return
+//	 */
+//	public UserTremn findUserTremnByContact(Contact contact) {
+//		try {
+//			return manager.createNamedQuery("findUserTremnByContact", UserTremn.class)
+//					.setParameter("pContact", contact)
+//					.getSingleResult()
+//					;
+//		} catch (NoResultException e) {
+//			return null;
+//		}
+//	}
 
 }

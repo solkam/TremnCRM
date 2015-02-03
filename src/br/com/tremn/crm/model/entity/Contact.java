@@ -28,10 +28,9 @@ import br.com.tremn.crm.model.util.DateUtil;
  * @since 21 JAN 2015
  */
 @Entity
-@SequenceGenerator(name="ContactSeq", sequenceName="ContactSeq")
 public class Contact implements Serializable {
 
-	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ContactSeq")
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull
