@@ -5,7 +5,7 @@
 	
 	<persistence-unit name="TremnCRM">
 		
-		<jta-data-source>java:/TremnMySQLDS</jta-data-source>
+		<jta-data-source>java:/TremnCRMDS</jta-data-source>
 		<mapping-file>META-INF/orm.xml</mapping-file>
 		<class>br.com.tremn.crm.model.entity.UserTremn</class>
 		<class>br.com.tremn.crm.model.entity.Contact</class>

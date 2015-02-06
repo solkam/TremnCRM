@@ -78,9 +78,17 @@
 }
 
 .menuOn {
-	border-color: purple;
+	border: 2px solid rgb(142,37,141);
 }
 
 .menuOff {
-	border-color: transparent;
+	border: 2px solid #efefef;
+}
+
+
+
+#primefaces
+
+span.ui-button-text {
+	font-size: 1.5em;
 }
