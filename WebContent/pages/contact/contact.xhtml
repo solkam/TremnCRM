@@ -30,7 +30,7 @@
 					<p:inputText value="#{contactMB.filterCity}" size="30" />
 				</h:panelGrid>
 				
-				<p:commandButton id="btnSearch" icon="ui-icon-search" value="Pesquisar" style="font-size:1.5em;" 
+				<p:commandButton id="btnSearch" icon="ui-icon-search" value="Pesquisar"  
 					action="#{contactMB.search()}"
 					update=":formContacts"
 					/>
@@ -45,7 +45,7 @@
 		<p:panel>
 			<tremn:globalMessages />
 			
-			<p:commandButton id="btnNew" icon="ui-icon-plus" value="Novo Contato" style="font-size:1.5em" 
+			<p:commandButton id="btnNew" icon="ui-icon-plus" value="Novo Contato"  
 				process="@this"
 				action="#{contactMB.reset()}"
 				oncomplete="PF('DialogContact').show();"
