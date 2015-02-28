@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/jboss-web.xml=UTF-8
+=======
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/jboss-web.xml=UTF-8
+>>>>>>> 10a0c4635811ba6c85f145289127cffd961f130d
