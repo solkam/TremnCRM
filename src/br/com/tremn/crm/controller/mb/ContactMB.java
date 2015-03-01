@@ -87,6 +87,12 @@ public class ContactMB implements Serializable {
 	}
 
 	
+	//autocomplete
+	public List<Contact> completeContact(String fragment) {
+		List<Contact> contacts = service.searchContactByFistNameOrLastNameOrCity(fragment, fragment);
+		return contacts;
+	}
+	
 	
 	//acessores...
 	private static final long serialVersionUID = -1748543442806801025L;

@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.tremn.crm.model.entity.enumeration.Gender;
+import br.com.tremn.crm.model.entity.enumeration.ParticipationCategory;
 import br.com.tremn.crm.model.entity.enumeration.Profession;
 import br.com.tremn.crm.model.exception.BusinessException;
 import br.com.tremn.crm.model.util.DateUtil;
@@ -71,8 +73,20 @@ public class Contact implements Serializable {
 	private Gender gender;
 	
 	
+	
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
+	
+	
+	@Enumerated(EnumType.STRING)
+	private ParticipationCategory participationCategory = ParticipationCategory.CLIENT;
+	
+	
+	/**
+	 * Contact que indicou
+	 */
+	@ManyToOne
+	private Contact contactWhoIndicated;
 	
 	
 	@Size(max=1000)
@@ -107,11 +121,9 @@ public class Contact implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
 	public String getEmailPrincipal() {
 		return emailPrincipal;
 	}
-
 	public void setEmailPrincipal(String emailPrincipal) {
 		this.emailPrincipal = emailPrincipal;
 	}
@@ -127,15 +139,12 @@ public class Contact implements Serializable {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
 	public String getLastName() {
 		return lastName;
 	}
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
 	public Address getAddress() {
 		if (address==null) {
 			address = new Address();
@@ -163,55 +172,56 @@ public class Contact implements Serializable {
 	public void setTelephone(Telephone telephone) {
 		this.telephone = telephone;
 	}
-	
-
 	public Integer getBirthDay() {
 		return birthDay;
 	}
-
 	public void setBirthDay(Integer birthDay) {
 		this.birthDay = birthDay;
 	}
-
 	public Integer getBirthMonth() {
 		return birthMonth;
 	}
-
 	public void setBirthMonth(Integer birthMonth) {
 		this.birthMonth = birthMonth;
 	}
-
 	public Integer getBirthYear() {
 		return birthYear;
 	}
-
 	public void setBirthYear(Integer birthYear) {
 		this.birthYear = birthYear;
 	}
-
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-
 	public Gender getGender() {
 		return gender;
 	}
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-
 	public Profession getProfession() {
 		return profession;
 	}
-
 	public void setProfession(Profession profession) {
 		this.profession = profession;
 	}
+	public Contact getContactWhoIndicated() {
+		return contactWhoIndicated;
+	}
 
+	public void setContactWhoIndicated(Contact contactWhoIndicated) {
+		this.contactWhoIndicated = contactWhoIndicated;
+	}
+
+	public ParticipationCategory getParticipationCategory() {
+		return participationCategory;
+	}
+	public void setParticipationCategory(ParticipationCategory participationCategory) {
+		this.participationCategory = participationCategory;
+	}
 	public String getObservation() {
 		return observation;
 	}

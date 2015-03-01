@@ -1,7 +1,9 @@
 package br.com.tremn.crm.model.service;
 
 import static br.com.tremn.crm.model.util.QueryUtil.isNotBlank;
+
 import static br.com.tremn.crm.model.util.QueryUtil.toLikeMatchModeSTART;
+import static br.com.tremn.crm.model.util.QueryUtil.toLikeMatchModeANY;
 
 import java.util.List;
 
@@ -81,6 +83,16 @@ public class ContactService {
 		return c;
 	}
 	
+
+	/**
+	 * Busca um contato pela PK
+	 * @param contactId
+	 * @return
+	 */
+	public Contact findContactById(long contactId) {
+		return manager.find(Contact.class, contactId);
+	}
+	
 	
 	/**
 	 * Pesquisa contact segundo filtros de pesquisa (usando criteria)
@@ -128,10 +140,27 @@ public class ContactService {
 		criteria.where(conjuction);
 		criteria.orderBy( builder.asc( root.<String>get("firstName")), builder.asc( root.<String>get("lastName")) );
 		
-		return manager.createQuery(criteria).getResultList();
+		List<Contact> contacts = manager.createQuery(criteria).getResultList();
+		return contacts;
+	}
+	
+	/**
+	 * Pesquisa contact pelo primeiro nome ou ultimo ou cidade
+	 * (usando no autocomplete de contatos)
+	 * @param name
+	 * @param cityName
+	 * @return
+	 */
+	public List<Contact> searchContactByFistNameOrLastNameOrCity(String name, String cityName) {
+		List<Contact> contacts = manager.createNamedQuery("searchContactByFistNameOrLastNameOrCity", Contact.class)
+				.setParameter("pName", toLikeMatchModeANY(name))
+				.setParameter("pCityName", toLikeMatchModeANY(cityName))
+				.getResultList();
+		return contacts;
 	}
 	
 	
+
 	
 	/**
 	 * Encontra contato pelo email
@@ -149,6 +178,8 @@ public class ContactService {
 			return null;
 		}
 	}
+
+
 	
 	
 	

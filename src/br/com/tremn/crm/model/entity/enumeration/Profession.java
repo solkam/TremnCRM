@@ -80,16 +80,14 @@ public enum Profession {
 	;
 	
 
-	private final String descrption;
+	private final String description;
 
 	private Profession(String d) {
-		this.descrption = d;
+		this.description = d;
 	}
 
-	public String getDescrption() {
-		return descrption;
+	public String getDescription() {
+		return description;
 	}
-	
-	
-	
+
 }

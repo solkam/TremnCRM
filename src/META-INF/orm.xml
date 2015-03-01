@@ -24,6 +24,17 @@
 			order by c.firstName, c.lastName
 		</query>
 	</named-query>
+
+	<named-query name="searchContactByFistNameOrLastNameOrCity">
+		<query>
+			select distinct c
+			from Contact c
+			where c.firstName          like :pName
+			or   c.lastName            like :pName
+			or   c.address.addressCity like :pCityName
+			order by c.firstName, c.lastName
+		</query>
+	</named-query>
 	
 	<named-query name="findContactByEmailPrincipal">
 		<query>
