@@ -12,13 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.tremn.crm.model.entity.enumeration.Gender;
+import br.com.tremn.crm.model.exception.BusinessException;
 import br.com.tremn.crm.model.util.DateUtil;
 
 
@@ -34,10 +34,17 @@ public class Contact implements Serializable {
 	private Long id;
 
 	@NotNull
-	private String name;
+	private String firstName;
 	
 	@NotNull
-	private String email;
+	private String lastName;
+	
+	
+	@NotNull
+	private String emailPrincipal;
+	
+	private String emailAlternative;
+	
 	
 	@Embedded
 	private Address address;
@@ -48,9 +55,15 @@ public class Contact implements Serializable {
 	@Embedded
 	private Telephone telephone;
 	
+
+	@NotNull
+	private Integer birthDay;
 	
-	@Temporal(TemporalType.DATE)
-	private Date birthday;
+	@NotNull
+	private Integer birthMonth;
+
+	@NotNull
+	private Integer birthYear;
 	
 	
 	@Enumerated(EnumType.STRING)
@@ -91,18 +104,35 @@ public class Contact implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	
+	public String getEmailPrincipal() {
+		return emailPrincipal;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setEmailPrincipal(String emailPrincipal) {
+		this.emailPrincipal = emailPrincipal;
 	}
-	public String getEmail() {
-		return email;
+	public String getEmailAlternative() {
+		return emailAlternative;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAlternative(String emailAlternative) {
+		this.emailAlternative = emailAlternative;
 	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	public Address getAddress() {
 		if (address==null) {
 			address = new Address();
@@ -130,12 +160,30 @@ public class Contact implements Serializable {
 	public void setTelephone(Telephone telephone) {
 		this.telephone = telephone;
 	}
-	public Date getBirthday() {
-		return birthday;
+	
+
+	public Integer getBirthDay() {
+		return birthDay;
 	}
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+	public void setBirthDay(Integer birthDay) {
+		this.birthDay = birthDay;
+	}
+
+	public Integer getBirthMonth() {
+		return birthMonth;
+	}
+
+	public void setBirthMonth(Integer birthMonth) {
+		this.birthMonth = birthMonth;
+	}
+
+	public Integer getBirthYear() {
+		return birthYear;
+	}
+
+	public void setBirthYear(Integer birthYear) {
+		this.birthYear = birthYear;
 	}
 
 	public void setCreateDate(Date createDate) {
@@ -164,7 +212,14 @@ public class Contact implements Serializable {
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public Date getUpdateDate() {
+		return updateDate;
+	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -195,13 +250,30 @@ public class Contact implements Serializable {
 	}
 	
 	
+	
 	//runtime
 	
+	public Date getBirthdate() {
+		return DateUtil.buildDate(getBirthYear(), getBirthMonth(), getBirthDay());
+	}
+	
+	
 	public Integer getAge() {
-		if (getBirthday()!=null) {
-			return DateUtil.calculateAge( getBirthday() );
+		if (getBirthdate()!=null) {
+			return DateUtil.calculateAge( getBirthdate() );
 		}
 		return null;
+	}
+	
+	public String getFullName() {
+		return String.format("%s %s", getFirstName(), getLastName() );
+	}
+
+
+	public void validateBirthdate() {
+		if (!DateUtil.isAValidDate(getBirthYear(), getBirthMonth(), getBirthDay()) ) {
+			throw new BusinessException("Data de Nascimento inválida");
+		}
 	}
 	
 	

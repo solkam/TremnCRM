@@ -21,15 +21,15 @@
 		<query>
 			select c
 			from Contact c
-			order by c.name
+			order by c.firstName, c.lastName
 		</query>
 	</named-query>
 	
-	<named-query name="findContactByEmail">
+	<named-query name="findContactByEmailPrincipal">
 		<query>
 			select c
 			from Contact c
-			where c.email = :pEmail
+			where c.emailPrincipal = :pEmailPrincipal
 		</query>
 	</named-query>
 

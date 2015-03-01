@@ -14,26 +14,19 @@
 		<fieldset>
 			<legend>Básicos</legend>
 			
-				<h:panelGrid columns="4" cellpadding="5">
+				<h:panelGrid columns="7" cellpadding="5">
 					<h:panelGrid>
-						<p:outputLabel for="inName" value="Nome" styleClass="req" />
-						<p:inputText id="inName" value="#{contactMB.contact.name}" size="40" required="true" />
-						<p:message for="inName" />
+						<p:outputLabel for="inFirstName" value="Primeiro Nome" styleClass="req" />
+						<p:inputText id="inFirstName" value="#{contactMB.contact.firstName}" size="30" required="true" />
+						<p:message for="inFirstName" />
 					</h:panelGrid>
 				
 					<h:panelGrid>
-						<p:outputLabel for="inEmail" value="Email" styleClass="req" />
-						<p:inputText id="inEmail" value="#{contactMB.contact.email}" size="30" required="true" />
-						<p:message for="inEmail" />
+						<p:outputLabel for="inLastName" value="Sobrenome" styleClass="req" />
+						<p:inputText id="inLastName" value="#{contactMB.contact.lastName}" size="40" required="true" />
+						<p:message for="inLastName" />
 					</h:panelGrid>
 
-					<h:panelGrid>
-						<p:outputLabel for="inBirth" value="Data Nascimento" styleClass="req" />
-						<p:inputMask id="inBirth" mask="99/99/9999" value="#{contactMB.contact.birthday}" size="10" required="true" >
-							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
-						</p:inputMask>
-						<p:message for="inBirth" />
-					</h:panelGrid>
 
 					<h:panelGrid>
 						<p:outputLabel for="inGender" value="Sexo" styleClass="req" />
@@ -44,6 +37,49 @@
 						<p:message for="inGender" />
 					</h:panelGrid>
 
+
+					<h:panelGrid>
+						<h:outputText value="Nascimento:" styleClass="req" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inBirthDay" value="Dia" styleClass="req" />
+						<p:selectOneMenu id="inBirthDay" value="#{contactMB.contact.birthDay}" required="true" >
+							<f:selectItems value="#{enumHelper.days}" var="dayVar" 
+								itemValue="#{dayVar.index}" itemLabel="#{dayVar.index}" />
+						</p:selectOneMenu>	
+						<p:message for="inBirthDay" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inBirthMonth" value="Mês" styleClass="req" />
+						<p:selectOneMenu id="inBirthMonth" value="#{contactMB.contact.birthMonth}" required="true"  >
+							<f:selectItems value="#{enumHelper.months}" var="monthVar"
+								itemValue="#{monthVar.index}" itemLabel="#{monthVar.description}" />
+						</p:selectOneMenu>	
+						<p:message for="inBirthMonth" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inBirthYear" value="Ano" styleClass="req" />
+						<p:inputMask id="inBirthYear" mask="9999" value="#{contactMB.contact.birthYear}" size="5" required="true" />	
+						<p:message for="inBirthYear" />
+					</h:panelGrid>
+						
+				</h:panelGrid>
+
+				<h:panelGrid columns="4" cellpadding="5">
+					<h:panelGrid>
+						<p:outputLabel for="inEmailP" value="Email Principal" styleClass="req" />
+						<p:inputText id="inEmailP" value="#{contactMB.contact.emailPrincipal}" size="50" required="true" />
+						<p:message for="inEmailP" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inEmailA" value="Email Alternativo" styleClass="" />
+						<p:inputText id="inEmailA" value="#{contactMB.contact.emailAlternative}" size="50" />
+						<p:message for="inEmailA" />
+					</h:panelGrid>
 				</h:panelGrid>
 		</fieldset>
 
@@ -52,9 +88,18 @@
 		<fieldset>
 			<legend>Endereço</legend>
 			
-			<h:panelGrid columns="3" cellpadding="5">
+			<h:panelGrid columns="4" cellpadding="5">
 					<h:panelGrid>
-						<p:outputLabel for="inStreet" value="Rua" styleClass="req" />
+						<p:outputLabel for="inAddType" value="Tipo de Logradouro" styleClass="req" />
+						<p:selectOneMenu id="inAddType" value="#{contactMB.contact.address.addressType}" required="true" >
+							<f:selectItems value="#{enumHelper.addressTypes}" var="typeVar" 
+								itemValue="#{typeVar}" itemLabel="#{typeVar.description}" />
+						</p:selectOneMenu>
+						<p:message for="inAddType" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inStreet" value="Logradouro" styleClass="req" />
 						<p:inputText id="inStreet" value="#{contactMB.contact.address.addressStreet}" size="50" required="true" />
 						<p:message for="inStreet" />
 					</h:panelGrid>
@@ -93,7 +138,7 @@
 
 					<h:panelGrid>
 						<p:outputLabel for="inZip" value="CEP"  />
-						<p:inputText id="inZip" value="#{contactMB.contact.address.addressZipcode}" size="10"  />
+						<p:inputMask id="inZip" mask="99.999-999" value="#{contactMB.contact.address.addressZipcode}" size="10"  />
 						<p:message for="inZip" />
 					</h:panelGrid>
 			</h:panelGrid>
@@ -105,23 +150,43 @@
 		<fieldset>
 			<legend>Telefones</legend>
 			
-			<h:panelGrid columns="3" cellpadding="5">
-				<h:panelGrid>
-					<p:outputLabel for="inMobile" value="Celular"  />
-					<p:inputText id="inMobile" value="#{contactMB.contact.telephone.telephoneMobile}" size="20"  />
-					<p:message for="inMobile" />
-				</h:panelGrid>
-			
+			<h:panelGrid columns="4" cellpadding="5">
 				<h:panelGrid>
 					<p:outputLabel for="inRes" value="Residencial"  />
-					<p:inputText id="inRes" value="#{contactMB.contact.telephone.telephoneResidential}" size="20"  />
+					<p:inputText id="inRes" value="#{contactMB.contact.telephone.telephoneResidential}" size="15"  />
 					<p:message for="inRes" />
 				</h:panelGrid>
 
 				<h:panelGrid>
 					<p:outputLabel for="inComm" value="Comercial"  />
-					<p:inputText id="inComm" value="#{contactMB.contact.telephone.telephoneCommercial}" size="20"  />
+					<p:inputText id="inComm" value="#{contactMB.contact.telephone.telephoneCommercial}" size="15"  />
 					<p:message for="inComm" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel for="inMobile1" value="Celular 1"  />
+					<h:panelGrid columns="2">
+						<p:inputText id="inMobile1" value="#{contactMB.contact.telephone.telephoneMobile1}" size="15"  />
+						<p:selectOneMenu value="#{contactMB.contact.telephone.telephoneMobile1Company}">
+							<f:selectItem itemLabel="" noSelectionOption="true" />
+							<f:selectItems value="#{enumHelper.telephoneMobileCompanies}" var="companyVar" 
+								itemValue="#{companyVar}" itemLabel="#{companyVar}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<p:message for="inMobile1" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel for="inMobile2" value="Celular 2"  />
+					<h:panelGrid columns="2">
+						<p:inputText id="inMobile2" value="#{contactMB.contact.telephone.telephoneMobile2}" size="15"  />
+						<p:selectOneMenu value="#{contactMB.contact.telephone.telephoneMobile2Company}">
+							<f:selectItem itemLabel="" noSelectionOption="true" />
+							<f:selectItems value="#{enumHelper.telephoneMobileCompanies}" var="companyVar" 
+								itemValue="#{companyVar}" itemLabel="#{companyVar}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<p:message for="inMobile2" />
 				</h:panelGrid>
 			</h:panelGrid>
 		</fieldset>

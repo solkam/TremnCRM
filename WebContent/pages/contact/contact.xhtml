@@ -55,12 +55,16 @@
 			<p:dataTable value="#{contactMB.contacts}" var="contactVar"
 				rendered="#{not empty contactMB.contacts}">
 				
-				<p:column headerText="Nome">
-					<h:outputText value="#{contactVar.name}" styleClass="destak2" />
+				<p:column headerText="ID" styleClass="col5p colCenter">
+					#{contactVar.id}
+				</p:column>
+
+				<p:column headerText="Nome completo">
+					<h:outputText value="#{contactVar.fullName}" styleClass="destak2" />
 				</p:column>
 				
-				<p:column headerText="Email">
-					#{contactVar.email}
+				<p:column headerText="Email Principal">
+					#{contactVar.emailPrincipal}
 				</p:column>
 				
 				<p:column headerText="Cidade">
@@ -68,8 +72,8 @@
 				</p:column>
 				
 				<p:column headerText="Data Nascimento" styleClass="colCenter">
-					<h:outputText value="#{contactVar.birthday}">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
+					<h:outputText value="#{contactVar.birthdate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
 					</h:outputText>
 				</p:column>
 				
@@ -102,30 +106,39 @@
 		
 		<p:outputPanel id="regionContact">
 		
-			<p:panelGrid columns="6" rendered="#{not contactMB.contact.transient}">
-				<h:outputText value="Nome" />
-				<h:outputText value="Email" />
+			<p:panelGrid columns="7" rendered="#{not contactMB.contact.transient}">
+				<h:outputText value="ID" />
+				<h:outputText value="Nome completo" />
+				<h:outputText value="Email principal" />
 				<h:outputText value="Cidade" />
 				<h:outputText value="Data Nascimento" />
 				<h:outputText value="Idade" />
 				<h:outputText value="Sexo" />
 				
-				<h:outputText value="#{contactMB.contact.name}" styleClass="destak2" />
-				<h:outputText value="#{contactMB.contact.email}" styleClass="destak2" />
+				<h:outputText value="#{contactMB.contact.id}" styleClass="destak2" />
+				<h:outputText value="#{contactMB.contact.fullName}" styleClass="destak2" />
+				<h:outputText value="#{contactMB.contact.emailPrincipal}" styleClass="destak2" />
 				<h:outputText value="#{contactMB.contact.address.addressCity}" styleClass="destak2" />
-				<tremn:outputDate value="#{contactMB.contact.birthday}" styleClass="destak2" />
+				<tremn:outputDate value="#{contactMB.contact.birthdate}" styleClass="destak2" />
 				<h:outputText value="#{contactMB.contact.age}" styleClass="destak2" />
 				<h:outputText value="#{contactMB.contact.gender.description}" styleClass="destak2" />
 			</p:panelGrid>
+			
+			<p:spacer height="10" />
 			
 			<p:tabView>
 				<p:tab title="Principal">
 					<ui:include src="/pages/contact/contact-frag-principal.xhtml" />
 				</p:tab>
 				
+				<p:tab title="Foto" rendered="#{not contactMB.contact.transient}">
+					em construcao
+				</p:tab>
+
 				<p:tab title="Vínculos" rendered="#{not contactMB.contact.transient}">
 					em construcao
 				</p:tab>
+
 			</p:tabView>
 			
 		</p:outputPanel>

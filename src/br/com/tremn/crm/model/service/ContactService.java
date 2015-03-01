@@ -47,7 +47,7 @@ public class ContactService {
 	 * @param c
 	 */
 	private void verifyEmailIsUnique(Contact c) {
-		Contact foundContact = findContactByEmail(c.getEmail());
+		Contact foundContact = findContactByEmailPrincipal(c.getEmailPrincipal() );
 		if (foundContact!=null && !foundContact.equals(c)) {
 			throw new BusinessException("Email já usado por outro contato");
 		}
@@ -97,15 +97,25 @@ public class ContactService {
 		Predicate conjuction = builder.conjunction();
 		//1.name
 		if (isNotBlank(name)) {
-			conjuction = builder.and( conjuction, 
-					builder.like(root.<String>get("name"), toLikeMatchModeSTART(name))
+			Predicate disjunction = builder.disjunction();
+			disjunction = builder.or( disjunction, 
+					builder.like(root.<String>get("firstName"), toLikeMatchModeSTART(name))
 				);
+			disjunction = builder.or( disjunction, 
+					builder.like(root.<String>get("lastName"), toLikeMatchModeSTART(name))
+				);
+			conjuction = builder.and( disjunction );
 		}
 		//2.email
 		if (isNotBlank(email)) {
-			conjuction = builder.and( conjuction, 
-					builder.equal(root.<String>get("email"), email)
+			Predicate disjunction = builder.disjunction();
+			disjunction = builder.or( disjunction, 
+					builder.equal(root.<String>get("emailPrincipal"), email)
 				);
+			disjunction = builder.or( disjunction, 
+					builder.equal(root.<String>get("emailAlternative"), email)
+				);
+			conjuction = builder.and( disjunction );
 		}
 		//2.email
 		if (isNotBlank(city)) {
@@ -114,8 +124,9 @@ public class ContactService {
 				);
 		}
 		//where e orderBy
+		criteria.distinct(true);
 		criteria.where(conjuction);
-		criteria.orderBy( builder.asc( root.<String>get("name") ));
+		criteria.orderBy( builder.asc( root.<String>get("firstName")), builder.asc( root.<String>get("lastName")) );
 		
 		return manager.createQuery(criteria).getResultList();
 	}
@@ -128,10 +139,10 @@ public class ContactService {
 	 * @param email
 	 * @return
 	 */
-	private Contact findContactByEmail(String email) {
+	private Contact findContactByEmailPrincipal(String email) {
 		try {
-			return manager.createNamedQuery("findContactByEmail", Contact.class)
-					.setParameter("pEmail", email)
+			return manager.createNamedQuery("findContactByEmailPrincipal", Contact.class)
+					.setParameter("pEmailPrincipal", email)
 					.getSingleResult()
 					;
 		} catch (NoResultException e) {

@@ -12,6 +12,11 @@ import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.service.ContactService;
 
+/**
+ * Controller para UC Gerenciar Contato
+ * @author Solkam
+ * @since 01 FEV 2015
+ */
 @ManagedBean(name="contactMB")
 @ViewScoped
 public class ContactMB implements Serializable {
@@ -56,11 +61,13 @@ public class ContactMB implements Serializable {
 	}
 	
 	public void save() {
+		contact.validateBirthdate();
 		service.saveContact(contact);
 		populateContacts();
 		refresh();
 		JSFUtil.addInfoMessage("Contato salvo com sucesso");
 	}
+	
 	
 	public void remove() {
 		service.removeContact(contact);

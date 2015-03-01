@@ -7,8 +7,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import br.com.tremn.crm.model.exception.BusinessException;
-
 /**
  * Utilitário para JSF como faces messages.
  * @author Solkam

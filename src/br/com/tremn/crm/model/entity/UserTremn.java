@@ -1,8 +1,7 @@
 package br.com.tremn.crm.model.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -40,30 +38,28 @@ public class UserTremn implements Serializable {
 	private String password;
 
 
-	
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private Profile profile;
-	
-
 	
 	
 	
 	//log
 	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar createDate;
+	private Date createDate;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar updateDate;
+	private Date updateDate;
 	
+
 	
-	//listener
+	//listeners
 	@PrePersist void onPersist() {
-		this.createDate = new GregorianCalendar();
+		this.createDate = new Date();
 	}
 	
 	@PreUpdate void onUpdate() {
-		this.updateDate = new GregorianCalendar();
+		this.updateDate = new Date();
 	}
 	
 
@@ -95,16 +91,16 @@ public class UserTremn implements Serializable {
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
-	public Calendar getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Calendar createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public Calendar getUpdateDate() {
+	public Date getUpdateDate() {
 		return updateDate;
 	}
-	public void setUpdateDate(Calendar updateDate) {
+	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
 

@@ -3,6 +3,10 @@ package br.com.tremn.crm.model.entity;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import br.com.tremn.crm.model.entity.enumeration.AddressType;
 
 /**
  * Classe embutivel que representa todos os
@@ -13,6 +17,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address implements Serializable {
 	
+	@Enumerated(EnumType.STRING)
+	private AddressType addressType;
+
 	private String addressStreet;
 	
 	private String addressNumber;
@@ -35,6 +42,12 @@ public class Address implements Serializable {
 	}
 	public void setAddressStreet(String addressStreet) {
 		this.addressStreet = addressStreet;
+	}
+	public AddressType getAddressType() {
+		return addressType;
+	}
+	public void setAddressType(AddressType addressType) {
+		this.addressType = addressType;
 	}
 	public String getAddressNumber() {
 		return addressNumber;

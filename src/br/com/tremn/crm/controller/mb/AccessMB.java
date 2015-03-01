@@ -18,9 +18,9 @@ import br.com.tremn.crm.model.service.UserService;
  * @author Solkam
  * @since 25 JAN 2015
  */
-@ManagedBean(name="loginBean")
+@ManagedBean(name="accessMB")
 @SessionScoped
-public class LoginBean implements Serializable {
+public class AccessMB implements Serializable {
 
 	private static final String USER_KEY = "USER";
 
