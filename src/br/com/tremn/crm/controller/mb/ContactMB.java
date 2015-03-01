@@ -61,12 +61,17 @@ public class ContactMB implements Serializable {
 	}
 	
 	public void save() {
+		//validações
 		contact.validateBirthdate();
+		contact.validateDocuments();
+		//salva
 		service.saveContact(contact);
+		//prepara exibição
 		populateContacts();
 		refresh();
 		JSFUtil.addInfoMessage("Contato salvo com sucesso");
 	}
+
 	
 	
 	public void remove() {

@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.tremn.crm.model.entity.enumeration.Gender;
+import br.com.tremn.crm.model.entity.enumeration.Profession;
 import br.com.tremn.crm.model.exception.BusinessException;
 import br.com.tremn.crm.model.util.DateUtil;
 
@@ -70,7 +71,9 @@ public class Contact implements Serializable {
 	private Gender gender;
 	
 	
-	private String profession;
+	@Enumerated(EnumType.STRING)
+	private Profession profession;
+	
 	
 	@Size(max=1000)
 	private String observation;
@@ -200,12 +203,15 @@ public class Contact implements Serializable {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	public String getProfession() {
+
+	public Profession getProfession() {
 		return profession;
 	}
-	public void setProfession(String profession) {
+
+	public void setProfession(Profession profession) {
 		this.profession = profession;
 	}
+
 	public String getObservation() {
 		return observation;
 	}
@@ -252,12 +258,19 @@ public class Contact implements Serializable {
 	
 	
 	//runtime
-	
+
+	/**
+	 * Monta um Date a partir dos campos individuais de ano, mês e dia
+	 * @return
+	 */
 	public Date getBirthdate() {
 		return DateUtil.buildDate(getBirthYear(), getBirthMonth(), getBirthDay());
 	}
 	
-	
+	/**
+	 * Calcula a idade através da data de nascimento
+	 * @return
+	 */
 	public Integer getAge() {
 		if (getBirthdate()!=null) {
 			return DateUtil.calculateAge( getBirthdate() );
@@ -265,14 +278,38 @@ public class Contact implements Serializable {
 		return null;
 	}
 	
+	/**
+	 * Monta o nome completo juntando o primeiro e último nomes.
+	 * @return
+	 */
 	public String getFullName() {
 		return String.format("%s %s", getFirstName(), getLastName() );
 	}
 
 
+	/**
+	 * Os campos individuais de ano, mês e dia deve formar uma data válida
+	 */
 	public void validateBirthdate() {
 		if (!DateUtil.isAValidDate(getBirthYear(), getBirthMonth(), getBirthDay()) ) {
 			throw new BusinessException("Data de Nascimento inválida");
+		}
+	}
+	
+	/**
+	 * Pelo menos um documento tem que ser fornecido
+	 */
+	public void validateDocuments() {
+		String cpf = getDocument().getDocumentCPF();
+		String passport = getDocument().getDocumentPassport();
+		String rg = getDocument().getDocumentRG();
+		
+		boolean isCpfNull = cpf==null || cpf.trim().isEmpty();
+		boolean isPassportNull = passport==null || passport.trim().isEmpty();
+		boolean isRg = rg==null || rg.trim().isEmpty();
+		
+		if (isCpfNull  && isPassportNull && isRg) {
+			throw new BusinessException("Pelo menos um documento deve ser informado");
 		}
 	}
 	

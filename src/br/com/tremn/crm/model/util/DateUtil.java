@@ -35,7 +35,17 @@ public class DateUtil {
 	}
 	
 	
-	public static boolean isAValidDate(int year, int month, int day) {
+	/**
+	 * Validate se os parametros individuais para ano, mês e dia 
+	 * formam uma data válida 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static boolean isAValidDate(Integer year, Integer month, Integer day) {
+		if (hasNull(year, month, day)) return false;
+
 		try {
 			GregorianCalendar calendarAux = new GregorianCalendar(year, month-1, day);
 			if (day == calendarAux.get(Calendar.DAY_OF_MONTH)) {
@@ -50,7 +60,17 @@ public class DateUtil {
 	}
 	
 	
-	public static Date buildDate(int year, int month, int day) {
+	/**
+	 * A partir dos parâmetros individuais de ano, mês e dia
+	 * construe um Date válido
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static Date buildDate(Integer year, Integer month, Integer day) {
+		if (hasNull(year, month, day)) return null;
+		
 		if (isAValidDate(year, month, day)) {
 			return new GregorianCalendar(year, month-1, day).getTime();
 		} else {
@@ -61,7 +81,25 @@ public class DateUtil {
 	
 	
 	/**
+	 * Verifica se algum parametro é null.
+	 * (para validações short-circuit)
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	private static boolean hasNull(Integer year, Integer month, Integer day) {
+		if (year==null || month==null || day==null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
+	/**
 	 * Lança exception se parametro vier null
+	 * (para validações short-circuit)
 	 * @param param
 	 */
 	private static void throwIfNull(Object param) {
