@@ -153,8 +153,8 @@ public class ContactService {
 	 */
 	public List<Contact> searchContactByFistNameOrLastNameOrCity(String name, String cityName) {
 		List<Contact> contacts = manager.createNamedQuery("searchContactByFistNameOrLastNameOrCity", Contact.class)
-				.setParameter("pName", toLikeMatchModeANY(name))
-				.setParameter("pCityName", toLikeMatchModeANY(cityName))
+				.setParameter("pName", toLikeMatchModeSTART(name))
+				.setParameter("pCityName", toLikeMatchModeSTART(cityName))
 				.getResultList();
 		return contacts;
 	}

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components">
+       
+<h:form enctype="multipart/form-data">
+	<p:panel>
+
+		<h:panelGrid columns="3" cellpadding="10">
+			
+			<p:outputPanel id="displayImagem">
+				<tremn:displayContactImage contact="#{contactMB.contact}" />
+			</p:outputPanel>
+	
+			<p:fileUpload id="inImagem" fileUploadListener="#{contactMB.onFileUpload}" 
+				rendered="#{not contactMB.contact.flagImageOK}"
+				multiple="false" auto="true"
+				update="@form :formContacts :panelContact"
+	            invalidFileMessage="Tipo não permitido"
+	            invalidSizeMessage="Tamanho acima do permitido"
+	            label="Escolher foto para o contato"
+	            cancelLabel="Cancelar"
+	            uploadLabel="Enviar"
+	            sizeLimit="15000000"
+	            allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/"      				
+				/>
+				
+			<p:commandButton icon="ui-icon-trash" value="Remover foto"
+				rendered="#{contactMB.contact.flagImageOK}"
+				action="#{contactMB.removeImage()}"
+				process="@this"
+				update="@form :formContacts :panelContact"
+				/>
+		</h:panelGrid>
+		
+	</p:panel>
+</h:form>
+
+</ui:fragment>

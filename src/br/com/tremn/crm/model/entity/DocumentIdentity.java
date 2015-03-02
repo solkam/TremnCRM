@@ -1,7 +1,9 @@
 package br.com.tremn.crm.model.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * Classe embutivel com os possiveis documentos de
@@ -12,10 +14,13 @@ import javax.persistence.*;
 @Embeddable
 public class DocumentIdentity implements Serializable {
 
+	@Size(max=30)
 	private String documentCPF;
 	
+	@Size(max=30)
 	private String documentPassport;
 	
+	@Size(max=30)
 	private String documentRG;
 
 

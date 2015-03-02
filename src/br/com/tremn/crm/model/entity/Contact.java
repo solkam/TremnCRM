@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -36,69 +37,130 @@ public class Contact implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	/**
+	 * Primeiro nome
+	 */
 	@NotNull
+	@Size(max=100)
 	private String firstName;
 	
+	/**
+	 * Ultimo nome (ou nome de família)
+	 */
 	@NotNull
+	@Size(max=100)
 	private String lastName;
 	
-	
+	/**
+	 * Email principal, mais usado
+	 */
 	@NotNull
+	@Size(max=100)
 	private String emailPrincipal;
 	
+	/**
+	 * Email secundário ou alternativo
+	 */
+	@Size(max=100)
 	private String emailAlternative;
 	
-	
+	/**
+	 * Dados completos de endereço
+	 */
 	@Embedded
 	private Address address;
 	
+	/**
+	 * Dados completos de documentos
+	 */
 	@Embedded
 	private DocumentIdentity document;
 
+	/**
+	 * Dados completos de telefones
+	 */
 	@Embedded
 	private Telephone telephone;
 	
-
+	/**
+	 * Dia do nascimento
+	 */
 	@NotNull
 	private Integer birthDay;
 	
+	/**
+	 * Mês do nascimento
+	 */
 	@NotNull
 	private Integer birthMonth;
 
+	/**
+	 * Ano do nascimento
+	 */
 	@NotNull
 	private Integer birthYear;
 	
-	
+	/**
+	 * Sexo
+	 */
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
 	
-	
+	/**
+	 * Profissão segundo Código Brasileiro de Ocupações
+	 */
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
+
+	/**
+	 * Empresa em trbalha e função
+	 */
+	@Embedded
+	private Company company;
 	
-	
+	/**
+	 * Categoria de participação em eventos da Tremn
+	 */
 	@Enumerated(EnumType.STRING)
 	private ParticipationCategory participationCategory = ParticipationCategory.CLIENT;
 	
 	
 	/**
-	 * Contact que indicou
+	 * Contact responsável por indicar
 	 */
 	@ManyToOne
 	private Contact contactWhoIndicated;
 	
+	/**
+	 * Dados sobre as redes sociais
+	 */
+	@Embedded
+	private SocialNetwork socialNetwork;
 	
+	/**
+	 * Observações diversas
+	 */
 	@Size(max=1000)
 	private String observation;
 	
 	
-	//log
+	//foto
+	@Lob
+	private byte[] imageBinary;
+	
+	@Size(max=5)
+	private String imageExtension;
+	
+	
+	
+	//logs
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
+	
 	
 	
 	//listener
@@ -120,6 +182,27 @@ public class Contact implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public byte[] getImageBinary() {
+		return imageBinary;
+	}
+	public void setImageBinary(byte[] imageBinary) {
+		this.imageBinary = imageBinary;
+	}
+	public String getImageExtension() {
+		return imageExtension;
+	}
+	public void setImageExtension(String imageExtension) {
+		this.imageExtension = imageExtension;
+	}
+	public Company getCompany() {
+		if (company==null) {
+			company = new Company();
+		}
+		return company;
+	}
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 	public String getEmailPrincipal() {
 		return emailPrincipal;
@@ -211,11 +294,9 @@ public class Contact implements Serializable {
 	public Contact getContactWhoIndicated() {
 		return contactWhoIndicated;
 	}
-
 	public void setContactWhoIndicated(Contact contactWhoIndicated) {
 		this.contactWhoIndicated = contactWhoIndicated;
 	}
-
 	public ParticipationCategory getParticipationCategory() {
 		return participationCategory;
 	}
@@ -233,6 +314,15 @@ public class Contact implements Serializable {
 	}
 	public Date getUpdateDate() {
 		return updateDate;
+	}
+	public SocialNetwork getSocialNetwork() {
+		if (socialNetwork==null) {
+			socialNetwork = new SocialNetwork();
+		}
+		return socialNetwork;
+	}
+	public void setSocialNetwork(SocialNetwork socialNetwork) {
+		this.socialNetwork = socialNetwork;
 	}
 
 	
@@ -296,6 +386,25 @@ public class Contact implements Serializable {
 		return String.format("%s %s", getFirstName(), getLastName() );
 	}
 
+	
+	/**
+	 * Flag que valida que tanto extensão e binario da imagem estão preenchido
+	 * @return
+	 */
+	public Boolean getFlagImageOK() {
+		return getImageExtension()!=null 
+			&& !getImageExtension().trim().isEmpty() 
+			&& getImageBinary()!=null;
+	}
+
+	
+	/**
+	 * Monta o nome da imagem usando o ID e a extensão
+	 * @return
+	 */
+	public String getImageName() {
+		return String.format("contact_%s.%s", getId(), getImageExtension());
+	}
 
 	/**
 	 * Os campos individuais de ano, mês e dia deve formar uma data válida

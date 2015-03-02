@@ -59,6 +59,10 @@
 					#{contactVar.id}
 				</p:column>
 
+				<p:column headerText="Foto" styleClass="col5p colCenter">
+					<tremn:displayContactImage contact="#{contactVar}" />
+				</p:column>
+
 				<p:column headerText="Nome completo">
 					<h:outputText value="#{contactVar.fullName}" styleClass="destak2" />
 				</p:column>
@@ -102,12 +106,13 @@
 	<!-- dialog contact -->
 	<p:dialog widgetVar="DialogContact" header="Contato"
 		modal="true" dynamic="true" closeOnEscape="true" maximizable="true"
-		position="top" width="70%" height="50%">
+		position="top" width="90%" height="90%">
 		
 		<p:outputPanel id="regionContact">
 		
-			<p:panelGrid columns="7" rendered="#{not contactMB.contact.transient}">
+			<p:panelGrid id="panelContact" columns="8" rendered="#{not contactMB.contact.transient}">
 				<h:outputText value="ID" />
+				<h:outputText value="Foto" />
 				<h:outputText value="Nome completo" />
 				<h:outputText value="Email principal" />
 				<h:outputText value="Cidade" />
@@ -116,6 +121,7 @@
 				<h:outputText value="Sexo" />
 				
 				<h:outputText value="#{contactMB.contact.id}" styleClass="destak2" />
+				<tremn:displayContactImage contact="#{contactMB.contact}" />
 				<h:outputText value="#{contactMB.contact.fullName}" styleClass="destak2" />
 				<h:outputText value="#{contactMB.contact.emailPrincipal}" styleClass="destak2" />
 				<h:outputText value="#{contactMB.contact.address.addressCity}" styleClass="destak2" />
@@ -132,11 +138,11 @@
 				</p:tab>
 				
 				<p:tab title="Foto" rendered="#{not contactMB.contact.transient}">
-					em construcao
+					<ui:include src="/pages/contact/contact-frag-photo.xhtml" />
 				</p:tab>
 
 				<p:tab title="Vínculos" rendered="#{not contactMB.contact.transient}">
-					em construcao
+					<ui:include src="/pages/contact/contact-frag-vinculo.xhtml" />
 				</p:tab>
 
 			</p:tabView>

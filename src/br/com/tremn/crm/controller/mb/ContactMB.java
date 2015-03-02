@@ -1,5 +1,7 @@
 package br.com.tremn.crm.controller.mb;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,6 +10,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.FileUploadEvent;
+
+import br.com.tremn.crm.controller.util.ImageStreamUtil;
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.service.ContactService;
@@ -22,7 +27,9 @@ import br.com.tremn.crm.model.service.ContactService;
 public class ContactMB implements Serializable {
 	
 	@EJB ContactService service;
+
 	
+	private ImageStreamUtil imageStreamUtil = new ImageStreamUtil();
 	
 	private List<Contact> contacts;
 	
@@ -92,6 +99,80 @@ public class ContactMB implements Serializable {
 		List<Contact> contacts = service.searchContactByFistNameOrLastNameOrCity(fragment, fragment);
 		return contacts;
 	}
+	
+	
+	
+	/* ****
+	 * FOTO
+	 ******/
+	/**
+	 * Orquesta o upload da imagem
+	 * @param event
+	 * @throws IOException
+	 */
+	public void onFileUpload(FileUploadEvent event) throws IOException {
+		redimImage(event);
+		saveImageInFS();
+		saveImageInDB();
+	}
+	
+	
+	/**
+	 * Realiza alguns ajustes na imagem apos o upload como 
+	 * redimensioná-la e gravar no disco.
+	 * @param event
+	 * @throws IOException
+	 */
+	private void redimImage(FileUploadEvent event) throws IOException {
+		//1.extensão da imagem
+		String imageExtension = imageStreamUtil.extractExtension( event.getFile().getFileName() );
+		contact.setImageExtension(imageExtension);
+
+		//2.conteudo binário da imagem
+		InputStream imageInputStream = event.getFile().getInputstream();
+		byte[] imageBinary = imageStreamUtil.getBinaryDimensionated(imageInputStream, imageExtension);
+		contact.setImageBinary( imageBinary );
+	}
+	
+	
+	/**
+	 * Grava no disco a imagem do contact.
+	 * Se ele não tiver imagem, não grava nada.
+	 * @param produto
+	 */
+	private void saveImageInFS() throws IOException {
+		if (contact.getFlagImageOK() ) {
+			byte[] imageBinary = contact.getImageBinary();
+			String imageName = contact.getImageName();
+		
+			imageStreamUtil.writeInFileSystem(imageBinary, imageName);
+		}
+	}
+	
+	/**
+	 * Salva o contact que implicitamente salvará sua imagem
+	 */
+	public void saveImageInDB() {
+		contact = service.saveContact( contact );
+		refresh();
+		populateContacts();
+		JSFUtil.addInfoMessage("Foto salva com sucesso");
+	}
+	
+	
+	/**
+	 * Remove as informaçoes da imagem
+	 * Nota: fisicamente a imagem continua no FileSystem
+	 */
+	public void removeImage() {
+		contact.setImageBinary( null );
+		contact.setImageExtension( null );
+		contact = service.saveContact( contact );
+		refresh();
+		populateContacts();
+		JSFUtil.addInfoMessage("Foto removida");
+	}
+	
 	
 	
 	//acessores...

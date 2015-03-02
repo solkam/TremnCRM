@@ -1,0 +1,77 @@
+package br.com.tremn.crm.controller.util;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
+
+/**
+ * Utilitário para imagem como redimensionar ou gravação em disco
+ * @author Solkam
+ * @since 01 MAR 2015
+ */
+public class ImageStreamUtil {
+
+	// dimensão padrão de imagens
+	private static final int DIM_DEFAULT = 75;
+	
+	private static final String IMAGE_PATH = "resources/upload_img/";
+	
+	
+	public byte[] getBinaryDimensionated(InputStream inputStream, String extension) throws IOException {
+		BufferedImage imagemOriginal = ImageIO.read( inputStream );
+		
+		BufferedImage imagemRedim = new BufferedImage(DIM_DEFAULT, DIM_DEFAULT, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = imagemRedim.createGraphics();
+		g.drawImage(imagemOriginal, 0, 0, DIM_DEFAULT, DIM_DEFAULT, null);
+		
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		ImageIO.write(imagemRedim, extension, outputStream);
+		return outputStream.toByteArray();
+	}
+	
+	
+	public void redimensionate(InputStream inputStream, String extension, OutputStream outputStream) throws IOException {
+		BufferedImage imagemOriginal = ImageIO.read( inputStream );
+		
+		BufferedImage imagemRedim = new BufferedImage(DIM_DEFAULT, DIM_DEFAULT, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = imagemRedim.createGraphics();
+		g.drawImage(imagemOriginal, 0, 0, DIM_DEFAULT, DIM_DEFAULT, null);
+		
+		ImageIO.write(imagemRedim, extension, outputStream);
+	}
+	
+	
+	
+	public String extractExtension(String fileName) {
+		int indexOfPonto = fileName.indexOf(".");
+		String extensao = fileName.substring( indexOfPonto + 1 );
+		return extensao;
+	}
+	
+	
+	
+	public void writeInFileSystem(byte[] binary, String fileName) throws IOException {
+		File theFile = new File(getRealFolder(), fileName );
+		FileOutputStream fos = new FileOutputStream( theFile );
+		fos.write( binary );
+		fos.flush();
+		fos.close();
+	}
+	
+	
+	private String getRealFolder() {
+		return FacesContext.getCurrentInstance().getExternalContext().getRealPath(IMAGE_PATH);
+	}
+	
+	
+	
+
+}

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Size;
 
 import br.com.tremn.crm.model.entity.enumeration.AddressType;
 
@@ -20,18 +21,25 @@ public class Address implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private AddressType addressType;
 
+	@Size(max=100)
 	private String addressStreet;
 	
+	@Size(max=30)
 	private String addressNumber;
 	
+	@Size(max=50)
 	private String addressComplement;
 	
+	@Size(max=100)
 	private String addressDistrict;
 	
+	@Size(max=100)
 	private String addressCity;
 	
+	@Size(max=50)
 	private String addressState;
 	
+	@Size(max=20)
 	private String addressZipcode;
 
 

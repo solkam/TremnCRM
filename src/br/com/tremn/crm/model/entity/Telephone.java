@@ -3,6 +3,7 @@ package br.com.tremn.crm.model.entity;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import br.com.tremn.crm.model.entity.enumeration.TelephoneMobileCompany;
 
@@ -17,14 +18,25 @@ public class Telephone implements Serializable {
 	
 	private static final String DEFAULT_NUMBER = "+55(21)";
 
+	@Enumerated(EnumType.STRING)
 	private TelephoneMobileCompany telephoneMobile1Company;
+
+	@Size(max=20)
 	private String telephoneMobile1 = DEFAULT_NUMBER;
 	
+	
+	@Enumerated(EnumType.STRING)
 	private TelephoneMobileCompany telephoneMobile2Company;
+	
+	@Size(max=20)
 	private String telephoneMobile2 = DEFAULT_NUMBER;
 
+	
+	@Size(max=20)
 	private String telephoneCommercial = DEFAULT_NUMBER;
 	
+	
+	@Size(max=20)
 	private String telephoneResidential = DEFAULT_NUMBER;
 
 

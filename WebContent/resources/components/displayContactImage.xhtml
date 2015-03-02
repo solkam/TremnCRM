@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<cc:interface>
+	<cc:attribute name="contact" required="true" />
+</cc:interface>
+
+<cc:implementation>
+
+	<p:graphicImage library="upload_img" name="#{cc.attrs.contact.imageName}" cache="false"
+		rendered="#{cc.attrs.contact.flagImageOK}" />
+
+	<p:graphicImage library="upload_img" name="img_not_found_75_off.png" cache="true"
+		rendered="#{not cc.attrs.contact.flagImageOK}" />
+
+</cc:implementation>
+
+</html>
