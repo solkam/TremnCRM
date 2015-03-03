@@ -1,9 +1,7 @@
 package br.com.tremn.crm.model.service;
 
 import static br.com.tremn.crm.model.util.QueryUtil.isNotBlank;
-
 import static br.com.tremn.crm.model.util.QueryUtil.toLikeMatchModeSTART;
-import static br.com.tremn.crm.model.util.QueryUtil.toLikeMatchModeANY;
 
 import java.util.List;
 

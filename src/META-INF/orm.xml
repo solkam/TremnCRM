@@ -48,6 +48,14 @@
 	
 	<!-- Product -->
 	
+	<named-query name="findProductByName">
+		<query>
+			select p
+			from Product p
+			where p.name = :pName
+		</query>
+	</named-query>
+
 	<named-query name="searchProduct">
 		<query>
 			select p
@@ -56,14 +64,26 @@
 		</query>
 	</named-query>
 	
-	<named-query name="findProductByName">
+	<named-query name="searchProductByFlagActive">
 		<query>
 			select p
 			from Product p
-			where p.name = :pName
+			where p.flagActive = :pFlagActive
+			order by p.name
 		</query>
 	</named-query>
 	
+
+
+	<!-- Event -->
+	
+	<named-query name="findEventByName">
+		<query>
+			select e
+			from Event e
+			where e.name = :pName
+		</query>
+	</named-query>
 
 
 </entity-mappings>

@@ -14,11 +14,24 @@
 	<h:form id="formSearch">
 	
 		<p:fieldset legend="Pesquisa" toggleable="true">
-			<h:panelGrid columns="4" cellpadding="10">
+			<h:panelGrid columns="5" cellpadding="10">
 			
 				<h:panelGrid>
+					<h:outputText value="Produto" />
+					<p:selectOneMenu value="#{eventMB.filterProduct.id }" >
+						<f:selectItems value="#{eventMB.comboProducts}" var="productVar" 
+							itemValue="#{productVar.id}" itemLabel="#{productVar.name}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<h:outputText value="Nome" />
+					<p:inputText value="#{eventMB.filterName}" size="30" />
+				</h:panelGrid>
+
+				<h:panelGrid>
 					<h:outputText value="Ano" />
-					<p:inputMask value="#{eventMB.filterAno}" mask="9999" size="5" />
+					<p:inputMask value="#{eventMB.filterYear}" mask="9999" size="5" />
 				</h:panelGrid>
 
 				<h:panelGrid>
@@ -58,10 +71,14 @@
 					#{eventVar.id}
 				</p:column>
 			
+				<p:column headerText="Produto">
+					<h:outputText value="#{eventVar.product.name}" styleClass="destak3" />
+				</p:column>
+	
 				<p:column headerText="Nome">
 					<h:outputText value="#{eventVar.name}" styleClass="destak2" />
 				</p:column>
-	
+
 				<p:column headerText="Status" styleClass="colCenter col5p">
 					<tremn:displayEventStatus event="#{eventVar}" />
 				</p:column>
@@ -98,12 +115,14 @@
 			<p:panelGrid columns="5" rendered="#{not eventMB.event.transient}">
 				<h:outputText value="ID" />
 				<h:outputText value="Name" />
+				<h:outputText value="Produto" />
 				<h:outputText value="Status" />
 				<h:outputText value="Data Início" />
 				<h:outputText value="Data Término" />
 				
 				<h:outputText value="#{eventMB.event.id}" styleClass="destak2" />
 				<h:outputText value="#{eventMB.event.name}" styleClass="destak2" />
+				<h:outputText value="#{eventMB.event.product.name}" styleClass="destak2" />
 				<tremn:displayEventStatus event="#{eventMB.event}" />
 				<tremn:outputDate value="#{eventMB.event.beginDate }" />
 				<tremn:outputDate value="#{eventMB.event.endDate }" />
@@ -112,6 +131,9 @@
 			<p:spacer height="5" />
 			
 			<p:tabView>
+				<p:tab title="Principal">
+					em construcao
+				</p:tab>
 
 			</p:tabView>
 

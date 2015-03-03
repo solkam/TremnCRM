@@ -76,6 +76,23 @@ public class ProductService {
 		return product;
 	}
 	
+
+	/**
+	 * Busca um produto pelo nome
+	 * @param name
+	 * @return
+	 */
+	private Product findProductByName(String name) {
+		try {
+			return manager.createNamedQuery("findProductByName", Product.class)
+					.setParameter("pName", name)
+					.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	
 	/**
 	 * Pesquisa todos os produtos
 	 * @return
@@ -118,19 +135,17 @@ public class ProductService {
 		return products;
 	}
 	
+
 	/**
-	 * Busca um produto pelo nome
-	 * @param name
+	 * Pesquisa produtos pelo flag ativo
+	 * @param b
 	 * @return
 	 */
-	private Product findProductByName(String name) {
-		try {
-			return manager.createNamedQuery("findProductByName", Product.class)
-					.setParameter("pName", name)
-					.getSingleResult();
-		} catch (NoResultException e) {
-			return null;
-		}
+	public List<Product> searchProductByFlagActive(Boolean flagActive) {
+		return manager.createNamedQuery("searchProductByFlagActive", Product.class)
+				.setParameter("pFlagActive", flagActive)
+				.getResultList()
+				;
 	}
 
 }
