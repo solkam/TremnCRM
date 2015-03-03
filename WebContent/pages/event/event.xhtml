@@ -18,9 +18,9 @@
 			
 				<h:panelGrid>
 					<h:outputText value="Produto" />
-					<p:selectOneMenu value="#{eventMB.filterProduct.id }" >
-						<f:selectItems value="#{eventMB.comboProducts}" var="productVar" 
-							itemValue="#{productVar.id}" itemLabel="#{productVar.name}" />
+					<p:selectOneMenu value="#{eventMB.filterProduct }" converter="#{productConverter}" >
+						<f:selectItems value="#{eventMB.comboProducts}" var="productVar"  
+							itemValue="#{productVar}" itemLabel="#{productVar.name}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 
@@ -61,7 +61,7 @@
 				process="@this"
 				action="#{eventMB.reset()}"
 				oncomplete="PF('DialogEvent').show()"
-				update="@form :regionEvent"
+				update=":regionEvent"
 				/>
 				
 			<p:dataTable value="#{eventMB.events}" var="eventVar"
@@ -87,7 +87,7 @@
 					<tremn:outputDate value="#{eventVar.beginDate}" />
 				</p:column>
 
-				<p:column headerText="Data Início" styleClass="colCenter">
+				<p:column headerText="Data Término" styleClass="colCenter">
 					<tremn:outputDate value="#{eventVar.endDate}" />
 				</p:column>
 				
@@ -108,11 +108,11 @@
 	<!-- Dialogo Evento -->
 	<p:dialog widgetVar="DialogEvent" header="Evento"
 		modal="true" dynamic="true" maximizable="true" closeOnEscape="true"
-		position="top" width="50%" height="90%">
+		position="top" width="80%" height="90%">
 		
 		<p:outputPanel id="regionEvent">
 		
-			<p:panelGrid columns="5" rendered="#{not eventMB.event.transient}">
+			<p:panelGrid columns="6" rendered="#{not eventMB.event.transient}">
 				<h:outputText value="ID" />
 				<h:outputText value="Name" />
 				<h:outputText value="Produto" />
@@ -132,9 +132,12 @@
 			
 			<p:tabView>
 				<p:tab title="Principal">
-					em construcao
+					<ui:include src="/pages/event/event-frag-principal.xhtml" />
 				</p:tab>
 
+				<p:tab title="Vínculos">
+					<ui:include src="/pages/event/event-frag-vinculo.xhtml" />
+				</p:tab>
 			</p:tabView>
 
 		

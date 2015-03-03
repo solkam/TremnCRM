@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Event;
 import br.com.tremn.crm.model.entity.Product;
+import br.com.tremn.crm.model.entity.VinculoContactEvent;
 import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.service.EventService;
 import br.com.tremn.crm.model.service.ProductService;
@@ -35,7 +36,7 @@ public class EventMB implements Serializable {
 	
 	
 	//filtros
-	private Product filterProduct = new Product();
+	private Product filterProduct;
 	private String filterName;
 	private Integer filterYear = DateUtil.getCurrentYear();
 	private List<EventStatus> filterStatusList;
@@ -48,6 +49,8 @@ public class EventMB implements Serializable {
 	@PostConstruct void init() {
 		populateFilterStatusList();
 		populateComboProducts();
+		search();
+		resetVinculo();
 	}
 
 	private void populateComboProducts() {
@@ -60,11 +63,12 @@ public class EventMB implements Serializable {
 		filterStatusList.add( EventStatus.ACTIVE );
 	}
 	
-	
 	private void populateEvents() {
 		events = eventService.searchEventByFilter(filterProduct, filterName, filterYear, filterStatusList);
 	}
 	
+
+	//actions...
 	
 	public void search() {
 		populateEvents();
@@ -79,11 +83,14 @@ public class EventMB implements Serializable {
 	
 	public void manage(Event seletecdEvent) {
 		this.event = seletecdEvent;
+		refresh();
 	}
 	
 	
+
 	public void save() {
 		event = eventService.saveEvent(event);
+		refresh();
 		populateEvents();
 		JSFUtil.addInfoMessage("Evento salvo com sucesso");
 	}
@@ -91,13 +98,70 @@ public class EventMB implements Serializable {
 	
 	public void remove() {
 		eventService.removeEvent(event);
+		refresh();
 		populateEvents();
 		JSFUtil.addInfoMessage("Evento removido");
 	}
 	
 	
-
+	/* ******
+	 * Status
+	 ********/
+	public void doPlanned() {
+		changeStatus(EventStatus.PLANNED);
+	}
+	
+	public void doActive() {
+		changeStatus(EventStatus.ACTIVE);
+	}
+	
+	public void doCanceled() {
+		changeStatus(EventStatus.CONCLUDED);
+	}
+	
+	public void doConcluded() {
+		changeStatus(EventStatus.CONCLUDED);
+	}
+	
+	private void changeStatus(EventStatus newStatus) {
+		event.setStatus( newStatus );
+		event = eventService.saveEvent(event);
+		refresh();
+		populateEvents();
+		JSFUtil.addInfoMessage("Status de evento atualizado com sucesso");
+	}
+	
+	
+	
+	/* ********
+	 * Vinculos
+	 **********/
+	private VinculoContactEvent newVinculo;
+	
+	private void resetVinculo() {
+		newVinculo = new VinculoContactEvent();
+	}
+	
+	public void addVinculo() {
+		newVinculo.setEvent( event );
+		eventService.saveVinculoContactEvent( newVinculo );
+		resetVinculo();
+		refresh();
+		JSFUtil.addInfoMessage("Vínculo adicionado com sucess");
+	}
+	
+	public void removeVinculo(VinculoContactEvent selectedVinculo) {
+		eventService.removeVinculoContactEvent( selectedVinculo );
+		refresh();
+		JSFUtil.addInfoMessage("Vínculo removido");
+	}
+	
+	
 	//util
+	private void refresh() {
+		event = eventService.refreshEvent(event);
+	}
+	
 
 	//acessores...
 	private static final long serialVersionUID = -403844433478168660L;
@@ -137,4 +201,13 @@ public class EventMB implements Serializable {
 	public List<Product> getComboProducts() {
 		return comboProducts;
 	}
+
+	public VinculoContactEvent getNewVinculo() {
+		return newVinculo;
+	}
+
+	public void setNewVinculo(VinculoContactEvent newVinculo) {
+		this.newVinculo = newVinculo;
+	}
+	
 }

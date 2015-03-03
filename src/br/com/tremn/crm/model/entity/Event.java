@@ -2,6 +2,7 @@ package br.com.tremn.crm.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,10 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.tremn.crm.model.entity.enumeration.EventStatus;
@@ -26,15 +29,12 @@ import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 @Entity
 public class Event implements Serializable {
 
-
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@Size(max=100)
 	private String name;
 	
-	@ManyToOne
-	private Product product;
 	
 	@Temporal(TemporalType.DATE)
 	private Date beginDate;
@@ -49,6 +49,17 @@ public class Event implements Serializable {
 
 	@Size(max=1000)
 	private String observation;
+	
+	
+	
+	@ManyToOne
+	@NotNull
+	private Product product;
+	
+	
+	@OneToMany(mappedBy="event")
+	private List<VinculoContactEvent> vinculos;
+
 	
 	
 	//logs
@@ -79,6 +90,14 @@ public class Event implements Serializable {
 		this.id = id;
 	}
 	
+	public List<VinculoContactEvent> getVinculos() {
+		return vinculos;
+	}
+
+	public void setVinculos(List<VinculoContactEvent> vinculos) {
+		this.vinculos = vinculos;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -161,4 +180,25 @@ public class Event implements Serializable {
 	public boolean isTransient() {
 		return getId()==null;
 	}
+
+	@Override
+	public String toString() {
+		return "Event [id=" + id + ", name=" + name + "]";
+	}
+	
+	//status
+	public Boolean getFlagStatusActive() {
+		return EventStatus.ACTIVE.equals( getStatus() );
+	}
+	public Boolean getFlagStatusCancelled() {
+		return EventStatus.CANCELED.equals( getStatus() );
+	}
+	public Boolean getFlagStatusConcluded() {
+		return EventStatus.CONCLUDED.equals( getStatus() );
+	}
+	public Boolean getFlagStatusPlanned() {
+		return EventStatus.PLANNED.equals( getStatus() );
+	}
+	
+	
 }

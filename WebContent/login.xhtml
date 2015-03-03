@@ -4,6 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components"
       template="/WEB-INF/design/_template-main.xhtml">
        
 <ui:define name="title" />       
@@ -13,10 +14,10 @@
 <ui:define name="content">
 	<h:form>
 		<center>
-			<p:panel header="Login" style="width:50%">
+			<p:panel header="Autenticação" style="width:75%">
 				<h:panelGrid cellpadding="10" >
 					
-					<p:messages globalOnly="true" />
+					<tremn:globalMessages />
 				
 					<h:panelGrid>
 						<p:outputLabel for="inEmail" value="Email"  />
@@ -31,7 +32,7 @@
 					</h:panelGrid>
 					
 					<p:commandButton icon="ui-icon-key" value="Entrar"
-						action="#{loginBean.doLogin}"
+						action="#{accessMB.doLogin() }"
 						update="@form" />
 					
 				</h:panelGrid>

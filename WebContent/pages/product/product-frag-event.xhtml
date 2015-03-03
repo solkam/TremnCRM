@@ -7,6 +7,36 @@
       xmlns:tremn="http://java.sun.com/jsf/composite/components">
        
 
-	em construcao...
+<p:scrollPanel mode="native" styleClass="scrollable1">
+
+	<h:outputText value="Não há eventos" styleClass="red" 
+		rendered="#{empty productMB.product.events}" />
+
+	<p:dataTable value="#{productMB.product.events}" var="eventVar"
+		rendered="#{not empty productMB.product.events}">
+	
+		<p:column headerText="ID" styleClass="col5p colCenter">
+			#{eventVar.id}
+		</p:column>
+	
+		<p:column headerText="Nome">
+			<h:outputText value="#{eventVar.name}" styleClass="destak2" />
+		</p:column>
+
+		<p:column headerText="Status" styleClass="colCenter">
+			<tremn:displayEventStatus event="#{eventVar}" />
+		</p:column>
+
+		<p:column headerText="Data Início" styleClass="colCenter">
+			<tremn:outputDate value="#{eventVar.beginDate}" />
+		</p:column>
+
+		<p:column headerText="Data Término" styleClass="colCenter">
+			<tremn:outputDate value="#{eventVar.endDate}" />
+		</p:column>
+
+	</p:dataTable>
+
+</p:scrollPanel>
 
 </ui:fragment>

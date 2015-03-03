@@ -159,6 +159,12 @@ public class Product implements Serializable {
 	public boolean isTransient() {
 		return getId()==null;
 	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + "]";
+	}
+
 	
 	
 }

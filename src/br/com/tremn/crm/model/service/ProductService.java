@@ -73,9 +73,20 @@ public class ProductService {
 	 */
 	public Product refresthProduct(Product product) {
 		product = manager.find(Product.class, product.getId() );
+		product.getEvents().size();
 		return product;
 	}
 	
+	
+	/**
+	 * Busca produto pela PK
+	 * (usado no converter)
+	 * @param id
+	 * @return
+	 */
+	public Product findProductById(Long id) {
+		return manager.find(Product.class, id);
+	}
 
 	/**
 	 * Busca um produto pelo nome

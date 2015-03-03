@@ -19,6 +19,7 @@ import javax.persistence.criteria.Root;
 
 import br.com.tremn.crm.model.entity.Event;
 import br.com.tremn.crm.model.entity.Product;
+import br.com.tremn.crm.model.entity.VinculoContactEvent;
 import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.exception.BusinessException;
 
@@ -46,7 +47,7 @@ public class EventService {
 	private void verifyEventNameUnique(Event event) {
 		Event foundEvent = findEventByName(event.getName());
 		if (foundEvent!=null && !foundEvent.equals(event)) {
-			throw new BusinessException("Já existe Event com este nome");
+			throw new BusinessException("Já existe Evento com este nome");
 		}
 	}
 
@@ -58,6 +59,20 @@ public class EventService {
 	public void removeEvent(Event event) {
 		manager.remove( manager.merge( event ) );
 	}
+	
+
+	
+	/**
+	 * Recarregar evento e suas associações
+	 * @param event
+	 * @return
+	 */
+	public Event refreshEvent(Event event) {
+		event = manager.find(Event.class, event.getId() );
+		event.getVinculos().size();
+		return event;
+	}
+	
 	
 	
 	/**
@@ -123,7 +138,23 @@ public class EventService {
 		List<Event> events = manager.createQuery(criteria).getResultList();
 		return events;
 	}
+
+
 	
+	/* *******
+	 * Vínculo
+	 *********/
+	
+	public VinculoContactEvent saveVinculoContactEvent(VinculoContactEvent vinculo) {
+		return manager.merge( vinculo );
+	}
+
+
+	public void removeVinculoContactEvent(VinculoContactEvent vinculo) {
+		manager.remove( manager.merge(vinculo) );
+	}
+
+
 	
 
 }

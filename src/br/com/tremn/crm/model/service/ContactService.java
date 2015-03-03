@@ -158,7 +158,15 @@ public class ContactService {
 	}
 	
 	
-
+	/**
+	 * Pesquisa todos os contatos que tem imagem
+	 * @return
+	 */
+	public List<Contact> searchContactWithImage() {
+		return manager.createNamedQuery("searchContactWithImage", Contact.class)
+				.getResultList();
+	}
+	
 	
 	/**
 	 * Encontra contato pelo email

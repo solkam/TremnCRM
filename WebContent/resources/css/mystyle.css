@@ -1,5 +1,9 @@
 @CHARSET "ISO-8859-1";
 
+.warn {
+	color: red;
+}
+
 .req {
 	color: red;
 }
@@ -34,6 +38,15 @@
 .destak3 {
 	font-weight: bold;
 	font-size: 1.0em;
+}
+
+
+.scrollable1 {
+	height: 500px
+}
+
+.scrollable2 {
+	height: 400px
 }
 
 

@@ -261,6 +261,10 @@
 						completeMethod="#{contactMB.completeContact}" var="contactVar"
 						itemValue="#{contactVar}" itemLabel="#{contactVar.fullName}"
 						size="30" dropdown="true" queryDelay="500" minQueryLength="2" scrollHeight="200" >
+							<p:column styleClass="col10p colCenter">
+								<tremn:displayContactImage contact="#{vinculoVar.contact}" />
+							</p:column>
+
 							<p:column headerText="Nome completo">
 								#{contactVar.fullName}
 							</p:column>

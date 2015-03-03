@@ -12,13 +12,21 @@
 			</h:panelGrid>
 		</p:toolbarGroup>
 		
-		<p:toolbarGroup align="right" rendered="#{loginBean.logged}">
+		<p:toolbarGroup align="right" >
 			<h:form>
-				<h:panelGrid columns="3" cellpadding="10" cellspacing="0">
-					<p:commandButton icon="ui-icon-key" />
+				<h:panelGrid columns="3" cellpadding="10" cellspacing="0" >
+
+					<p:commandLink icon="ui-icon-gear" value="Imagens dos Contatos" style="color:#ddd" 
+						process="@this"
+						action="#{configMB.storeContactImagesOnFS()}" 
+						ajax="false"
+						/>
+				
+					<p:commandButton icon="ui-icon-key" title="Trocar senha" rendered="#{accessMB.logged}"
+						/>
 					
-					<p:commandButton icon="ui-icon-power" value="Sair"
-						action="#{loginBean.doLogout()}"
+					<p:commandButton icon="ui-icon-power" value="Sair" rendered="#{accessMB.logged}"
+						action="#{accessMB.doLogout() }"
 						process="@this" 
 						ajax="false"
 						/>

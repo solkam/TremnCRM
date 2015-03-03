@@ -62,6 +62,7 @@ public class ProductMB implements Serializable {
 	
 	public void manage(Product selectedProduct) {
 		this.product = selectedProduct;
+		refresh();
 	}
 	
 	

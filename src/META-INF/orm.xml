@@ -36,6 +36,14 @@
 		</query>
 	</named-query>
 	
+	<named-query name="searchContactWithImage">
+		<query>
+			select c
+			from Contact c
+			where c.imageBinary IS NOT NULL
+		</query>
+	</named-query>
+	
 	<named-query name="findContactByEmailPrincipal">
 		<query>
 			select c

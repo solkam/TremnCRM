@@ -17,6 +17,7 @@
 		<class>br.com.tremn.crm.model.entity.Company</class>
 		<class>br.com.tremn.crm.model.entity.Product</class>
 		<class>br.com.tremn.crm.model.entity.Event</class>
+		<class>br.com.tremn.crm.model.entity.VinculoContactEvent</class>
 		
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />

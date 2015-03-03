@@ -13,11 +13,37 @@
 	
 		<h:panelGrid columns="2" cellpadding="5">
 			<h:panelGrid>
+				<p:outputLabel for="inProduct" value="Produto" styleClass="req" />
+				<p:selectOneMenu id="inProduct" value="#{eventMB.event.product}" required="true" converter="#{productConverter}" >
+					<f:selectItems value="#{eventMB.comboProducts}" var="prodVar" 
+						itemValue="#{prodVar}" itemLabel="#{prodVar.name}" />
+				</p:selectOneMenu>
+				<p:message for="inProduct" />
+			</h:panelGrid>
+		
+			<h:panelGrid>
 				<p:outputLabel for="inName" value="Nome" styleClass="req" />
 				<p:inputText id="inName" value="#{eventMB.event.name}" size="50" required="true" />
 				<p:message for="inName" />
 			</h:panelGrid>
+		</h:panelGrid>
+
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid>
+				<p:outputLabel for="inBeginDate" value="Data de início" />
+				<p:calendar id="inBeginDate" value="#{eventMB.event.beginDate}" 
+					showOn="button" size="10" 
+					pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+				<p:message for="inBeginDate" />
+			</h:panelGrid>
 		
+			<h:panelGrid>
+				<p:outputLabel for="inEndDate" value="Data de Término" />
+				<p:calendar id="inEndDate" value="#{eventMB.event.endDate}" 
+					showOn="button" size="10"
+					pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+				<p:message for="inEndDate" />
+			</h:panelGrid>
 		</h:panelGrid>
 
 		<h:panelGrid cellpadding="5">
@@ -27,11 +53,45 @@
 				<p:message for="inObs" />
 			</h:panelGrid>
 		</h:panelGrid>
+
+		<h:panelGrid cellpadding="5" rendered="#{not eventMB.event.transient}">
+			<p:outputLabel value="Status"  />
+			
+			<h:panelGrid columns="5" cellpadding="10">
+				<tremn:displayEventStatus event="#{eventMB.event}" />
+				
+				<p:commandButton icon="ui-icon-play" value="Ativar" 
+					process="@this"
+					rendered="#{not eventMB.event.flagStatusActive}"
+					action="#{eventMB.doActive()}"
+					update="@form :formEvents" 
+					/>
+				<p:commandButton icon="ui-icon-cancel" value="Canceldar" 
+					process="@this"
+					rendered="#{not eventMB.event.flagStatusCancelled}"
+					action="#{eventMB.doCanceled()}"
+					update="@form :formEvents" 
+					/>
+				<p:commandButton icon="ui-icon-check" value="Concluir" 
+					process="@this"
+					rendered="#{not eventMB.event.flagStatusConcluded}"
+					action="#{eventMB.doConcluded()}"
+					update="@form :formEvents"
+					/>
+				<p:commandButton icon="ui-icon-check" value="Deixar como planejado" 
+					process="@this"
+					rendered="#{not eventMB.event.flagStatusPlanned}"
+					action="#{eventMB.doPlanned()}"
+					update="@form :formEvents"
+					/>
+			</h:panelGrid>
+		</h:panelGrid>
+
 	</p:panel>
 	
 	<p:toolbar>
 		<f:facet name="left">
-			<p:commandButton icon="ui-icon-check" value="Salvar Produto" 
+			<p:commandButton icon="ui-icon-check" value="Salvar Evento" 
 				action="#{eventMB.save()}"
 				update="@form :regionEvent  :formEvents"
 				oncomplete="if (args.sucessOnly) PF('DialogEvent').hide();"
