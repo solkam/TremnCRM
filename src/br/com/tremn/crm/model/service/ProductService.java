@@ -1,9 +1,8 @@
 package br.com.tremn.crm.model.service;
 
 import static br.com.tremn.crm.model.util.QueryUtil.isNotEmpty;
-import static br.com.tremn.crm.model.util.QueryUtil.isNotNegative;
+import static br.com.tremn.crm.model.util.QueryUtil.isNotNull;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -17,7 +16,6 @@ import javax.persistence.criteria.Root;
 
 import br.com.tremn.crm.model.entity.Product;
 import br.com.tremn.crm.model.entity.enumeration.ProductCategory;
-import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.exception.BusinessException;
 
 
@@ -95,16 +93,16 @@ public class ProductService {
 	 * @param ano
 	 * @return
 	 */
-	public List<Product> searchProductByFilter(List<EventStatus> statusList, List<ProductCategory> categoryList, Integer ano) {
+	public List<Product> searchProductByFilter(Boolean flagActive, List<ProductCategory> categoryList) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
 		Root<Product> root = criteria.from(Product.class);
 		
 		Predicate conjunction = builder.conjunction();
-		//1.status
-		if (isNotEmpty(statusList) ) {
-			conjunction = builder.and(conjunction, 
-					root.<EventStatus>get("status").in(statusList) 
+		//1.flag ativo
+		if (isNotNull(flagActive)) {
+			conjunction = builder.and(conjunction,
+					builder.equal( root.<Boolean>get("flagActive"), flagActive)
 				);
 		}
 		//2.category
@@ -113,14 +111,8 @@ public class ProductService {
 					root.<ProductCategory>get("category").in(categoryList) 
 				);
 		}
-		//3.ano
-		if (isNotNegative(ano)) {
-			conjunction = builder.and(conjunction,
-					builder.equal( builder.function("YEAR", Integer.class, root.<Date>get("beginDate")), ano)
-				);
-		}
 		criteria.where( conjunction );
-		criteria.orderBy( builder.asc(root.<Date>get("beginDate")) );
+		criteria.orderBy( builder.asc(root.<String>get("name")) );
 		
 		List<Product> products = manager.createQuery(criteria).getResultList();
 		return products;

@@ -28,7 +28,20 @@
 			</h:panelGrid>
 		</h:panelGrid>
 
-		<h:panelGrid cellpadding="5">
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid>
+				<h:outputText value="Ativo?" />
+				<h:panelGrid id="displayFlag" columns="2" cellpadding="5">
+					<tremn:displayFlag flag="#{productMB.product.flagActive}" />
+					
+					<p:selectOneRadio value="#{productMB.product.flagActive}" layout="pageDirection"> 
+						<f:selectItem itemLabel="Sim" itemValue="true"  />
+						<f:selectItem itemLabel="Não" itemValue="false" />
+						<p:ajax process="@this" update="displayFlag" global="false" />
+					</p:selectOneRadio>
+				</h:panelGrid>
+			</h:panelGrid>
+		
 			<h:panelGrid>
 				<p:outputLabel for="inObs" value="Observação"  />
 				<p:inputTextarea id="inObs" value="#{productMB.product.observation}" rows="3" cols="80" />

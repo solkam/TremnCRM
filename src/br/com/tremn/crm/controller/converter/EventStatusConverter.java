@@ -12,8 +12,8 @@ import br.com.tremn.crm.model.entity.enumeration.EventStatus;
  * @author Solkam
  * @since 02 MAR 2015
  */
-@ManagedBean(name="productStatusConverter")
-public class ProductStatusConverter implements Converter {
+@ManagedBean(name="eventStatusConverter")
+public class EventStatusConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext ctx, UIComponent comp, String txt) {

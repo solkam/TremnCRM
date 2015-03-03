@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"> 
 
 	<center>
-		<h:panelGrid columns="4" cellpadding="5">
+		<h:panelGrid columns="5" cellpadding="5">
 		
 			<h:link outcome="/pages/contact/contact.xhtml" styleClass="menuitem">
 				<f:param name="idx" value="0" />
@@ -18,26 +18,33 @@
 		
 			<h:link outcome="/pages/product/product.xhtml" styleClass="menuitem">
 				<f:param name="idx" value="1" />
-				<f:param name="prodIdx" value="0" />
 				<h:panelGrid cellpadding="0" cellspacing="5" styleClass="menuitem">
 					<p:graphicImage library="img" name="icon_product_96.png"  />
 					<p:separator styleClass="#{param.idx eq 1 ? 'menuOn' : 'menuOff' }" />
 				</h:panelGrid>
 			</h:link>
 
-			<h:link outcome="/pages/report/report.xhtml" styleClass="menuitem">
+			<h:link outcome="/pages/event/event.xhtml" styleClass="menuitem">
 				<f:param name="idx" value="2" />
 				<h:panelGrid cellpadding="0" cellspacing="5" styleClass="menuitem">
-					<p:graphicImage library="img" name="icon_report_96.png"  />
+					<p:graphicImage library="img" name="icon_event_96.png"  />
 					<p:separator styleClass="#{param.idx eq 2 ? 'menuOn' : 'menuOff' }" />
 				</h:panelGrid>
 			</h:link>
 
-			<h:link outcome="/pages/user/user.xhtml" styleClass="menuitem">
+			<h:link outcome="/pages/report/report.xhtml" styleClass="menuitem">
 				<f:param name="idx" value="3" />
 				<h:panelGrid cellpadding="0" cellspacing="5" styleClass="menuitem">
-					<p:graphicImage library="img" name="icon_user_96.png"  />
+					<p:graphicImage library="img" name="icon_report_96.png"  />
 					<p:separator styleClass="#{param.idx eq 3 ? 'menuOn' : 'menuOff' }" />
+				</h:panelGrid>
+			</h:link>
+
+			<h:link outcome="/pages/user/user.xhtml" styleClass="menuitem">
+				<f:param name="idx" value="4" />
+				<h:panelGrid cellpadding="0" cellspacing="5" styleClass="menuitem">
+					<p:graphicImage library="img" name="icon_user_96.png"  />
+					<p:separator styleClass="#{param.idx eq 4 ? 'menuOn' : 'menuOff' }" />
 				</h:panelGrid>
 			</h:link>
 	

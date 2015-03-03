@@ -60,7 +60,7 @@ public class EnumHelper {
 		return ParticipationCategory.values();
 	}
 	
-	public EventStatus[] getProductStatuses() {
+	public EventStatus[] getEventStatuses() {
 		return EventStatus.values();
 	}
 	

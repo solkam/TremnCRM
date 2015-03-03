@@ -15,6 +15,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.tremn.crm.model.entity.enumeration.ProductCategory;
@@ -48,6 +49,10 @@ public class Product implements Serializable {
 	private String observation;
 	
 	
+	@NotNull
+	private Boolean flagActive = true;
+	
+	
 	
 	//logs
 	@Temporal(TemporalType.TIMESTAMP)
@@ -76,6 +81,14 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 	
+	public Boolean getFlagActive() {
+		return flagActive;
+	}
+
+	public void setFlagActive(Boolean flagActive) {
+		this.flagActive = flagActive;
+	}
+
 	public String getObservation() {
 		return observation;
 	}

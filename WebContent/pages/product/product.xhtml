@@ -5,23 +5,39 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:tremn="http://java.sun.com/jsf/composite/components"
-      template="/WEB-INF/design/_decorate_product.xhtml">
+      template="/WEB-INF/design/_template-main.xhtml">
        
-<ui:define name="content-product">
+<ui:define name="title">Produtos</ui:define>       
+       
+<ui:define name="content">
 
 	<h:form id="formSearch">
 	
 		<p:fieldset legend="Pesquisa" toggleable="true">
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="3" cellpadding="10">
 			
 				<h:panelGrid>
 					<h:outputText value="Ativo?" />
-					<p:selectOneMenu value="#{productMB.filterFlagActive}"> 
-						<f:selectItem itemLabel="Sim" itemValue="true"  />
-						<f:selectItem itemLabel="Não" itemValue="false" />
-					</p:selectOneMenu>
+					<h:panelGrid id="displayFlag" columns="2" cellpadding="5">
+						<tremn:displayFlag flag="#{productMB.filterFlagActive}" />
+						
+						<p:selectOneRadio value="#{productMB.filterFlagActive}" layout="pageDirection"> 
+							<f:selectItem itemLabel="Sim" itemValue="true"  />
+							<f:selectItem itemLabel="Não" itemValue="false" />
+							<p:ajax process="@this" update="displayFlag" global="false" />
+						</p:selectOneRadio>
+					</h:panelGrid>
 				</h:panelGrid>
 			
+				<h:panelGrid>
+					<h:outputText value="Categoria" />
+					<p:selectManyCheckbox value="#{productMB.filterProductCategoryList}" 
+						converter="#{productCategoryConverter}" layout="pageDirection"> 
+							<f:selectItems value="#{enumHelper.productCategories}" var="categoryVar" 
+								itemValue="#{categoryVar}" itemLabel="#{categoryVar.description}"  />
+					</p:selectManyCheckbox>
+				</h:panelGrid>
+
 				<p:commandButton icon="ui-icon-search" value="Pesquisar" style="font-size:1.2em"
 					action="#{productMB.search()}"
 					update=":formProducts" 
@@ -51,10 +67,18 @@
 					#{productVar.id}
 				</p:column>
 			
-				<p:column headerText="Nome" styleClass="col8op">
+				<p:column headerText="Nome" styleClass="col40p">
 					<h:outputText value="#{productVar.name}" styleClass="destak2" />
 				</p:column>
 	
+				<p:column headerText="Categoria" styleClass="col40p colCenter">
+					<h:outputText value="#{productVar.category.description}" styleClass="destak3" />
+				</p:column>
+
+				<p:column headerText="Ativo?" styleClass="col5p colCenter">
+					<tremn:displayFlag flag="#{productVar.flagActive}" />
+				</p:column>
+
 				<p:column headerText="Observação" styleClass="col10p colCenter">
 					<tremn:displayNote value="#{productVar.observation}" />
 				</p:column>
@@ -80,12 +104,14 @@
 		
 		<p:outputPanel id="regionProduct">
 		
-			<p:panelGrid columns="2" rendered="#{not productMB.product.transient}">
+			<p:panelGrid columns="3" rendered="#{not productMB.product.transient}">
 				<h:outputText value="ID" />
 				<h:outputText value="Name" />
+				<h:outputText value="Categoria" />
 				
 				<h:outputText value="#{productMB.product.id}" styleClass="destak2" />
 				<h:outputText value="#{productMB.product.name}" styleClass="destak2" />
+				<h:outputText value="#{productMB.product.category.description}" styleClass="destak2" />
 			</p:panelGrid>
 			
 			<p:spacer height="5" />

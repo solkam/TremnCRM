@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components">
+       
+<h:form>
+	<p:panel>
+	
+		<tremn:globalMessages />
+	
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid>
+				<p:outputLabel for="inName" value="Nome" styleClass="req" />
+				<p:inputText id="inName" value="#{eventMB.event.name}" size="50" required="true" />
+				<p:message for="inName" />
+			</h:panelGrid>
+		
+		</h:panelGrid>
+
+		<h:panelGrid cellpadding="5">
+			<h:panelGrid>
+				<p:outputLabel for="inObs" value="Observação"  />
+				<p:inputTextarea id="inObs" value="#{eventMB.event.observation}" rows="3" cols="80" />
+				<p:message for="inObs" />
+			</h:panelGrid>
+		</h:panelGrid>
+	</p:panel>
+	
+	<p:toolbar>
+		<f:facet name="left">
+			<p:commandButton icon="ui-icon-check" value="Salvar Produto" 
+				action="#{eventMB.save()}"
+				update="@form :regionEvent  :formEvents"
+				oncomplete="if (args.sucessOnly) PF('DialogEvent').hide();"
+				/>
+		</f:facet>
+		
+		<f:facet name="right">
+			<p:menuButton value="remover?" rendered="#{not eventMB.event.transient}">
+				<p:menuitem icon="ui-icon-trash" value="Sim, remover" 
+					process="@this"
+					action="#{eventMB.remove()}"
+					update="@form :regionEvent :formEvents"
+					oncomplete="if (args.sucessOnly) PF('DialogEvent').hide();"
+					/>
+				<p:menuitem icon="ui-icon-close" value="Não" 
+					process="@none"	update="@none" global="false"
+					/>
+			</p:menuButton>
+		</f:facet>
+	</p:toolbar>
+	
+</h:form>
+
+</ui:fragment>

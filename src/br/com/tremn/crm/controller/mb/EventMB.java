@@ -15,6 +15,11 @@ import br.com.tremn.crm.model.entity.enumeration.ProductCategory;
 import br.com.tremn.crm.model.service.ProductService;
 import br.com.tremn.crm.model.util.DateUtil;
 
+/**
+ * Controller para Gerenciar Eventos
+ * @author Solkam
+ * @since 03 MAR 2015
+ */
 @ManagedBean(name="eventMB")
 @ViewScoped
 public class EventMB implements Serializable {
@@ -43,10 +48,33 @@ public class EventMB implements Serializable {
 		filterStatusList.add( EventStatus.ACTIVE );
 	}
 	
+	
+	public void search() {
+		
+	}
 
+	public void reset() {
+		
+	}
+	
+	public void manage(Event seletecdEvent) {
+		this.event = seletecdEvent;
+	}
+	
+	
+	public void save() {
+		
+	}
+	
+	public void remove() {
+		
+	}
+	
+	
+
+
+	//acessores...
 	private static final long serialVersionUID = -403844433478168660L;
-
-
 	public Event getEvent() {
 		return event;
 	}

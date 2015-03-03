@@ -1,7 +1,6 @@
 package br.com.tremn.crm.controller.mb;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,9 +11,7 @@ import javax.faces.bean.ViewScoped;
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Product;
 import br.com.tremn.crm.model.entity.enumeration.ProductCategory;
-import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.service.ProductService;
-import br.com.tremn.crm.model.util.DateUtil;
 
 
 /**
@@ -26,20 +23,26 @@ import br.com.tremn.crm.model.util.DateUtil;
 @ViewScoped
 public class ProductMB implements Serializable {
 	
-
 	@EJB ProductService service;
 	
 	private List<Product> products;
 	
 	private Product product;
-	
-	
-	//filtro
-	private Boolean filterFlagActive = true;
 
 	
+	//filtros
+	private Boolean filterFlagActive = true;
+	private List<ProductCategory> filterProductCategoryList;
+	
+	
+	//inits
+	
+	@PostConstruct void init() {
+		search();
+	}
+	
 	private void populateProducts() {
-		products = service.searchProduct();
+		products = service.searchProductByFilter(filterFlagActive, filterProductCategoryList);
 	}
 	
 	
@@ -107,5 +110,17 @@ public class ProductMB implements Serializable {
 	public void setFilterFlagActive(Boolean filterFlagActive) {
 		this.filterFlagActive = filterFlagActive;
 	}
+
+
+	public List<ProductCategory> getFilterProductCategoryList() {
+		return filterProductCategoryList;
+	}
+
+
+	public void setFilterProductCategoryList(
+			List<ProductCategory> filterProductCategoryList) {
+		this.filterProductCategoryList = filterProductCategoryList;
+	}
+
 	
 }

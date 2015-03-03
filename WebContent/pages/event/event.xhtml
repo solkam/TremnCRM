@@ -5,14 +5,16 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:tremn="http://java.sun.com/jsf/composite/components"
-      template="/WEB-INF/design/_decorate_product.xhtml">
+      template="/WEB-INF/design/_template-main.xhtml">
        
-<ui:define name="content-product">
+<ui:define name="title">Eventos</ui:define>       
+       
+<ui:define name="content">
 
 	<h:form id="formSearch">
 	
 		<p:fieldset legend="Pesquisa" toggleable="true">
-			<h:panelGrid columns="4" cellpadding="5">
+			<h:panelGrid columns="4" cellpadding="10">
 			
 				<h:panelGrid>
 					<h:outputText value="Ano" />
@@ -21,23 +23,15 @@
 
 				<h:panelGrid>
 					<h:outputText value="Status" />
-					<p:selectManyCheckbox value="#{eventMB.filterStatusList}" layout="pageDirection" converter="#{productStatusConverter}">
-						<f:selectItems value="#{enumHelper.productStatuses}" var="statusVar" 
+					<p:selectManyCheckbox value="#{eventMB.filterStatusList}" layout="pageDirection" converter="#{eventStatusConverter}">
+						<f:selectItems value="#{enumHelper.eventStatuses}" var="statusVar" 
 							itemValue="#{statusVar}" itemLabel="#{statusVar.description}" />
 					</p:selectManyCheckbox>
 				</h:panelGrid>
 				
-				<h:panelGrid>
-					<h:outputText value="Categoria" />
-					<p:selectManyCheckbox value="#{eventMB.filterCategoryList}" layout="pageDirection" converter="#{productCategoryConverter}">
-						<f:selectItems value="#{enumHelper.productCategories}" var="categoryVar" 
-							itemValue="#{categoryVar}" itemLabel="#{categoryVar.description}" />
-					</p:selectManyCheckbox>
-				</h:panelGrid>
-
 				<p:commandButton icon="ui-icon-search" value="Pesquisar" style="font-size:1.2em"
 					action="#{eventMB.search()}"
-					update=":formProducts" 
+					update=":formEvents" 
 					/>
 			</h:panelGrid>
 		</p:fieldset>
@@ -45,52 +39,47 @@
 	
 	<p:spacer height="5" />
 
-	<h:form id="formProducts">
+	<h:form id="formEvents">
 		<p:panel>
 
 			<tremn:globalMessages />
 			
-			<p:commandButton icon="ui-icon-plus" value="Novo Produto" 
+			<p:commandButton icon="ui-icon-plus" value="Novo Evento" 
 				process="@this"
 				action="#{eventMB.reset()}"
-				oncomplete="PF('DialogProduct').show()"
-				update="@form :regionProduct"
+				oncomplete="PF('DialogEvent').show()"
+				update="@form :regionEvent"
 				/>
 				
-			<p:dataTable value="#{eventMB.events}" var="productVar"
+			<p:dataTable value="#{eventMB.events}" var="eventVar"
 				rendered="#{not empty eventMB.events}">
 			
 				<p:column headerText="ID" styleClass="col5p colCenter">
-					#{productVar.id}
+					#{eventVar.id}
 				</p:column>
 			
 				<p:column headerText="Nome">
-					<h:outputText value="#{productVar.name}" styleClass="destak2" />
+					<h:outputText value="#{eventVar.name}" styleClass="destak2" />
 				</p:column>
 	
 				<p:column headerText="Status" styleClass="colCenter col5p">
-					<tremn:displayEventStatus product="#{productVar}" />
+					<tremn:displayEventStatus event="#{eventVar}" />
 				</p:column>
 	
-				
-				<p:column headerText="Categoria" styleClass="colCenter">
-					#{productVar.category.description}
-				</p:column>
-				
 				<p:column headerText="Data Início" styleClass="colCenter">
-					<tremn:outputDate value="#{productVar.beginDate}" />
+					<tremn:outputDate value="#{eventVar.beginDate}" />
 				</p:column>
 
 				<p:column headerText="Data Início" styleClass="colCenter">
-					<tremn:outputDate value="#{productVar.endDate}" />
+					<tremn:outputDate value="#{eventVar.endDate}" />
 				</p:column>
 				
 				<p:column styleClass="col5p colCenter" >
 					<p:commandButton icon="ui-icon-pencil" 
 						process="@this"
-						action="#{eventMB.manage(productVar)}" 
-						oncomplete="PF('DialogProduct').show();"
-						update=":regionProduct"
+						action="#{eventMB.manage(eventVar)}" 
+						oncomplete="PF('DialogEvent').show();"
+						update=":regionEvent"
 						/>
 				</p:column>
 	
@@ -99,33 +88,31 @@
 	</h:form>
 	
 	
-	<!-- Dialogo Produto -->
-	<p:dialog widgetVar="DialogProduct" header="Produto"
+	<!-- Dialogo Evento -->
+	<p:dialog widgetVar="DialogEvent" header="Evento"
 		modal="true" dynamic="true" maximizable="true" closeOnEscape="true"
 		position="top" width="50%" height="90%">
 		
-		<p:outputPanel id="regionProduct">
+		<p:outputPanel id="regionEvent">
 		
-			<p:panelGrid columns="4" rendered="#{not eventMB.event.transient}">
+			<p:panelGrid columns="5" rendered="#{not eventMB.event.transient}">
 				<h:outputText value="ID" />
 				<h:outputText value="Name" />
 				<h:outputText value="Status" />
+				<h:outputText value="Data Início" />
+				<h:outputText value="Data Término" />
 				
 				<h:outputText value="#{eventMB.event.id}" styleClass="destak2" />
-				<h:outputText value="#{eventMB.event.}" styleClass="destak2" />
+				<h:outputText value="#{eventMB.event.name}" styleClass="destak2" />
 				<tremn:displayEventStatus event="#{eventMB.event}" />
+				<tremn:outputDate value="#{eventMB.event.beginDate }" />
+				<tremn:outputDate value="#{eventMB.event.endDate }" />
 			</p:panelGrid>
 			
 			<p:spacer height="5" />
 			
 			<p:tabView>
-				<p:tab title="Principal">
-					<ui:include src="/pages/product/product-frag-principal.xhtml" />
-				</p:tab>
 
-				<p:tab title="Eventos" rendered="#{not eventMB.event.transient}">
-					<ui:include src="/pages/product/product-frag-event.xhtml" />
-				</p:tab>
 			</p:tabView>
 
 		
