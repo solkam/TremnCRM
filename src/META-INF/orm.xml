@@ -43,6 +43,27 @@
 			where c.emailPrincipal = :pEmailPrincipal
 		</query>
 	</named-query>
+	
+	
+	
+	<!-- Product -->
+	
+	<named-query name="searchProduct">
+		<query>
+			select p
+			from Product p
+			order by p.name
+		</query>
+	</named-query>
+	
+	<named-query name="findProductByName">
+		<query>
+			select p
+			from Product p
+			where p.name = :pName
+		</query>
+	</named-query>
+	
 
 
 </entity-mappings>

@@ -45,10 +45,17 @@
 	width: 5%;
 }
 
+.col10p {
+	width: 10%;
+}
+
 .col50p {
 	width: 50%;
 }
 
+.col80p {
+	width: 80%;
+}
 
 .textCenter {
 	text-align: center;

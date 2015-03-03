@@ -6,8 +6,11 @@ import javax.faces.bean.ManagedBean;
 import br.com.tremn.crm.model.entity.enumeration.AddressType;
 import br.com.tremn.crm.model.entity.enumeration.DateDay;
 import br.com.tremn.crm.model.entity.enumeration.DateMonth;
+import br.com.tremn.crm.model.entity.enumeration.EventType;
 import br.com.tremn.crm.model.entity.enumeration.Gender;
 import br.com.tremn.crm.model.entity.enumeration.ParticipationCategory;
+import br.com.tremn.crm.model.entity.enumeration.ProductCategory;
+import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.entity.enumeration.Profile;
 import br.com.tremn.crm.model.entity.enumeration.Profession;
 import br.com.tremn.crm.model.entity.enumeration.TelephoneMobileCompany;
@@ -55,6 +58,18 @@ public class EnumHelper {
 	
 	public ParticipationCategory[] getParticipationCategories() {
 		return ParticipationCategory.values();
+	}
+	
+	public EventStatus[] getProductStatuses() {
+		return EventStatus.values();
+	}
+	
+	public ProductCategory[] getProductCategories() {
+		return ProductCategory.values();
+	}
+	
+	public EventType[] getEventTypes() {
+		return EventType.values();
 	}
 	
 }

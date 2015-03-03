@@ -14,6 +14,16 @@ public class DateUtil {
 	
 	private static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
 	
+	
+	/**
+	 * Retorno o ano atual em inteiro
+	 * @return
+	 */
+	public static Integer getCurrentYear() {
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+	
+	
 	/**
 	 * Calcula a idade a partir da data de nascimento
 	 * @param birthday
