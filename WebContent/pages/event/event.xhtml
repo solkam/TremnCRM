@@ -135,7 +135,7 @@
 					<ui:include src="/pages/event/event-frag-principal.xhtml" />
 				</p:tab>
 
-				<p:tab title="Vínculos">
+				<p:tab title="Vínculos" rendered="#{not eventMB.event.transient}">
 					<ui:include src="/pages/event/event-frag-vinculo.xhtml" />
 				</p:tab>
 			</p:tabView>
