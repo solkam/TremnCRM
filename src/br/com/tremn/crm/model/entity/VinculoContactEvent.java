@@ -5,9 +5,12 @@ import java.io.Serializable;
 
 
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import br.com.tremn.crm.model.entity.enumeration.VinculoType;
 
 /**
  * Representa os eventos que um contato participa
@@ -31,6 +34,10 @@ public class VinculoContactEvent implements Serializable {
 	private Event event;
 	
 	
+	@Enumerated(EnumType.STRING)
+	private VinculoType type;
+	
+	
 	@Size(max=100)
 	private String observation;
 
@@ -44,6 +51,14 @@ public class VinculoContactEvent implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public VinculoType getType() {
+		return type;
+	}
+
+	public void setType(VinculoType type) {
+		this.type = type;
 	}
 
 	public Contact getContact() {

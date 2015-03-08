@@ -7,13 +7,13 @@ package br.com.tremn.crm.model.entity.enumeration;
  */
 public enum ProductCategory {
 	
-	SHORT_DURATION("Curso de curta duraÁ„o")
+	SHORT_DURATION("Curso de curta dura√ß√£o")
 	,
-	LONG_DURATION("Curso de longa duraÁ„o")
+	LONG_DURATION("Curso de longa dura√ß√£o")
 	,
 	PALESTRA("Palestra")
 	,
-	SEMINAR("Semin·rio")
+	SEMINAR("Semin√°rio")
 	,
 	SEGUIMENT("Seguimento")
 	,

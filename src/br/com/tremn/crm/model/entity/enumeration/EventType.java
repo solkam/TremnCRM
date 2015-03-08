@@ -11,7 +11,7 @@ public enum EventType {
 	,
 	OUTDOOR("Outdoor")
 	,
-	SEMINAR("Semin·rio")
+	SEMINAR("Semin√°rio")
 	,
 	SEGUIMENT("Seguimento")
 	;

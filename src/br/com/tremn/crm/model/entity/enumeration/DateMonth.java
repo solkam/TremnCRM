@@ -11,7 +11,7 @@ public enum DateMonth {
 	,
 	FEB(2, "Fevereiro")
 	,
-	MAR(3, "Março")
+	MAR(3, "MarÃ§o")
 	,
 	APR(4, "Abril")
 	,

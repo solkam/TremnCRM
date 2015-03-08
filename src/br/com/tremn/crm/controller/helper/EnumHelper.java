@@ -14,6 +14,7 @@ import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.entity.enumeration.Profile;
 import br.com.tremn.crm.model.entity.enumeration.Profession;
 import br.com.tremn.crm.model.entity.enumeration.TelephoneMobileCompany;
+import br.com.tremn.crm.model.entity.enumeration.VinculoType;
 
 /**
  * Helper para enum serem visualizados em componentes Select
@@ -70,6 +71,10 @@ public class EnumHelper {
 	
 	public EventType[] getEventTypes() {
 		return EventType.values();
+	}
+	
+	public VinculoType[] getVinculoTypes() {
+		return VinculoType.values();
 	}
 	
 }

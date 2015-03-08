@@ -13,7 +13,7 @@ public enum EventStatus {
 	,
 	CANCELED("Cancelado", "icon_product_status_CANCELED_36.png")
 	,
-	CONCLUDED("Concluído", "icon_product_status_CONCLUDED_36.png")
+	CONCLUDED("ConcluÃ­do", "icon_product_status_CONCLUDED_36.png")
 	;
 	
 	
