@@ -18,7 +18,7 @@ import br.com.tremn.crm.model.entity.enumeration.Profile;
 import static br.com.tremn.crm.model.util.QueryUtil.*;
 
 /**
- * Serviços de negocio para Usuario
+ * Servicos de negocio para Usuario
  * @author Solkam
  * @since 21 JAN 2015
  */
@@ -48,7 +48,7 @@ public class UserService {
 	
 	
 	/**
-	 * Busca um usuario pelo email e senha. Usado na autenticação
+	 * Busca um usuario pelo email e senha. Usado na autenticaï¿½ï¿½o
 	 * @param email
 	 * @param password
 	 * @return

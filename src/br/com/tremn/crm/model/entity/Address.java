@@ -11,7 +11,7 @@ import br.com.tremn.crm.model.entity.enumeration.AddressType;
 
 /**
  * Classe embutivel que representa todos os
- * campos de endereço
+ * campos de endereco
  * @author Solkam
  * @since 01 FEV 2015
  */

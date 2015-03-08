@@ -4,7 +4,7 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
 
 /**
- * Classe embarcável que representa a empresa
+ * Classe embarcavel que representa a empresa
  * onde o contato trabalha
  * @author Solkam
  * @since 01 MAR 2015

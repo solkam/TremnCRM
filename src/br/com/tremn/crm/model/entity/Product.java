@@ -22,7 +22,7 @@ import br.com.tremn.crm.model.entity.enumeration.ProductCategory;
 
 /**
  * Representa um produto da Tremn, podendo ser curso,
- * seminarios ou serviços realizados.
+ * seminarios ou servicos realizados.
  * @author Solkam
  * @since 02 MAR 2015
  */

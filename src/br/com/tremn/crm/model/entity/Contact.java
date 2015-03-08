@@ -45,7 +45,7 @@ public class Contact implements Serializable {
 	private String firstName;
 	
 	/**
-	 * Ultimo nome (ou nome de família)
+	 * Ultimo nome (ou nome de familia)
 	 */
 	@NotNull
 	@Size(max=100)
@@ -59,13 +59,13 @@ public class Contact implements Serializable {
 	private String emailPrincipal;
 	
 	/**
-	 * Email secundário ou alternativo
+	 * Email secundï¿½rio ou alternativo
 	 */
 	@Size(max=100)
 	private String emailAlternative;
 	
 	/**
-	 * Dados completos de endereço
+	 * Dados completos de endereco
 	 */
 	@Embedded
 	private Address address;
@@ -89,7 +89,7 @@ public class Contact implements Serializable {
 	private Integer birthDay;
 	
 	/**
-	 * Mês do nascimento
+	 * Mes do nascimento
 	 */
 	@NotNull
 	private Integer birthMonth;
@@ -108,26 +108,26 @@ public class Contact implements Serializable {
 	
 	
 	/**
-	 * Profissão segundo Código Brasileiro de Ocupações
+	 * Profissao segundo Codigo Brasileiro de Ocupacoes
 	 */
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
 
 	/**
-	 * Empresa em trbalha e função
+	 * Empresa em trbalha e funcao
 	 */
 	@Embedded
 	private Company company;
 	
 	/**
-	 * Categoria de participação em eventos da Tremn
+	 * Categoria de participacao em eventos da Tremn
 	 */
 	@Enumerated(EnumType.STRING)
 	private ParticipationCategory participationCategory = ParticipationCategory.CLIENT;
 	
 	
 	/**
-	 * Contact responsável por indicar
+	 * Contact responsavel por indicar
 	 */
 	@ManyToOne
 	private Contact contactWhoIndicated;
@@ -139,7 +139,7 @@ public class Contact implements Serializable {
 	private SocialNetwork socialNetwork;
 	
 	/**
-	 * Observações diversas
+	 * Observacoes diversas
 	 */
 	@Size(max=1000)
 	private String observation;
@@ -360,7 +360,7 @@ public class Contact implements Serializable {
 	//runtime
 
 	/**
-	 * Monta um Date a partir dos campos individuais de ano, mês e dia
+	 * Monta um Date a partir dos campos individuais de ano, mes e dia
 	 * @return
 	 */
 	public Date getBirthdate() {
@@ -368,7 +368,7 @@ public class Contact implements Serializable {
 	}
 	
 	/**
-	 * Calcula a idade através da data de nascimento
+	 * Calcula a idade atraves da data de nascimento
 	 * @return
 	 */
 	public Integer getAge() {
@@ -379,7 +379,7 @@ public class Contact implements Serializable {
 	}
 	
 	/**
-	 * Monta o nome completo juntando o primeiro e último nomes.
+	 * Monta o nome completo juntando o primeiro e ultimo nomes.
 	 * @return
 	 */
 	public String getFullName() {
@@ -388,7 +388,7 @@ public class Contact implements Serializable {
 
 	
 	/**
-	 * Flag que valida que tanto extensão e binario da imagem estão preenchido
+	 * Flag que valida que tanto extensao e binario da imagem estao preenchido
 	 * @return
 	 */
 	public Boolean getFlagImageOK() {
@@ -399,7 +399,7 @@ public class Contact implements Serializable {
 
 	
 	/**
-	 * Monta o nome da imagem usando o ID e a extensão
+	 * Monta o nome da imagem usando o ID e a extensao
 	 * @return
 	 */
 	public String getImageName() {
@@ -407,11 +407,11 @@ public class Contact implements Serializable {
 	}
 
 	/**
-	 * Os campos individuais de ano, mês e dia deve formar uma data válida
+	 * Os campos individuais de ano, mes e dia deve formar uma data valida
 	 */
 	public void validateBirthdate() {
 		if (!DateUtil.isAValidDate(getBirthYear(), getBirthMonth(), getBirthDay()) ) {
-			throw new BusinessException("Data de Nascimento inválida");
+			throw new BusinessException("Data de Nascimento invalida");
 		}
 	}
 	

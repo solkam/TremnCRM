@@ -20,7 +20,7 @@ import br.com.tremn.crm.model.exception.BusinessException;
 
 
 /**
- * Serviços de negócio para Produto
+ * Servicos de negocio para Produto
  * @author Solkam
  * @since 02 MAR 2015
  */
@@ -46,13 +46,13 @@ public class ProductService {
 	
 	
 	/**
-	 * Verifica se nome do produto é único
+	 * Verifica se nome do produto eh unico
 	 * @param product
 	 */
 	private void verifyProductNameUnique(Product product) {
 		Product foundProduct = findProductByName( product.getName() );
 		if (foundProduct!=null && !product.equals(foundProduct)) {
-			throw new BusinessException("Já existe produto com este nome");
+			throw new BusinessException("JÃ¡ existe produto com este nome");
 		}
 	}
 

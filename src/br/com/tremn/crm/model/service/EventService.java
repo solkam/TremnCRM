@@ -24,7 +24,7 @@ import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.exception.BusinessException;
 
 /**
- * Serviços de Negocio para Eventos
+ * Servicos de Negocio para Eventos
  * @author Solkam
  * @since 03 MAR 2015
  */
@@ -47,7 +47,7 @@ public class EventService {
 	private void verifyEventNameUnique(Event event) {
 		Event foundEvent = findEventByName(event.getName());
 		if (foundEvent!=null && !foundEvent.equals(event)) {
-			throw new BusinessException("Já existe Evento com este nome");
+			throw new BusinessException("JÃ¡ existe Evento com este nome");
 		}
 	}
 
@@ -63,7 +63,7 @@ public class EventService {
 
 	
 	/**
-	 * Recarregar evento e suas associações
+	 * Recarregar evento e suas associacoes
 	 * @param event
 	 * @return
 	 */
@@ -142,7 +142,7 @@ public class EventService {
 
 	
 	/* *******
-	 * Vínculo
+	 * Vinculo
 	 *********/
 	
 	public VinculoContactEvent saveVinculoContactEvent(VinculoContactEvent vinculo) {

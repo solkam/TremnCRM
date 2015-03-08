@@ -6,7 +6,7 @@ import java.util.GregorianCalendar;
 
 
 /**
- * Utilitários para se trabalhar com datas
+ * Utilitarios para se trabalhar com datas
  * @author Solkam
  * @since 01 FEV 2015
  */
@@ -46,8 +46,8 @@ public class DateUtil {
 	
 	
 	/**
-	 * Validate se os parametros individuais para ano, mês e dia 
-	 * formam uma data válida 
+	 * Validate se os parametros individuais para ano, mes e dia 
+	 * formam uma data valida 
 	 * @param year
 	 * @param month
 	 * @param day
@@ -71,8 +71,8 @@ public class DateUtil {
 	
 	
 	/**
-	 * A partir dos parâmetros individuais de ano, mês e dia
-	 * construe um Date válido
+	 * A partir dos parametros individuais de ano, mes e dia
+	 * construe um Date valido
 	 * @param year
 	 * @param month
 	 * @param day
@@ -91,8 +91,8 @@ public class DateUtil {
 	
 	
 	/**
-	 * Verifica se algum parametro é null.
-	 * (para validações short-circuit)
+	 * Verifica se algum parametro eh null.
+	 * (para validacoes short-circuit)
 	 * @param year
 	 * @param month
 	 * @param day
@@ -108,8 +108,8 @@ public class DateUtil {
 	
 	
 	/**
-	 * Lança exception se parametro vier null
-	 * (para validações short-circuit)
+	 * Lanca exception se parametro vier null
+	 * (para validacoes short-circuit)
 	 * @param param
 	 */
 	private static void throwIfNull(Object param) {

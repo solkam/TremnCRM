@@ -20,7 +20,7 @@ import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.exception.BusinessException;
 
 /**
- * Serviços de negocio para Contact
+ * Serviï¿½os de negocio para Contact
  * @author Solkam
  * @since 01 FEV 2015
  */
@@ -49,7 +49,7 @@ public class ContactService {
 	private void verifyEmailIsUnique(Contact c) {
 		Contact foundContact = findContactByEmailPrincipal(c.getEmailPrincipal() );
 		if (foundContact!=null && !foundContact.equals(c)) {
-			throw new BusinessException("Email já usado por outro contato");
+			throw new BusinessException("Email jÃ¡ usado por outro contato");
 		}
 	}
 
@@ -65,7 +65,7 @@ public class ContactService {
 	
 	/**
 	 * RN que verifica se existem associados ao contact
-	 * que será removido
+	 * que serï¿½ removido
 	 * @param c
 	 */
 	private void verifyContactAssociations(Contact c) {

@@ -11,7 +11,7 @@
 	
 		<p:fieldset legend="Novo Vínculo" toggleable="true">
 		
-			<h:panelGrid columns="5" cellpadding="10">
+			<h:panelGrid columns="6" cellpadding="10">
 				<h:panelGrid>
 					<p:outputLabel for="inContact" value="Contato" styleClass="req" />
 					<p:autoComplete id="inContact" value="#{eventMB.newVinculo.contact}" converter="#{contactConverter}"
@@ -45,6 +45,15 @@
 					<p:message for="inObs" />
 				</h:panelGrid>
 				
+				<h:panelGrid>
+					<p:outputLabel for="inType" value="Tipo de Vínculo" styleClass="req" />
+					<p:selectOneMenu id="inType" value="#{eventMB.newVinculo.type}" required="true" >
+						<f:selectItems value="#{enumHelper.vinculoTypes}" var="typeVar" 
+							itemValue="#{typeVar}" itemLabel="#{typeVar.description}" />
+					</p:selectOneMenu>
+					<p:message for="inType" />
+				</h:panelGrid>
+
 				<p:commandButton icon="ui-icon-plus" value="Adicionar"
 					action="#{eventMB.addVinculo()}" 
 					update="@form"

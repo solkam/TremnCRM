@@ -6,7 +6,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.Size;
 
 /**
- * Classe embarcável com os contatos de redes sociais
+ * Classe embarcavel com os contatos de redes sociais
  * @author Solkam
  * @since 01 MAR 2014
  */

@@ -16,8 +16,8 @@ public class QueryUtil {
  * Criteria JPA 2	
  ****************/
 	/**
-	 * Retorna se uma string está em branco
-	 * testando se está null e se tem espaços 
+	 * Retorna se uma string estah em branco
+	 * testando se estah null e se tem espacos 
 	 * em branco.
 	 * @param str
 	 * @return
@@ -27,7 +27,7 @@ public class QueryUtil {
 	}
 	
 	/**
-	 * Verifica se um inteiro é positivo ou zero.
+	 * Verifica se um inteiro eh positivo ou zero.
 	 * @param num
 	 * @return
 	 */
@@ -36,7 +36,7 @@ public class QueryUtil {
 	}
 	
 	/**
-	 * Verifica se um objeto é null
+	 * Verifica se um objeto eh null
 	 * @param obj
 	 * @return
 	 */
@@ -45,7 +45,7 @@ public class QueryUtil {
 	}
 	
 	/**
-	 * Verifica se lista está preenchida
+	 * Verifica se lista esta preenchida
 	 * @param lista
 	 * @return
 	 */
@@ -55,23 +55,23 @@ public class QueryUtil {
 	
 	
 /*
- * Expressões com LIKE	
+ * Expressï¿½es com LIKE	
  *********************/
 	private static String nvl(String text) {
 		return text==null ? "" : text;
 	}
 	
 	/**
-	 * Retorna a expressão de like com modo de comparação INICIAL
+	 * Retorna a expressao de like com modo de comparacao INICIAL
 	 * @param value
-	 * @return expressão like
+	 * @return expressao like
 	 */
 	public static String toLikeMatchModeSTART(String value) {
 		return nvl(value) + LIKE_SIMBOL;
 	}
 	
 	/**
-	 * Retorna a expressão de like com modelo de comparação INICIAL e FINAL
+	 * Retorna a expressao de like com modelo de comparacao INICIAL e FINAL
 	 * @param value
 	 * @return expressao like
 	 */
