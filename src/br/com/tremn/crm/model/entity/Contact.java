@@ -2,6 +2,7 @@ package br.com.tremn.crm.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -10,7 +11,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -21,7 +25,6 @@ import javax.validation.constraints.Size;
 
 import br.com.tremn.crm.model.entity.enumeration.Gender;
 import br.com.tremn.crm.model.entity.enumeration.ParticipationCategory;
-import br.com.tremn.crm.model.entity.enumeration.Profession;
 import br.com.tremn.crm.model.exception.BusinessException;
 import br.com.tremn.crm.model.util.DateUtil;
 
@@ -108,10 +111,26 @@ public class Contact implements Serializable {
 	
 	
 	/**
-	 * Profissao segundo Codigo Brasileiro de Ocupacoes
+	 * Profissoes desempenhadas
 	 */
-	@Enumerated(EnumType.STRING)
-	private Profession profession;
+	@ManyToMany
+	@JoinTable(name="Contact_x_Profession"
+		,joinColumns=@JoinColumn(name="contact_id")
+		,inverseJoinColumns=@JoinColumn(name="profession_id")
+	)
+	private List<Profession> professions;
+	
+	
+	/**
+	 * Areas de interesse (hobbies)
+	 */
+	@ManyToMany
+	@JoinTable(name="Contact_x_InterestArea"
+		,joinColumns=@JoinColumn(name="contact_id")
+		,inverseJoinColumns=@JoinColumn(name="interestArea_id")
+	)
+	private List<InterestArea> interestAreas;
+
 
 	/**
 	 * Empresa em trbalha e funcao
@@ -195,6 +214,13 @@ public class Contact implements Serializable {
 	public void setImageExtension(String imageExtension) {
 		this.imageExtension = imageExtension;
 	}
+	public List<InterestArea> getInterestAreas() {
+		return interestAreas;
+	}
+	public void setInterestAreas(List<InterestArea> interestAreas) {
+		this.interestAreas = interestAreas;
+	}
+
 	public Company getCompany() {
 		if (company==null) {
 			company = new Company();
@@ -285,11 +311,11 @@ public class Contact implements Serializable {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	public Profession getProfession() {
-		return profession;
+	public List<Profession> getProfessions() {
+		return professions;
 	}
-	public void setProfession(Profession profession) {
-		this.profession = profession;
+	public void setProfessions(List<Profession> professions) {
+		this.professions = professions;
 	}
 	public Contact getContactWhoIndicated() {
 		return contactWhoIndicated;

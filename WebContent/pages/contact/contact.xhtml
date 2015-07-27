@@ -141,6 +141,10 @@
 					<ui:include src="/pages/contact/contact-frag-photo.xhtml" />
 				</p:tab>
 
+				<p:tab title="Áreas de Interesse" rendered="#{not contactMB.contact.transient}">
+					<ui:include src="/pages/contact/contact-frag-interest-area.xhtml" />
+				</p:tab>
+
 				<p:tab title="Vínculos" rendered="#{not contactMB.contact.transient}">
 					<ui:include src="/pages/contact/contact-frag-vinculo.xhtml" />
 				</p:tab>

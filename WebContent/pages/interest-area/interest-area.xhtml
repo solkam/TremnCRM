@@ -1,0 +1,92 @@
+<!DOCTYPE html > 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components"
+      template="/WEB-INF/design/_decorate_adjust.xhtml">
+       
+<ui:define name="content-decorator">
+
+<h:form id="formNewInterestArea">
+
+	<p:fieldset legend="Nova" toggleable="true" collapsed="true">
+		
+			<h:panelGrid columns="7" cellpadding="5">
+		
+				<h:panelGrid>
+					<p:outputLabel for="inDesc" value="Descrição" styleClass="less2 req" />
+					<p:inputText id="inDesc" value="#{interestAreaMB.newInterestArea.description }"
+						required="true" size="40" maxlength="50" />
+					<p:message for="inDesc" />
+				</h:panelGrid>
+				
+				<p:commandButton icon="ui-icon-check" value="Salvar" style="font-size:1.25em"
+						action="#{interestAreaMB.save()}"
+						update="@form :formInterestArea" 
+						/>
+
+			</h:panelGrid>
+	
+	</p:fieldset>
+</h:form>
+
+
+<p:spacer height="10" />
+
+	
+<h:form id="formInterestArea">
+
+	<tremn:globalGrowl />
+	<tremn:globalMessages />
+
+	<p:outputPanel rendered="#{not empty interestAreaMB.interestAreas}">
+	
+		<p:dataTable value="#{interestAreaMB.interestAreas}" var="interestAreaVar">
+			<p:column headerText="#" styleClass="colCenter col10p">
+				#{interestAreaVar.id}
+			</p:column>
+			
+			<p:column headerText="Ativa?" styleClass="colCenter col10p">
+				<p:selectBooleanCheckbox value="#{interestAreaVar.flagActive}" />
+			</p:column>
+
+			<p:column headerText="Descrição *" styleClass="colCenter col50p">
+				<p:inputText id="inDesc" value="#{interestAreaVar.description }" size="40" maxlength="50" 
+					required="true" requiredMessage="Descrição é Obrigatório" 
+					/>
+				<p:message for="inDesc" />
+			</p:column>
+		
+			<p:column headerText="Criado em" styleClass="colCenter col10p">
+				<tremn:outputTimestamp value="#{interestAreaVar.createDate }" />
+			</p:column>
+		
+			<p:column headerText="Atualizado em" styleClass="colCenter col10p">
+				<tremn:outputTimestamp value="#{interestAreaVar.updateDate }" />
+			</p:column>
+		
+			<p:column styleClass="colCenter col10p">
+				<p:commandButton icon="ui-icon-trash" value="remover"
+					process="@this"
+					action="#{interestAreaMB.remove(interestAreaVar)}"
+					update="@form"
+					/>
+			</p:column>
+			
+			<f:facet name="footer">
+				<p:separator />
+				
+				<p:commandButton icon="ui-icon-check" value="Salvar todas" style="font-size:1.25em"
+					action="#{interestAreaMB.saveAll() }"
+					update="@form"
+					/>
+			</f:facet>
+		</p:dataTable>
+	</p:outputPanel>
+
+</h:form>
+	
+</ui:define>
+</ui:composition>

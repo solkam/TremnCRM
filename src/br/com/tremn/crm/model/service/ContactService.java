@@ -17,6 +17,7 @@ import javax.persistence.criteria.Root;
 
 import br.com.tremn.crm.model.entity.Address;
 import br.com.tremn.crm.model.entity.Contact;
+import br.com.tremn.crm.model.entity.InterestArea;
 import br.com.tremn.crm.model.exception.BusinessException;
 
 /**
@@ -74,11 +75,16 @@ public class ContactService {
 
 	/**
 	 * Refresca contato com todas suas associacoes
-	 * @param c
+	 * @param contact
 	 * @return
 	 */
-	public Contact refreshContact(Contact c) {
-		return c;
+	public Contact refreshContact(Contact contact) {
+		contact = manager.find(Contact.class, contact.getId() );
+		
+		contact.getInterestAreas().size();
+		contact.getProfessions().size();
+		
+		return contact;
 	}
 	
 
@@ -91,6 +97,23 @@ public class ContactService {
 		return manager.find(Contact.class, contactId);
 	}
 	
+	/**
+	 * Encontra contato pelo email
+	 * (usado na RN para salvar contato)
+	 * @param email
+	 * @return
+	 */
+	private Contact findContactByEmailPrincipal(String email) {
+		try {
+			return manager.createNamedQuery("findContactByEmailPrincipal", Contact.class)
+					.setParameter("pEmailPrincipal", email)
+					.getSingleResult()
+					;
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
 	
 	/**
 	 * Pesquisa contact segundo filtros de pesquisa (usando criteria)
@@ -169,20 +192,14 @@ public class ContactService {
 	
 	
 	/**
-	 * Encontra contato pelo email
-	 * (usado na RN para salvar contato)
-	 * @param email
+	 * Pesquisa pelo contatos associados a uma area de interesse
+	 * @param area
 	 * @return
 	 */
-	private Contact findContactByEmailPrincipal(String email) {
-		try {
-			return manager.createNamedQuery("findContactByEmailPrincipal", Contact.class)
-					.setParameter("pEmailPrincipal", email)
-					.getSingleResult()
-					;
-		} catch (NoResultException e) {
-			return null;
-		}
+	public List<Contact> searchContactByInterestArea(InterestArea area) {
+		return manager.createNamedQuery("searchContactByInterestArea", Contact.class)
+				.setParameter("pInterestArea", area)
+				.getResultList();
 	}
 
 

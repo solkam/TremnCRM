@@ -225,16 +225,6 @@
 			
 			<h:panelGrid columns="5" cellpadding="5">
 				<h:panelGrid>
-					<p:outputLabel for="inProf" value="Profissão" styleClass="req" />
-					<p:selectOneMenu id="inProf" value="#{contactMB.contact.profession}" required="true" >
-						<f:selectItem itemLabel="" noSelectionOption="true" />
-						<f:selectItems value="#{enumHelper.professions}" var="profVar"
-							itemValue="#{profVar}" itemLabel="#{profVar.description}" />
-					</p:selectOneMenu>
-					<p:message for="inProf" />
-				</h:panelGrid>
-				
-				<h:panelGrid>
 					<p:outputLabel for="inCompany" value="Empresa em que trabalha"  />
 					<p:inputText id="inCompany" value="#{contactMB.contact.company.companyName}" size="20" />
 					<p:message for="inCompany" />

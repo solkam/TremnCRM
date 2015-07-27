@@ -52,6 +52,15 @@
 		</query>
 	</named-query>
 	
+	<named-query name="searchContactByInterestArea">
+		<query>
+			select c
+			from Contact c
+				join c.interestAreas area
+			where area = :pInterestArea
+			order by c.firstName, c.lastName
+		</query>
+	</named-query>
 	
 	
 	<!-- Product -->
@@ -90,6 +99,52 @@
 			select e
 			from Event e
 			where e.name = :pName
+		</query>
+	</named-query>
+
+	
+	<!-- area de interesse -->
+	<named-query name="searchInterestArea">
+		<query>
+			select ia
+			from InterestArea ia
+			order by ia.description
+		</query>
+	</named-query>
+	
+	<named-query name="searchActiveInterestArea">
+		<query>
+			select ia
+			from InterestArea ia
+			where ia.flagActive = TRUE
+			order by ia.description
+		</query>
+	</named-query>
+	
+	<named-query name="findInterestAreaByDescription">
+		<query>
+			select ia
+			from InterestArea ia
+			where ia.description = :pDescription
+		</query>
+	</named-query>
+	
+	
+	<!-- profissao -->
+	<named-query name="searchProfession">
+		<query>
+			select p
+			from Profession p
+			order by p.name
+		</query>
+	</named-query>
+	
+	<named-query name="searchActiveProfession">
+		<query>
+			select p
+			from Profession p
+			where p.flagActive = TRUE
+			order by p.name
 		</query>
 	</named-query>
 

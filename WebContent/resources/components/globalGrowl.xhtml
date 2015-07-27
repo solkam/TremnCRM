@@ -7,14 +7,12 @@
       xmlns:p="http://primefaces.org/ui">
 
 <cc:interface>
-	<cc:attribute name="value" required="true" />
-	<cc:attribute name="styleClass" />
+	
 </cc:interface>
 <cc:implementation>
 
-		<h:outputText value="#{cc.attrs.value}" styleClass="#{cc.attrs.styleClass}">
-			<f:convertDateTime pattern="dd/MM/yyyy" />
-		</h:outputText>
+	<p:growl globalOnly="true" severity="info, error, warn" closable="true" />
+	<p:growl globalOnly="true" severity="fatal" showDetail="true" showSummary="true" closable="true" />
 	
 </cc:implementation>
 </html>

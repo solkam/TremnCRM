@@ -3,6 +3,7 @@ package br.com.tremn.crm.controller.mb;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +16,10 @@ import org.primefaces.event.FileUploadEvent;
 import br.com.tremn.crm.controller.util.ImageStreamUtil;
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Contact;
+import br.com.tremn.crm.model.entity.InterestArea;
+import br.com.tremn.crm.model.entity.Profession;
 import br.com.tremn.crm.model.service.ContactService;
+import br.com.tremn.crm.model.service.InterestAreaService;
 
 /**
  * Controller para UC Gerenciar Contato
@@ -26,7 +30,9 @@ import br.com.tremn.crm.model.service.ContactService;
 @ViewScoped
 public class ContactMB implements Serializable {
 	
-	@EJB ContactService service;
+	@EJB ContactService contactService;
+	
+	@EJB InterestAreaService interestAreaService;
 
 	
 	private ImageStreamUtil imageStreamUtil = new ImageStreamUtil();
@@ -44,11 +50,13 @@ public class ContactMB implements Serializable {
 
 	//inits..
 	@PostConstruct void init() {
-		populateContacts();
+		search();
+		populateComboInterestAreas();
 	}
+	
 
 	private void populateContacts() {
-		contacts = service.searchContactByFilters(filterName, filterEmail, filterCity);
+		contacts = contactService.searchContactByFilters(filterName, filterEmail, filterCity);
 	}
 	
 	
@@ -68,35 +76,59 @@ public class ContactMB implements Serializable {
 	}
 	
 	public void save() {
-		//validaÁıes
+		//validacoes
 		contact.validateBirthdate();
 		contact.validateDocuments();
 		//salva
-		service.saveContact(contact);
-		//prepara exibiÁ„o
+		contactService.saveContact(contact);
+		//prepara exibicao
 		populateContacts();
 		refresh();
 		JSFUtil.addInfoMessage("Contato salvo com sucesso");
 	}
 
 	
-	
 	public void remove() {
-		service.removeContact(contact);
+		contactService.removeContact(contact);
 		populateContacts();
 		JSFUtil.addInfoMessage("Contato removido");
 	}
 	
 	
+	//areas de interesse
+	private List<InterestArea> comboInterestAreas;
+	
+	private void populateComboInterestAreas() {
+		comboInterestAreas = interestAreaService.searchActiveInterestArea();
+	}
+	
+	
+	public void saveInterestAresOfContact() {
+		contact = contactService.saveContact(contact);
+		refresh();
+		JSFUtil.addInfoMessage("√Åreas de Interesse salvas com sucesso");
+	}
+	
+	
 	//util
 	private void refresh() {
-		contact = service.refreshContact(contact); 
+		contact = contactService.refreshContact(contact); 
+		
+		//area de interesse (para evitar LIE)
+		List<InterestArea> areas = new ArrayList<>();
+		areas.addAll( contact.getInterestAreas() );
+		contact.setInterestAreas( areas );
+		
+		//profissoes (para evitar LIE)
+		List<Profession> professions = new ArrayList<>();
+		professions.addAll( contact.getProfessions() );
+		contact.setProfessions( professions );
 	}
 
 	
 	//autocomplete
 	public List<Contact> completeContact(String fragment) {
-		List<Contact> contacts = service.searchContactByFistNameOrLastNameOrCity(fragment, fragment);
+		List<Contact> contacts = contactService.searchContactByFistNameOrLastNameOrCity(fragment, fragment);
 		return contacts;
 	}
 	
@@ -119,16 +151,16 @@ public class ContactMB implements Serializable {
 	
 	/**
 	 * Realiza alguns ajustes na imagem apos o upload como 
-	 * redimension·-la e gravar no disco.
+	 * redimensionÔøΩ-la e gravar no disco.
 	 * @param event
 	 * @throws IOException
 	 */
 	private void redimImage(FileUploadEvent event) throws IOException {
-		//1.extens„o da imagem
+		//1.extensÔøΩo da imagem
 		String imageExtension = imageStreamUtil.extractExtension( event.getFile().getFileName() );
 		contact.setImageExtension(imageExtension);
 
-		//2.conteudo bin·rio da imagem
+		//2.conteudo binÔøΩrio da imagem
 		InputStream imageInputStream = event.getFile().getInputstream();
 		byte[] imageBinary = imageStreamUtil.getBinaryDimensionated(imageInputStream, imageExtension);
 		contact.setImageBinary( imageBinary );
@@ -137,7 +169,7 @@ public class ContactMB implements Serializable {
 	
 	/**
 	 * Grava no disco a imagem do contact.
-	 * Se ele n„o tiver imagem, n„o grava nada.
+	 * Se ele nÔøΩo tiver imagem, nÔøΩo grava nada.
 	 * @param produto
 	 */
 	private void saveImageInFS() throws IOException {
@@ -150,10 +182,10 @@ public class ContactMB implements Serializable {
 	}
 	
 	/**
-	 * Salva o contact que implicitamente salvar· sua imagem
+	 * Salva o contact que implicitamente salvarÔøΩ sua imagem
 	 */
 	public void saveImageInDB() {
-		contact = service.saveContact( contact );
+		contact = contactService.saveContact( contact );
 		refresh();
 		populateContacts();
 		JSFUtil.addInfoMessage("Foto salva com sucesso");
@@ -161,13 +193,13 @@ public class ContactMB implements Serializable {
 	
 	
 	/**
-	 * Remove as informaÁoes da imagem
+	 * Remove as informaÔøΩoes da imagem
 	 * Nota: fisicamente a imagem continua no FileSystem
 	 */
 	public void removeImage() {
 		contact.setImageBinary( null );
 		contact.setImageExtension( null );
-		contact = service.saveContact( contact );
+		contact = contactService.saveContact( contact );
 		refresh();
 		populateContacts();
 		JSFUtil.addInfoMessage("Foto removida");
@@ -204,4 +236,8 @@ public class ContactMB implements Serializable {
 	public void setFilterCity(String filterCity) {
 		this.filterCity = filterCity;
 	}
+	public List<InterestArea> getComboInterestAreas() {
+		return comboInterestAreas;
+	}
+	
 }
