@@ -36,13 +36,13 @@
 
 				<h:panelGrid>
 					<h:outputText value="Status" />
-					<p:selectManyCheckbox value="#{eventMB.filterStatusList}" layout="pageDirection" converter="#{eventStatusConverter}">
+					<p:selectManyButton value="#{eventMB.filterStatusList}" layout="pageDirection" converter="#{eventStatusConverter}">
 						<f:selectItems value="#{enumHelper.eventStatuses}" var="statusVar" 
 							itemValue="#{statusVar}" itemLabel="#{statusVar.description}" />
-					</p:selectManyCheckbox>
+					</p:selectManyButton>
 				</h:panelGrid>
 				
-				<p:commandButton icon="ui-icon-search" value="Pesquisar" style="font-size:1.2em"
+				<p:commandButton icon="ui-icon-search" value="Pesquisar" style="font-size:1.25em"
 					action="#{eventMB.search()}"
 					update=":formEvents" 
 					/>
@@ -57,7 +57,7 @@
 
 			<tremn:globalMessages />
 			
-			<p:commandButton icon="ui-icon-plus" value="Novo Evento" 
+			<p:commandButton icon="ui-icon-plus" value="Novo Evento" style="font-size:1.25em"
 				process="@this"
 				action="#{eventMB.reset()}"
 				oncomplete="PF('DialogEvent').show()"

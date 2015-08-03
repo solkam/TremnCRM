@@ -62,7 +62,7 @@ public class Contact implements Serializable {
 	private String emailPrincipal;
 	
 	/**
-	 * Email secund�rio ou alternativo
+	 * Email secundario ou alternativo
 	 */
 	@Size(max=100)
 	private String emailAlternative;

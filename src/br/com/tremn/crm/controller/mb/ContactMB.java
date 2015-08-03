@@ -20,6 +20,7 @@ import br.com.tremn.crm.model.entity.InterestArea;
 import br.com.tremn.crm.model.entity.Profession;
 import br.com.tremn.crm.model.service.ContactService;
 import br.com.tremn.crm.model.service.InterestAreaService;
+import br.com.tremn.crm.model.service.ProfessionService;
 
 /**
  * Controller para UC Gerenciar Contato
@@ -33,6 +34,8 @@ public class ContactMB implements Serializable {
 	@EJB ContactService contactService;
 	
 	@EJB InterestAreaService interestAreaService;
+	
+	@EJB ProfessionService professionService;
 
 	
 	private ImageStreamUtil imageStreamUtil = new ImageStreamUtil();
@@ -52,6 +55,7 @@ public class ContactMB implements Serializable {
 	@PostConstruct void init() {
 		search();
 		populateComboInterestAreas();
+		populateComboProfessions();
 	}
 	
 
@@ -102,12 +106,28 @@ public class ContactMB implements Serializable {
 		comboInterestAreas = interestAreaService.searchActiveInterestArea();
 	}
 	
-	
 	public void saveInterestAresOfContact() {
 		contact = contactService.saveContact(contact);
 		refresh();
 		JSFUtil.addInfoMessage("Áreas de Interesse salvas com sucesso");
 	}
+	
+	
+	//profissoes
+	private List<Profession> comboProfessions;
+
+	private void populateComboProfessions() {
+		comboProfessions = professionService.searchActiveProfession();
+	}
+	
+	public void saveProfessionsOfContact() {
+		contact = contactService.saveContact(contact);
+		refresh();
+		JSFUtil.addInfoMessage("Profissões salvas com sucesso");
+	}
+	
+	
+	
 	
 	
 	//util
@@ -169,7 +189,7 @@ public class ContactMB implements Serializable {
 	
 	/**
 	 * Grava no disco a imagem do contact.
-	 * Se ele n�o tiver imagem, n�o grava nada.
+	 * Se ele não tiver imagem, não grava nada.
 	 * @param produto
 	 */
 	private void saveImageInFS() throws IOException {
@@ -239,5 +259,9 @@ public class ContactMB implements Serializable {
 	public List<InterestArea> getComboInterestAreas() {
 		return comboInterestAreas;
 	}
+	public List<Profession> getComboProfessions() {
+		return comboProfessions;
+	}
+	
 	
 }

@@ -65,7 +65,7 @@ public class InterestAreaService {
 	private void verifyIfExistsContactForInterestArea(InterestArea area) {
 		List<Contact> contacts = contactService.searchContactByInterestArea(area);
 		if (!contacts.isEmpty()) {
-			throw new BusinessException("Existem contatos associados a esta área de interesse");
+			throw new BusinessException("Existem Contatos associados a esta Área de Interesse");
 		}
 	}
 

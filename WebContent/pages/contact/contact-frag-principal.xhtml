@@ -303,7 +303,7 @@
 
 	<p:toolbar>
 		<p:toolbarGroup>
-			<p:commandButton icon="ui-icon-check" value="Salvar Contato" 
+			<p:commandButton icon="ui-icon-check" value="Salvar Contato" style="font-size:1.25em"
 				action="#{contactMB.save()}"
 				update="@form :formContacts :regionContact"
 				oncomplete="if (args.sucessOnly) PF('DialogContact').hide();"
@@ -311,7 +311,7 @@
 		</p:toolbarGroup>
 		
 		<p:toolbarGroup align="right" rendered="#{not contactMB.contact.transient}">
-			<p:menuButton value="remover?">
+			<p:menuButton value="remover?" >
 				<p:menuitem icon="ui-icon-trash" value="Sim, remover" 
 					process="@this"
 					action="#{contactMB.remove()}"

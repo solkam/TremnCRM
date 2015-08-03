@@ -18,6 +18,7 @@ import javax.persistence.criteria.Root;
 import br.com.tremn.crm.model.entity.Address;
 import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.entity.InterestArea;
+import br.com.tremn.crm.model.entity.Profession;
 import br.com.tremn.crm.model.exception.BusinessException;
 
 /**
@@ -199,6 +200,18 @@ public class ContactService {
 	public List<Contact> searchContactByInterestArea(InterestArea area) {
 		return manager.createNamedQuery("searchContactByInterestArea", Contact.class)
 				.setParameter("pInterestArea", area)
+				.getResultList();
+	}
+	
+	
+	/**
+	 * Pesquisa pelos contatos associados a uma profession
+	 * @param profession
+	 * @return
+	 */
+	public List<Contact> searchContactByProfession(Profession profession) {
+		return manager.createNamedQuery("searchContactByProfession", Contact.class)
+				.setParameter("pProfession", profession)
 				.getResultList();
 	}
 

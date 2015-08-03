@@ -14,7 +14,7 @@ import br.com.tremn.crm.model.exception.InfraException;
 import br.com.tremn.crm.model.service.UserService;
 
 /**
- * Controller para UC Realizar Autenticação
+ * Controller para UC Realizar Autenticaï¿½ï¿½o
  * @author Solkam
  * @since 25 JAN 2015
  */
@@ -34,19 +34,19 @@ public class AccessMB implements Serializable {
 	
 	/**
 	 * Invoca a autentica do container. Uma autenticado, recupera o 
-	 * objeto usuario da base e coloca no escopo da sessão. 
+	 * objeto usuario da base e coloca no escopo da sessï¿½o. 
 	 * Finalmente, redireciona para a pagina home.
 	 * @return pagina inicial, caso sucesso
 	 */
 	public String doLogin() {
 		if (isAuthenticated()) {
-			//busca o object usuário no banco e coloca na session
+			//busca o object usuÃ¡rio no banco e coloca na session
 			UserTremn user = userService.findUserTremnByEmailAndPassword(email, pass);
 			putUserOnSession(user);
 			return gotoHomePage();
 		
 		} else {//autenticacao falhou
-			JSFUtil.addErroMessage("Email ou senha inválidos");
+			JSFUtil.addErroMessage("Email ou senha invï¿½lidos");
 			return gotoLoginPage();
 		}
 	}
@@ -64,7 +64,7 @@ public class AccessMB implements Serializable {
 	}
 
 	/**
-	 * De acordo com o perfil do usuário, 
+	 * De acordo com o perfil do usuÃ¡rio, 
 	 * direciona para uma pagina.
 	 * @return
 	 */

@@ -29,7 +29,7 @@
 					</p:selectOneRadio>
 				</h:panelGrid>
 				
-				<p:commandButton icon="ui-icon-search" value="Pesquisar" 
+				<p:commandButton icon="ui-icon-search" value="Pesquisar" style="font-size:1.25em"
 					action="#{userMB.search()}"
 					update=":formUsers" 
 					/>
@@ -45,7 +45,7 @@
 	<h:form id="formUsers">
 		<tremn:globalMessages />
 		
-		<p:commandButton icon="ui-icon-plus" value="Novo Usuário" style="font-size:1.5em;"
+		<p:commandButton icon="ui-icon-plus" value="Novo Usuário" style="font-size:1.25em;"
 			process="@this"
 			action="#{userMB.reset()}" 
 			update=":regionUser"

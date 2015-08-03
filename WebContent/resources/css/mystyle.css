@@ -1,5 +1,10 @@
 @CHARSET "UTF-8";
 
+.ui-dialog {
+	position: absolute !important;
+	overflow: hidden !important;
+}
+
 .warn {
 	color: red;
 }

@@ -13,16 +13,16 @@ import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 
 /**
- * Utilitário para imagem como redimensionar ou gravação em disco
+ * Utilitï¿½rio para imagem como redimensionar ou gravaï¿½ï¿½o em disco
  * @author Solkam
  * @since 01 MAR 2015
  */
 public class ImageStreamUtil {
 
-	// dimensão padrão de imagens
+	// dimensao padrao de imagens
 	private static final int DIM_DEFAULT = 75;
 	
-	private static final String IMAGE_PATH = "resources/upload_img/";
+	public static final String UPLOAD_IMAGE_PATH = "resources/upload_img/";
 	
 	
 	public byte[] getBinaryDimensionated(InputStream inputStream, String extension) throws IOException {
@@ -68,7 +68,7 @@ public class ImageStreamUtil {
 	
 	
 	private String getRealFolder() {
-		return FacesContext.getCurrentInstance().getExternalContext().getRealPath(IMAGE_PATH);
+		return FacesContext.getCurrentInstance().getExternalContext().getRealPath(UPLOAD_IMAGE_PATH);
 	}
 	
 	

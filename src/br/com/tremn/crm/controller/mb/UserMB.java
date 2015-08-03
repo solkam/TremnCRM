@@ -15,7 +15,7 @@ import br.com.tremn.crm.model.exception.BusinessException;
 import br.com.tremn.crm.model.service.UserService;
 
 /**
- * Controller para UC Gerenciar Usu·rios
+ * Controller para UC Gerenciar Usu√°rios
  * @author Solkam
  * @since 26 JAN 2015
  */
@@ -62,14 +62,14 @@ public class UserMB implements Serializable {
 	public void save() {
 		user = service.saveUserTremn(user);
 		populateUsers();
-		JSFUtil.addInfoMessage("Usu·rio salvo com sucesso");
+		JSFUtil.addInfoMessage("Usu√°rio salvo com sucesso");
 		
 	}
 	
 	public void remove() {
 		service.removeUserTremn(user);
 		populateUsers();
-		JSFUtil.addInfoMessage("Usu·rio removido");
+		JSFUtil.addInfoMessage("Usu√°rio removido");
 	}
 	
 	public void savePassword() {
@@ -83,7 +83,7 @@ public class UserMB implements Serializable {
 	//util
 	private void validatePasswords() {
 		if (!pass1.equals(pass2)) {
-			throw new BusinessException("Senhas n„o conferem");
+			throw new BusinessException("Senhas n√£o conferem");
 		}
 	}
 
