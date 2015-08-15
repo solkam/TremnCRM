@@ -1,0 +1,157 @@
+<!DOCTYPE html > 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components"
+      template="/WEB-INF/design/_template-main.xhtml">
+       
+<ui:define name="title">Relatórios</ui:define>       
+       
+<ui:define name="content">
+
+	<h:form id="formSearch">
+		<p:fieldset legend="Pesquisa" toggleable="true">
+			
+			<h:panelGrid columns="4" cellpadding="10">
+					<h:panelGrid>
+						<p:outputLabel for="inBirthDay" value="Dia"  />
+						<p:selectOneMenu id="inBirthDay" value="#{rContactMB.filterBirthDay }" >
+							<f:selectItem itemLabel="" noSelectionOption="true" />
+							<f:selectItems value="#{enumHelper.days}" var="dayVar" 
+								itemValue="#{dayVar.index}" itemLabel="#{dayVar.index}" />
+						</p:selectOneMenu>	
+						<p:message for="inBirthDay" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inBirthMonth" value="Mês"  />
+						<p:selectOneMenu id="inBirthMonth" value="#{rContactMB.filterBirthMonth }" >
+							<f:selectItem itemLabel="" noSelectionOption="true" />
+							<f:selectItems value="#{enumHelper.months}" var="monthVar"
+								itemValue="#{monthVar.index}" itemLabel="#{monthVar.description}" />
+						</p:selectOneMenu>	
+						<p:message for="inBirthMonth" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inBirthYear" value="Ano"  />
+						<p:inputMask id="inBirthYear" mask="9999" value="#{rContactMB.filterBirthYear }" size="5" />	
+						<p:message for="inBirthYear" />
+					</h:panelGrid>
+					
+					<h:panelGrid>
+						<p:outputLabel for="inGender" value="Sexo"  />
+						<p:selectOneMenu id="inGender" value="#{rContactMB.filterGender }" >
+							<f:selectItem itemLabel="" noSelectionOption="true" />
+							<f:selectItems value="#{enumHelper.genders}" var="genderVar" 
+								itemValue="#{genderVar}" itemLabel="#{genderVar.description}" />
+						</p:selectOneMenu>
+						<p:message for="inGender" />
+					</h:panelGrid>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" cellpadding="10">
+					<h:panelGrid>
+						<p:outputLabel for="inCity" value="Cidade"  />
+						<p:inputText id="inCity" value="#{rContactMB.filterCity }" size="30" />
+						<p:message for="inCity" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inState" value="Estado"  />
+						<p:inputText id="inState" value="#{rContactMB.filterState}" size="20" />
+						<p:message for="inState" />
+					</h:panelGrid>
+			</h:panelGrid>
+
+			<h:panelGrid cellpadding="10">
+				<h:panelGrid>
+					<p:outputLabel for="inIA" value="Áreas de Interesse"  />
+					<p:selectManyButton id="inIA" value="#{rContactMB.filterInterestAreas }" converter="#{interestAreaConverter }" >
+						<f:selectItems value="#{rContactMB.comboInterestAreas }" var="areaVar" 
+							itemValue="#{areaVar}" itemLabel="#{areaVar.description }" />
+					</p:selectManyButton>
+					<p:message for="inIA" />
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<h:panelGrid cellpadding="10">
+				<h:panelGrid>
+					<p:outputLabel for="inProf" value="Profissões"  />
+					<p:selectManyButton id="inProf" value="#{rContactMB.filterProfessions }" converter="#{professionConverter }" >
+						<f:selectItems value="#{rContactMB.comboProfessions }" var="profVar" 
+							itemValue="#{profVar}" itemLabel="#{profVar.name }" />
+					</p:selectManyButton>
+					<p:message for="inProf" />
+				</h:panelGrid>
+			</h:panelGrid>
+
+
+
+			<p:separator />
+			<div style="width:300px;margin:auto">
+				<p:commandButton icon="ui-icon-search" value="Pesquisar" style="font-size:1.5em" 
+					action="#{rContactMB.search()}"
+					update=":formResult"
+					/>
+			</div>
+			
+		</p:fieldset>
+	</h:form>
+	
+	
+	
+	<h:form id="formResult">
+	
+
+		<tremn:globalMessages />
+	
+
+		<p:outputPanel rendered="#{not empty rContactMB.contacts }">
+	
+			<p:dataTable value="#{rContactMB.contacts}" var="contactVar">
+				
+				<p:column headerText="ID" styleClass="col5p colCenter">
+					#{contactVar.id}
+				</p:column>
+
+				<p:column headerText="Foto" styleClass="col10p colCenter">
+					<tremn:displayContactImage contact="#{contactVar}" />
+				</p:column>
+
+				<p:column headerText="Nome completo">
+					<h:outputText value="#{contactVar.fullName}" styleClass="destak2" />
+				</p:column>
+				
+				<p:column headerText="Email Principal">
+					#{contactVar.emailPrincipal}
+				</p:column>
+				
+				<p:column headerText="Cidade">
+					#{contactVar.address.addressCity}
+				</p:column>
+				
+				<p:column headerText="Data Nascimento" styleClass="colCenter">
+					<h:outputText value="#{contactVar.birthdate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Idade" styleClass="colCenter">
+					<h:outputText value="#{contactVar.age}" />
+				</p:column>
+
+				<p:column headerText="Sexo" styleClass="colCenter">
+					<h:outputText value="#{contactVar.gender.description}" />
+				</p:column>
+			</p:dataTable>
+		</p:outputPanel>
+		
+	
+	</h:form>
+	
+	
+</ui:define>
+</ui:composition>
