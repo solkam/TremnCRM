@@ -44,8 +44,8 @@
 	<p:outputPanel rendered="#{not empty interestAreaMB.interestAreas}">
 	
 		<p:dataTable value="#{interestAreaMB.interestAreas}" var="interestAreaVar">
-			<p:column headerText="#" styleClass="colCenter col10p">
-				#{interestAreaVar.id}
+			<p:column headerText="#" styleClass="colCenter col5p">
+				<h:outputText value="#{interestAreaVar.id}" styleClass="less2" />
 			</p:column>
 			
 			<p:column headerText="Ativa?" styleClass="colCenter col10p">

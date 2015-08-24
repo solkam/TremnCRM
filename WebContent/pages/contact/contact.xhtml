@@ -82,7 +82,7 @@
 				</p:column>
 				
 				<p:column headerText="Idade" styleClass="colCenter">
-					<h:outputText value="#{contactVar.age}" />
+					<h:outputText value="#{contactVar.calculatedAge}" />
 				</p:column>
 
 				<p:column headerText="Sexo" styleClass="colCenter">
@@ -126,7 +126,7 @@
 				<h:outputText value="#{contactMB.contact.emailPrincipal}" styleClass="destak2" />
 				<h:outputText value="#{contactMB.contact.address.addressCity}" styleClass="destak2" />
 				<tremn:outputDate value="#{contactMB.contact.birthdate}" styleClass="destak2" />
-				<h:outputText value="#{contactMB.contact.age}" styleClass="destak2" />
+				<h:outputText value="#{contactMB.contact.calculatedAge}" styleClass="destak2" />
 				<h:outputText value="#{contactMB.contact.gender.description}" styleClass="destak2" />
 			</p:panelGrid>
 			

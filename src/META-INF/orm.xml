@@ -165,6 +165,16 @@
 			where p.name = :pName
 		</query>
 	</named-query>
+	
+	
+	<!-- maturity -->
+	<named-query name="searchMaturity">
+		<query>
+			select m
+			from Maturity m
+			order by m.minAge
+		</query>
+	</named-query>
 
 
 </entity-mappings>

@@ -11,9 +11,11 @@ import javax.faces.bean.ViewScoped;
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.entity.InterestArea;
+import br.com.tremn.crm.model.entity.Maturity;
 import br.com.tremn.crm.model.entity.Profession;
 import br.com.tremn.crm.model.entity.enumeration.Gender;
 import br.com.tremn.crm.model.service.InterestAreaService;
+import br.com.tremn.crm.model.service.MaturityService;
 import br.com.tremn.crm.model.service.ProfessionService;
 import br.com.tremn.crm.model.service.ReportService;
 
@@ -25,11 +27,11 @@ public class ReportContactMB implements Serializable {
 	
 	@EJB InterestAreaService interestAreaService;
 	@EJB ProfessionService professionService;
+	@EJB MaturityService maturityService;
 	
 	//combo
 	private List<InterestArea> comboInterestAreas;
 	private List<Profession> comboProfessions;
-	
 	
 	//filtros
 	private Integer filterBirthDay;
@@ -45,14 +47,20 @@ public class ReportContactMB implements Serializable {
 	//resultado
 	private List<Contact> contacts;
 	
+	//helper
+	private List<Maturity> maturityList;
+	
 	
 	@PostConstruct
 	void init() {
 		populateComboInterestAreas();
 		populateComboProfessions();
+		populateMaturityList();
 	}
 	
 	
+
+
 	private void populateComboInterestAreas() {
 		comboInterestAreas = interestAreaService.searchActiveInterestArea();
 	}
@@ -61,6 +69,10 @@ public class ReportContactMB implements Serializable {
 		comboProfessions = professionService.searchActiveProfession();
 	}
 
+	
+	private void populateMaturityList() {
+		maturityList = maturityService.searchMaturity();
+	}
 	
 
 	//actions...
@@ -78,6 +90,15 @@ public class ReportContactMB implements Serializable {
 	}
 
 
+	//helper
+	public String definirMaturityName(Contact contact) {
+		for (Maturity maturityVar : maturityList) {
+			if (maturityVar.getFlagInsideAges( contact.getCalculatedAge() )) {
+				return maturityVar.getName();
+			}
+		}
+		return "?";
+	}
 
 	
 	//acessores...

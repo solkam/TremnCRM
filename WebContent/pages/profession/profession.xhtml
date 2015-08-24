@@ -42,14 +42,14 @@
 	
 		<p:dataTable value="#{professionMB.professions}" var="professionVar">
 			<p:column headerText="#" styleClass="colCenter col5p">
-				#{professionVar.id}
+				<h:outputText value="#{professionVar.id}" styleClass="less2" />
 			</p:column>
 			
 			<p:column headerText="Ativo?" styleClass="colCenter col10p">
 				<p:selectBooleanCheckbox value="#{professionVar.flagActive}" />
 			</p:column>
 
-			<p:column headerText="Nome *" styleClass="colCenter col60p">
+			<p:column headerText="Nome *" styleClass="colCenter col50p">
 				<p:inputText id="inName" value="#{professionVar.name}" size="40" maxlength="50" 
 					required="true" requiredMessage="Nome é Obrigatório" 
 					/>
@@ -64,7 +64,7 @@
 				<tremn:outputTimestamp value="#{professionVar.updateDate }" />
 			</p:column>
 
-			<p:column styleClass="colCenter col5p">
+			<p:column styleClass="colCenter col10p">
 				<p:commandButton icon="ui-icon-trash" value="remover" 
 					process="@this"
 					action="#{professionMB.remove(professionVar) }"

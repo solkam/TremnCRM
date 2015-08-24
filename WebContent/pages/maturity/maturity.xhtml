@@ -1,0 +1,109 @@
+<!DOCTYPE html > 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components"
+      template="/WEB-INF/design/_decorate_adjust.xhtml">
+<ui:define name="content-decorator">
+
+
+<h:form id="formNewMaturity">
+
+	<p:fieldset legend="Nova" toggleable="true" collapsed="true">
+		<h:panelGrid columns="4" cellpadding="10">
+
+			<h:panelGrid>
+				<p:outputLabel for="inName" value="Nome" styleClass="less2 req" />
+				<p:inputText id="inName" value="#{maturityMB.newMaturity.name}" 
+					size="20" maxlength="20" required="true" 
+					/>
+				<p:message for="inName" />
+			</h:panelGrid>
+
+			<h:panelGrid>
+				<p:outputLabel for="inMin" value="Idade Mínima" styleClass="less2 req" />
+				<p:inputText id="inMin" value="#{maturityMB.newMaturity.minAge}" 
+					size="5" maxlength="5" required="true" 
+					/>
+				<p:message for="inMin" />
+			</h:panelGrid>
+
+			<h:panelGrid>
+				<p:outputLabel for="inMax" value="Idade Máxima" styleClass="less2 req" />
+				<p:inputText id="inMax" value="#{maturityMB.newMaturity.maxAge}" 
+					size="5" maxlength="5" required="true" 
+					/>
+				<p:message for="inMax" />
+			</h:panelGrid>
+
+
+			<p:commandButton icon="ui-icon-check" value="Salvar" style="font-size:1.25em" 
+				action="#{maturityMB.save()}"
+				update="@form :formMaturities"
+				/>
+		</h:panelGrid>
+	</p:fieldset>
+
+</h:form>
+
+<p:spacer height="10" />
+
+<h:form id="formMaturities">
+
+	<tremn:globalGrowl />
+	<tremn:globalMessages />
+	
+	<p:outputPanel rendered="#{not empty maturityMB.maturities}">
+	
+		<p:dataTable value="#{maturityMB.maturities}" var="maturityVar">
+			<p:column headerText="#" styleClass="colCenter col5p">
+				<h:outputText value="#{maturityVar.id}" styleClass="less2" />
+			</p:column>
+			
+			<p:column headerText="Nome *" styleClass="colCenter col30p">
+				<p:inputText id="inName" value="#{maturityVar.name}" size="20" maxlength="20" 
+					required="true" requiredMessage="Nome é obrigatório" 
+					/>
+				<p:message for="inName" />
+			</p:column>
+			
+			<p:column headerText="Idade Mínima *" styleClass="colCenter col30p">
+				<p:inputText id="inMin" value="#{maturityVar.minAge}" size="5" maxlength="5" 
+					required="true" requiredMessage="Idade Mínima é obrigatória" 
+					/>
+				<p:message for="inMin" />
+			</p:column>
+
+			<p:column headerText="Idade Máxima *" styleClass="colCenter col30p">
+				<p:inputText id="inMax" value="#{maturityVar.maxAge}" size="5" maxlength="5" 
+					required="true" requiredMessage="Idade Máxima é obrigatória" 
+					/>
+				<p:message for="inMax" />
+			</p:column>
+			
+			<p:column styleClass="colCenter col5p">
+				<p:commandButton icon="ui-icon-trash"  
+					process="@this"
+					action="#{maturityMB.remove(maturityVar) }"
+					update="@form"
+					/>
+			</p:column>
+			
+			<f:facet name="footer">
+				<p:separator />
+			
+				<p:commandButton icon="ui-icon-check" value="Salvar todas" style="font-size:1.25em" 
+					action="#{maturityMB.saveAll()}"
+					update="@form"
+					/>
+			</f:facet>
+		</p:dataTable>
+	</p:outputPanel>
+
+	
+</h:form>
+	
+</ui:define>
+</ui:composition>

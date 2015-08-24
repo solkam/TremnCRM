@@ -7,7 +7,7 @@
       xmlns:tremn="http://java.sun.com/jsf/composite/components"
       template="/WEB-INF/design/_template-main.xhtml">
        
-<ui:define name="title">Relatórios</ui:define>       
+<ui:define name="title">Relatório de Contatos</ui:define>       
        
 <ui:define name="content">
 
@@ -140,7 +140,11 @@
 				</p:column>
 				
 				<p:column headerText="Idade" styleClass="colCenter">
-					<h:outputText value="#{contactVar.age}" />
+					<h:outputText value="#{contactVar.calculatedAge}" />
+				</p:column>
+
+				<p:column headerText="Maturidade" styleClass="colCenter">
+					<h:outputText value="#{rContactMB.definirMaturityName(contactVar) }" />
 				</p:column>
 
 				<p:column headerText="Sexo" styleClass="colCenter">

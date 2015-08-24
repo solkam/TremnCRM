@@ -397,7 +397,7 @@ public class Contact implements Serializable {
 	 * Calcula a idade atraves da data de nascimento
 	 * @return
 	 */
-	public Integer getAge() {
+	public Integer getCalculatedAge() {
 		if (getBirthdate()!=null) {
 			return DateUtil.calculateAge( getBirthdate() );
 		}
