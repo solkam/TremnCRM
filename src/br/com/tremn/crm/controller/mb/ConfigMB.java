@@ -12,7 +12,7 @@ import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.service.ContactService;
 
 /**
- * Configurador para diversoes ações RNF:
+ * Configurador para diversoes aï¿½ï¿½es RNF:
  * - gravar imagens de contatos em disco para serem acessadas via navegador
  * 
  * @author Solkam
@@ -23,7 +23,7 @@ public class ConfigMB {
 	
 	@EJB ContactService contactService;
 	
-	public String storeContactImagesOnFS() throws IOException {
+	public String saveContactImagesOnFS() throws IOException {
 		ImageStreamUtil util = new ImageStreamUtil();
 		
 		List<Contact> contacts = contactService.searchContactWithImage();

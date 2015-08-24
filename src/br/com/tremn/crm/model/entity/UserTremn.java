@@ -43,6 +43,9 @@ public class UserTremn implements Serializable {
 	private Profile profile;
 	
 	
+	private Boolean flagTecnology = false;
+	
+	
 	
 	//log
 	@Temporal(TemporalType.TIMESTAMP)
@@ -73,6 +76,13 @@ public class UserTremn implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public Boolean getFlagTecnology() {
+		return flagTecnology;
+	}
+	public void setFlagTecnology(Boolean flagTecnology) {
+		this.flagTecnology = flagTecnology;
+	}
+
 	public String getPassword() {
 		return password;
 	}

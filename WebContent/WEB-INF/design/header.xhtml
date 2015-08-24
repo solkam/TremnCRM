@@ -7,28 +7,45 @@
 
 	<p:toolbar>
 		<p:toolbarGroup>
-			<h:panelGrid columns="2" cellpadding="8" cellspacing="0">
+			<h:panelGrid columns="3" cellpadding="5" >
+
 				<h:graphicImage library="img" name="logo_tremncrm_32.png" />
+				
+				<h:panelGrid columns="2" rendered="#{sessionHolder.flagLogged}" >
+					<span class="ui-icon ui-icon-person" />
+					<h:outputText value="#{sessionHolder.user.email}" styleClass="less2" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" rendered="#{sessionHolder.flagLogged}" >
+					<span class="ui-icon ui-icon-key" />
+					<h:outputText value="#{sessionHolder.user.profile.description}" styleClass="less2" />
+				</h:panelGrid>
+				
 			</h:panelGrid>
 		</p:toolbarGroup>
 		
+
+
+
 		<p:toolbarGroup align="right" >
 			<h:form>
-				<h:panelGrid columns="3" cellpadding="10" cellspacing="0" >
+				<h:panelGrid columns="3" cellpadding="5" >
 
-					<p:commandLink icon="ui-icon-gear" value="Imagens dos Contatos" style="color:#AAA" 
+					<p:commandLink icon="ui-icon-gear" value="Imagens dos Contatos" style="color:#AAA"
+						rendered="#{sessionHolder.flagTecnology}" 
 						process="@this"
-						action="#{configMB.storeContactImagesOnFS()}" 
+						action="#{configMB.saveContactImagesOnFS()}" 
 						ajax="false"
 						/>
 				
-					<p:commandButton icon="ui-icon-key" title="Trocar senha" rendered="#{accessMB.logged}"
+					<p:commandButton icon="ui-icon-key" value="Trocar senha" 
+						rendered="false"
 						/>
 					
-					<p:commandButton icon="ui-icon-power" value="Sair" rendered="#{accessMB.logged}"
-						action="#{accessMB.doLogout() }"
+					<p:commandButton icon="ui-icon-power" value="Sair" 
+						rendered="#{sessionHolder.flagLogged}"
 						process="@this" 
-						ajax="false"
+						action="#{accessMB.doLogout() }"
 						/>
 				</h:panelGrid>
 			</h:form>
