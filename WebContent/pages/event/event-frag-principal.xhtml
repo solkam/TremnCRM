@@ -94,7 +94,6 @@
 			<p:commandButton icon="ui-icon-check" value="Salvar Evento" style="font-size:1.25em"
 				action="#{eventMB.save()}"
 				update="@form :regionEvent  :formEvents"
-				oncomplete="if (args.sucessOnly) PF('DialogEvent').hide();"
 				/>
 		</f:facet>
 		

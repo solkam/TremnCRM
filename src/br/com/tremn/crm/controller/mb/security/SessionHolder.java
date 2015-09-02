@@ -31,13 +31,26 @@ public class SessionHolder implements Serializable {
 	
 
 	public void finalizeSession() {
-		putUserOnSession(null);
+		invalidateSession();
+		removeUserInSession();
 	}
+
+
+
+
 	
 	
 	//util
 	private void putUserOnSession(UserTremn user) {
 		JSFUtil.getHttpSession().setAttribute(USER_KEY, user);
+	}
+	
+	private void invalidateSession() {
+		JSFUtil.getHttpSession().invalidate();
+	}
+
+	private void removeUserInSession() {
+		JSFUtil.getHttpSession().removeAttribute(USER_KEY);
 	}
 	
 	

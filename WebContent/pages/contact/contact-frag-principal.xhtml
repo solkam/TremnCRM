@@ -306,7 +306,6 @@
 			<p:commandButton icon="ui-icon-check" value="Salvar Contato" style="font-size:1.25em"
 				action="#{contactMB.save()}"
 				update="@form :formContacts :regionContact"
-				oncomplete="if (args.sucessOnly) PF('DialogContact').hide();"
 				/>
 		</p:toolbarGroup>
 		
