@@ -84,7 +84,7 @@ public class ContactMB implements Serializable {
 		contact.validateBirthdate();
 		contact.validateDocuments();
 		//salva
-		contactService.saveContact(contact);
+		contact = contactService.saveContact(contact);
 		//prepara exibicao
 		populateContacts();
 		refresh();

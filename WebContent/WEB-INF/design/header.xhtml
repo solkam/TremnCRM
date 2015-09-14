@@ -42,9 +42,8 @@
 						rendered="false"
 						/>
 					
-					<p:commandButton icon="ui-icon-power" value="Sair" 
+					<p:commandButton icon="ui-icon-power" value="Sair" ajax="false" 
 						rendered="#{sessionHolder.flagLogged}"
-						process="@this" 
 						action="#{accessMB.doLogout() }"
 						/>
 				</h:panelGrid>

@@ -6,14 +6,13 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.UserTremn;
 import br.com.tremn.crm.model.service.UserService;
 
 /**
- * Controller para Realizar Login e Logout
+ * Controller para Autenticar
  * @author Solkam
  * @since 25 JAN 2015
  */
@@ -50,15 +49,15 @@ public class AccessMB implements Serializable {
 	
 	private String denyAcess() {
 		JSFUtil.addErroMessage("Email ou senha inválidos");
-		return gotoLoginPage();
+		return gotoLoginPage(false);
 	}
 	
 
 
 	public String doLogout() {
 		sessionHolder.finalizeSession();
-		JSFUtil.getHttpSession().invalidate();
-		return gotoLoginPage();
+		JSFUtil.addInfoMessage("Sua sessão foi encerrada com sucesso");
+		return gotoLoginPage(true);
 	}
 
 	/**
@@ -70,9 +69,15 @@ public class AccessMB implements Serializable {
 		return "home";
 	}
 	
-	private String gotoLoginPage() {
-		return "login";
+	private String gotoLoginPage(boolean flagRedirect) {
+		if (flagRedirect) {
+			return "/login?faces-redirect=true";
+		} else {
+			return "/login";
+		}
 	}
+	
+	
 	
 	/**
 	 * Verifica se o container JAAS autentica o
