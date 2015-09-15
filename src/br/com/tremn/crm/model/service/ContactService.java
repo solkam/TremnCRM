@@ -44,6 +44,17 @@ public class ContactService {
 		return manager.merge( c );
 	}
 	
+	
+	/**
+	 * Salva contato sem aplicado nenhuma RN.
+	 * (usado na importacao de contatos)
+	 * @param c
+	 * @return
+	 */
+	public Contact saveContactWithoutVerify(Contact c) {
+		return manager.merge( c );
+	}
+	
 	/**
 	 * RN para garantir unicidade do email em contato
 	 * @param c

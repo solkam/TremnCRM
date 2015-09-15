@@ -180,6 +180,9 @@ public class Contact implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date importDate;
+	
 	
 	
 	//listener
@@ -201,6 +204,12 @@ public class Contact implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Date getImportDate() {
+		return importDate;
+	}
+	public void setImportDate(Date importDate) {
+		this.importDate = importDate;
 	}
 	public byte[] getImageBinary() {
 		return imageBinary;

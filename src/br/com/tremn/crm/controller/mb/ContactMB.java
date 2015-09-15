@@ -1,6 +1,7 @@
 package br.com.tremn.crm.controller.mb;
 
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -171,16 +172,16 @@ public class ContactMB implements Serializable {
 	
 	/**
 	 * Realiza alguns ajustes na imagem apos o upload como 
-	 * redimension�-la e gravar no disco.
+	 * redimensiona-la e gravar no disco.
 	 * @param event
 	 * @throws IOException
 	 */
 	private void redimImage(FileUploadEvent event) throws IOException {
-		//1.extens�o da imagem
+		//1.extensao da imagem
 		String imageExtension = imageStreamUtil.extractExtension( event.getFile().getFileName() );
 		contact.setImageExtension(imageExtension);
 
-		//2.conteudo bin�rio da imagem
+		//2.conteudo binario da imagem
 		InputStream imageInputStream = event.getFile().getInputstream();
 		byte[] imageBinary = imageStreamUtil.getBinaryDimensionated(imageInputStream, imageExtension);
 		contact.setImageBinary( imageBinary );
@@ -202,7 +203,7 @@ public class ContactMB implements Serializable {
 	}
 	
 	/**
-	 * Salva o contact que implicitamente salvar� sua imagem
+	 * Salva o contact que implicitamente salvara sua imagem
 	 */
 	public void saveImageInDB() {
 		contact = contactService.saveContact( contact );
@@ -213,7 +214,7 @@ public class ContactMB implements Serializable {
 	
 	
 	/**
-	 * Remove as informa�oes da imagem
+	 * Remove as informacoes da imagem
 	 * Nota: fisicamente a imagem continua no FileSystem
 	 */
 	public void removeImage() {

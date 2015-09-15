@@ -1,0 +1,83 @@
+<!DOCTYPE html > 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components"
+      template="/WEB-INF/design/_decorate_adjust.xhtml">
+<ui:define name="content-decorator">
+
+
+<h:form enctype="multipart/form-data">
+	<p:panel>
+
+		<h:panelGrid columns="3" cellpadding="10">
+			
+			<p:fileUpload id="inImagem" fileUploadListener="#{importContactMB.onFileUpload }" 
+				multiple="false" auto="true"
+				update="@form :formImportedOnes"
+	            invalidFileMessage="Tipo não permitido"
+	            invalidSizeMessage="Tamanho acima do permitido"
+	            label="Escolher arquivo para importar"
+	            cancelLabel="Cancelar"
+	            uploadLabel="Enviar"
+	            sizeLimit="15000000"
+	            allowTypes="/(\.|\/)(csv|txt)$/"      				
+				/>
+				
+		</h:panelGrid>
+		
+	</p:panel>
+</h:form>
+
+<h:form id="formImportedOnes">
+
+	<tremn:globalGrowl />
+	
+	<p:outputPanel rendered="#{not empty importContactMB.dtos}">
+		<p:dataTable value="#{importContactMB.dtos}" var="dtoVar" rowKey="#{dtoVar.key}"
+			selection="#{importContactMB.selectedDtos}">
+		
+			<p:column selectionMode="multiple" styleClass="col5p colCenter" />
+			
+			<p:column headerText="Email">
+				#{dtoVar.email}
+			</p:column>
+			<p:column headerText="Primeiro nome">
+				#{dtoVar.firstName}
+			</p:column>
+			<p:column headerText="Ultimo nome">
+				#{dtoVar.lastName}
+			</p:column>
+			<p:column headerText="Telefone">
+				#{dtoVar.telephone}
+			</p:column>
+			<p:column headerText="Mes da Producao">
+				#{dtoVar.mesProducao}
+			</p:column>
+			<p:column headerText="Ano da Producao">
+				#{dtoVar.anoProducao}
+			</p:column>
+		</p:dataTable>
+
+		<div style="width:100%">
+			<div style="width:500px;margin:auto;">
+				<p:commandButton icon="ui-icon-check" value="Confirmar importação dos selecionados" 
+					action="#{importContactMB.confirm()}"
+					update="@form"
+					style="font-size:1.5em;"
+					/>
+			</div>
+		</div>
+		
+		<tremn:globalMessages />
+		
+	</p:outputPanel>
+
+
+</h:form>
+
+	
+</ui:define>
+</ui:composition>

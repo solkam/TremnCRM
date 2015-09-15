@@ -9,11 +9,11 @@ import javax.faces.event.PhaseListener;
 import org.primefaces.context.RequestContext;
 
 /**
- * Listener responsável por colocar um atributo boolean 
+ * Listener responsavel por colocar um atributo boolean 
  * no context do request ('sucessOnly') que indica que 
  * somente msgs de sucesso existem.
  * Este atributo pode ser lido via javascritpt atraves da 
- * variável args.
+ * variavel args.
  * 
  * @author Solkam
  * @since 02 FEV 2015
@@ -32,7 +32,7 @@ public class SucessListener implements PhaseListener {
 		FacesMessage.Severity severity = facesContext.getMaximumSeverity();
 		
 		/*
-		 * 0: info (unico que nao é erro)
+		 * 0: info (unico que nao ï¿½ erro)
 		 * 1: warn 
 		 * 2: error
 		 * 3: fatal
