@@ -70,6 +70,7 @@ public class EventService {
 	public Event refreshEvent(Event event) {
 		event = manager.find(Event.class, event.getId() );
 		event.getVinculos().size();
+		event.getPossiblePaymentMethods().size();
 		return event;
 	}
 	

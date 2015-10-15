@@ -11,10 +11,12 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Event;
+import br.com.tremn.crm.model.entity.PaymentMethod;
 import br.com.tremn.crm.model.entity.Product;
 import br.com.tremn.crm.model.entity.VinculoContactEvent;
 import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.service.EventService;
+import br.com.tremn.crm.model.service.PaymentMethodService;
 import br.com.tremn.crm.model.service.ProductService;
 import br.com.tremn.crm.model.util.DateUtil;
 
@@ -29,6 +31,7 @@ public class EventMB implements Serializable {
 	
 	@EJB EventService eventService;
 	@EJB ProductService productService;
+	@EJB PaymentMethodService paymentMethodService;
 	
 	private List<Event> events;
 	
@@ -43,14 +46,20 @@ public class EventMB implements Serializable {
 	
 	//combo
 	private List<Product> comboProducts;
+	private List<PaymentMethod> comboPaymentMethod;
 	
 	
 	//initis 
 	@PostConstruct void init() {
 		populateFilterStatusList();
 		populateComboProducts();
+		populateComboPaymentMethods();
 		search();
 		resetVinculo();
+	}
+
+	private void populateComboPaymentMethods() {
+		comboPaymentMethod = paymentMethodService.searchPaymentMethodByFlagActive(true);
 	}
 
 	private void populateComboProducts() {
@@ -147,13 +156,13 @@ public class EventMB implements Serializable {
 		eventService.saveVinculoContactEvent( newVinculo );
 		resetVinculo();
 		refresh();
-		JSFUtil.addInfoMessage("Vínculo adicionado com sucess");
+		JSFUtil.addInfoMessage("Vï¿½nculo adicionado com sucess");
 	}
 	
 	public void removeVinculo(VinculoContactEvent selectedVinculo) {
 		eventService.removeVinculoContactEvent( selectedVinculo );
 		refresh();
-		JSFUtil.addInfoMessage("Vínculo removido");
+		JSFUtil.addInfoMessage("Vï¿½nculo removido");
 	}
 	
 	
@@ -209,5 +218,10 @@ public class EventMB implements Serializable {
 	public void setNewVinculo(VinculoContactEvent newVinculo) {
 		this.newVinculo = newVinculo;
 	}
+
+	public List<PaymentMethod> getComboPaymentMethod() {
+		return comboPaymentMethod;
+	}
+	
 	
 }

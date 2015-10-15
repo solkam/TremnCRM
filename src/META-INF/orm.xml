@@ -177,4 +177,23 @@
 	</named-query>
 
 
+	<!-- Payment method -->
+	<named-query name="searchPaymentMethod">
+		<query>
+			select pm
+			from PaymentMethod pm
+			order by pm.description
+		</query>
+	</named-query>
+	
+	<named-query name="searchPaymentMethodByFlagActive">
+		<query>
+			select pm
+			from PaymentMethod pm
+			where pm.flagActive = :pFlagActive
+			order by pm.description
+		</query>
+	</named-query>
+
+
 </entity-mappings>

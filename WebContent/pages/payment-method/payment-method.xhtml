@@ -1,0 +1,105 @@
+<!DOCTYPE html > 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components"
+      template="/WEB-INF/design/_decorate_adjust.xhtml">
+       
+<ui:define name="content-decorator">
+
+<h:form id="formNewPaymentMethod">
+
+	<p:fieldset legend="Novo" toggleable="true" collapsed="true">
+		
+			<h:panelGrid columns="3" cellpadding="5">
+		
+				<h:panelGrid>
+					<p:outputLabel for="inDesc" value="Descrição" styleClass="less2 req" />
+					<p:inputText id="inDesc" value="#{payMB.paymentMethod.description }"
+						required="true" size="30" maxlength="30" />
+					<p:message for="inDesc" />
+				</h:panelGrid>
+				
+				<h:panelGrid>
+					<p:outputLabel for="inParcel" value="Nro de Parcelas" styleClass="less2 req" />
+					<p:inputText id="inParcel" value="#{payMB.paymentMethod.numberOfParcel }"
+						required="true" size="10" maxlength="10" />
+					<p:message for="inParcel" />
+				</h:panelGrid>
+
+				<p:commandButton icon="ui-icon-check" value="Salvar" style="font-size:1.25em"
+						action="#{payMB.save()}"
+						update="@form :formPaymentMethod" 
+						/>
+
+			</h:panelGrid>
+	</p:fieldset>
+</h:form>
+
+
+<p:spacer height="10" />
+
+	
+<h:form id="formPaymentMethod">
+
+	<tremn:globalGrowl />
+	<tremn:globalMessages />
+
+	<p:outputPanel rendered="#{not empty payMB.paymentMethods}">
+	
+		<p:dataTable value="#{payMB.paymentMethods }" var="pmVar">
+			<p:column headerText="#" styleClass="colCenter col5p">
+				<h:outputText value="#{pmVar.id}" styleClass="less2" />
+			</p:column>
+			
+			<p:column headerText="Ativa?" styleClass="colCenter col10p">
+				<p:selectBooleanCheckbox value="#{pmVar.flagActive}" />
+			</p:column>
+
+			<p:column headerText="Descrição *" styleClass="colCenter col30p">
+				<p:inputText id="inDesc" value="#{pmVar.description }" size="40" maxlength="50" 
+					required="true" requiredMessage="Descrição é Obrigatório" 
+					/>
+				<p:message for="inDesc" />
+			</p:column>
+		
+			<p:column headerText="Nro Parcelas *" styleClass="colCenter col20p">
+				<p:inputText id="inParcel" value="#{pmVar.numberOfParcel }" size="10" maxlength="10" 
+					required="true" requiredMessage="Nro de parcelas é Obrigatório" 
+					/>
+				<p:message for="inParcel" />
+			</p:column>
+
+			<p:column headerText="Criado em" styleClass="colCenter col10p">
+				<tremn:outputTimestamp value="#{pmVar.createDate }" styleClass="less2" />
+			</p:column>
+		
+			<p:column headerText="Atualizado em" styleClass="colCenter col10p">
+				<tremn:outputTimestamp value="#{pmVar.updateDate }" styleClass="less2" />
+			</p:column>
+		
+			<p:column styleClass="colCenter col10p">
+				<p:commandButton icon="ui-icon-trash" value="remover"
+					process="@this"
+					action="#{payMB.remove(pmVar)}"
+					update="@form"
+					/>
+			</p:column>
+			
+			<f:facet name="footer">
+				<p:separator />
+				
+				<p:commandButton icon="ui-icon-check" value="Salvar todas" style="font-size:1.25em"
+					action="#{payMB.saveAll() }"
+					update="@form"
+					/>
+			</f:facet>
+		</p:dataTable>
+	</p:outputPanel>
+
+</h:form>
+	
+</ui:define>
+</ui:composition>

@@ -10,6 +10,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -59,6 +62,14 @@ public class Event implements Serializable {
 	
 	@OneToMany(mappedBy="event")
 	private List<VinculoContactEvent> vinculos;
+	
+	
+	@ManyToMany
+	@JoinTable(name="Event_x_PaymentMethod"
+		,joinColumns=@JoinColumn(name="event_id")
+		,inverseJoinColumns=@JoinColumn(name="paymentMethod_id")
+		)
+	private List<PaymentMethod> possiblePaymentMethods;
 
 	
 	
@@ -89,39 +100,36 @@ public class Event implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+	public List<PaymentMethod> getPossiblePaymentMethods() {
+		return possiblePaymentMethods;
+	}
+	public void setPossiblePaymentMethods(List<PaymentMethod> possiblePaymentMethods) {
+		this.possiblePaymentMethods = possiblePaymentMethods;
+	}
 	public List<VinculoContactEvent> getVinculos() {
 		return vinculos;
 	}
-
 	public void setVinculos(List<VinculoContactEvent> vinculos) {
 		this.vinculos = vinculos;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public Date getCreateDate() {
 		return createDate;
 	}
-
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-
 	public Date getUpdateDate() {
 		return updateDate;
 	}
-
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-
 	public Product getProduct() {
 		return product;
 	}

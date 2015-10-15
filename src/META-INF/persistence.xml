@@ -21,6 +21,7 @@
 		<class>br.com.tremn.crm.model.entity.InterestArea</class>
 		<class>br.com.tremn.crm.model.entity.Profession</class>
 		<class>br.com.tremn.crm.model.entity.Maturity</class>
+		<class>br.com.tremn.crm.model.entity.PaymentMethod</class>
 		
 		<properties>
 			<property name="hibernate.show_sql" value="false" />

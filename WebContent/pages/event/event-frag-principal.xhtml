@@ -28,7 +28,7 @@
 			</h:panelGrid>
 		</h:panelGrid>
 
-		<h:panelGrid columns="2" cellpadding="5">
+		<h:panelGrid columns="3" cellpadding="5">
 			<h:panelGrid>
 				<p:outputLabel for="inBeginDate" value="Data de início" />
 				<p:calendar id="inBeginDate" value="#{eventMB.event.beginDate}" 
@@ -43,6 +43,17 @@
 					size="12" navigator="true"
 					pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" locale="pt_BR" />
 				<p:message for="inEndDate" />
+			</h:panelGrid>
+
+			<h:panelGrid>
+				<p:outputLabel for="inPays" value="Formas de pagamento possíveis" styleClass="req" />
+				<p:selectManyCheckbox id="inPays" value="#{eventMB.event.possiblePaymentMethods}" layout="pageDirection"
+					required="true" requiredMessage="Pelo menos uma forma de pagamento deve ser selecionada">
+					<f:selectItems value="#{eventMB.comboPaymentMethod}" var="pmVar" 
+						itemValue="#{pmVar}" itemLabel="#{pmVar.fullDescription}" 
+						/>
+				</p:selectManyCheckbox>
+				<p:message for="inPays" />
 			</h:panelGrid>
 		</h:panelGrid>
 
