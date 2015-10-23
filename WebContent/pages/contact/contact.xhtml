@@ -89,8 +89,8 @@
 					<h:outputText value="#{contactVar.gender.description}" />
 				</p:column>
 
-				<p:column styleClass="col5p colCenter">
-					<p:commandButton id="btnEdit" icon="ui-icon-pencil" 
+				<p:column styleClass="col10p colCenter">
+					<p:commandButton id="btnEdit" icon="ui-icon-pencil" value="Editar" 
 						process="@this"
 						action="#{contactMB.manager(contactVar)}"
 						oncomplete="PF('DialogContact').show();"

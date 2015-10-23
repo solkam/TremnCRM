@@ -59,6 +59,10 @@
 	text-align: center;
 }
 
+.colRight {
+	text-align: right;
+}
+
 .col5p {
 	width: 5%;
 }

@@ -22,8 +22,6 @@ public class PaymentMethod implements Serializable {
 	@Size(max=50)
 	private String description;
 	
-	private Integer numberOfParcel;
-	
 	private Boolean flagActive = true;
 
 	
@@ -72,12 +70,6 @@ public class PaymentMethod implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Integer getNumberOfParcel() {
-		return numberOfParcel;
-	}
-	public void setNumberOfParcel(Integer numberOfParcel) {
-		this.numberOfParcel = numberOfParcel;
-	}
 	public Boolean getFlagActive() {
 		return flagActive;
 	}
@@ -115,7 +107,7 @@ public class PaymentMethod implements Serializable {
 	}
 	
 	public String getFullDescription() {
-		return String.format("%s - %s", getDescription(), getNumberOfParcel() );
+		return String.format("%s", getDescription() );
 	}
 	
 }

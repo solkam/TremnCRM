@@ -27,6 +27,11 @@ public class PaymentMethodService {
 	public void removePaymentMethod(PaymentMethod pm) {
 		manager.remove( manager.merge(pm) );
 	}
+	
+	
+	public PaymentMethod findPaymentMethod(Long id) {
+		return manager.find(PaymentMethod.class, id);
+	}
 
 	
 	public List<PaymentMethod> searchPaymentMethod() {

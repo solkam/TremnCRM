@@ -91,8 +91,8 @@
 					<tremn:outputDate value="#{eventVar.endDate}" />
 				</p:column>
 				
-				<p:column styleClass="col5p colCenter" >
-					<p:commandButton icon="ui-icon-pencil" 
+				<p:column styleClass="col10p colCenter" >
+					<p:commandButton icon="ui-icon-pencil" value="Editar" 
 						process="@this"
 						action="#{eventMB.manage(eventVar)}" 
 						oncomplete="PF('DialogEvent').show();"
@@ -108,7 +108,7 @@
 	<!-- Dialogo Evento -->
 	<p:dialog widgetVar="DialogEvent" header="Evento"
 		modal="true" dynamic="true" maximizable="true" closeOnEscape="true"
-		position="top" width="80%" height="90%">
+		position="top" width="90%" height="90%">
 		
 		<p:outputPanel id="regionEvent">
 		

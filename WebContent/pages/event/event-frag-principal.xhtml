@@ -48,6 +48,7 @@
 			<h:panelGrid>
 				<p:outputLabel for="inPays" value="Formas de pagamento possíveis" styleClass="req" />
 				<p:selectManyCheckbox id="inPays" value="#{eventMB.event.possiblePaymentMethods}" layout="pageDirection"
+					converter="#{paymentMethodConverter}"
 					required="true" requiredMessage="Pelo menos uma forma de pagamento deve ser selecionada">
 					<f:selectItems value="#{eventMB.comboPaymentMethod}" var="pmVar" 
 						itemValue="#{pmVar}" itemLabel="#{pmVar.fullDescription}" 

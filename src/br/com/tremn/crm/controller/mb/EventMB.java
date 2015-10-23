@@ -156,20 +156,31 @@ public class EventMB implements Serializable {
 		eventService.saveVinculoContactEvent( newVinculo );
 		resetVinculo();
 		refresh();
-		JSFUtil.addInfoMessage("V�nculo adicionado com sucess");
+		JSFUtil.addInfoMessage("Vínculo adicionado com sucesso");
 	}
 	
 	public void removeVinculo(VinculoContactEvent selectedVinculo) {
 		eventService.removeVinculoContactEvent( selectedVinculo );
 		refresh();
-		JSFUtil.addInfoMessage("V�nculo removido");
+		JSFUtil.addInfoMessage("Vínculo removido");
 	}
 	
 	
 	//util
 	private void refresh() {
 		event = eventService.refreshEvent(event);
+		redefinedPaymentMethods();
 	}
+
+	
+	private void redefinedPaymentMethods() {
+		//redefine possiblePaymentMethods para evitar LIE:
+		List<PaymentMethod> paymentMethodsAsPersistBag = event.getPossiblePaymentMethods();
+		List<PaymentMethod> redefinedPaymentMethods = new ArrayList<PaymentMethod>();
+		redefinedPaymentMethods.addAll( paymentMethodsAsPersistBag );
+		event.setPossiblePaymentMethods( redefinedPaymentMethods );
+	}
+	
 	
 
 	//acessores...

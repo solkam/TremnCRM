@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 
 
+import java.math.BigDecimal;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,6 +40,13 @@ public class VinculoContactEvent implements Serializable {
 	private VinculoType type;
 	
 	
+	@ManyToOne
+	private PaymentMethod paymentMethod;
+	
+	
+	private BigDecimal paymentParcelValue; 
+	
+	
 	@Size(max=100)
 	private String observation;
 
@@ -48,42 +57,46 @@ public class VinculoContactEvent implements Serializable {
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+	public BigDecimal getPaymentParcelValue() {
+		return paymentParcelValue;
+	}
+	public void setPaymentParcelValue(BigDecimal paymentParcelValue) {
+		this.paymentParcelValue = paymentParcelValue;
+	}
 	public VinculoType getType() {
 		return type;
 	}
-
 	public void setType(VinculoType type) {
 		this.type = type;
 	}
-
 	public Contact getContact() {
 		return contact;
 	}
-
 	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
-
 	public Event getEvent() {
 		return event;
 	}
-
 	public void setEvent(Event event) {
 		this.event = event;
 	}
-
 	public String getObservation() {
 		return observation;
 	}
-
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
+	
 
 	@Override
 	public int hashCode() {
@@ -109,6 +122,7 @@ public class VinculoContactEvent implements Serializable {
 			return false;
 		return true;
 	}
+	
 	
 	public boolean isTransient() {
 		return getId()==null;
