@@ -91,7 +91,7 @@ public class ImportContactMB implements Serializable {
 			c.setImportDate( new Date() );
 			
 			String obs = String.format("Producao: %s / %s", dtoVar.getMesProducao(), dtoVar.getAnoProducao() );
-			c.setObservation( obs );
+//			c.setObservation( obs );//nao existe mais uma unica obs sobre contato
 			
 			contactService.saveContactWithoutVerify( c );
 		}

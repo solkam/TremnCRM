@@ -17,9 +17,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.entity.Event;
+import br.com.tremn.crm.model.entity.Interaction;
 import br.com.tremn.crm.model.entity.Product;
-import br.com.tremn.crm.model.entity.VinculoContactEvent;
+import br.com.tremn.crm.model.entity.Vinculo;
 import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.exception.BusinessException;
 
@@ -71,6 +73,7 @@ public class EventService {
 		event = manager.find(Event.class, event.getId() );
 		event.getVinculos().size();
 		event.getPossiblePaymentMethods().size();
+		event.getInteractions().size();
 		return event;
 	}
 	
@@ -146,16 +149,71 @@ public class EventService {
 	 * Vinculo
 	 *********/
 	
-	public VinculoContactEvent saveVinculoContactEvent(VinculoContactEvent vinculo) {
+	public Vinculo saveVinculo(Vinculo vinculo) {
+		verifyContactAndEvent(vinculo);
 		return manager.merge( vinculo );
 	}
 
 
-	public void removeVinculoContactEvent(VinculoContactEvent vinculo) {
-		manager.remove( manager.merge(vinculo) );
+	/**
+	 * Verifica se contato já está vinculado ao evento
+	 * @param vinculo
+	 */
+	private void verifyContactAndEvent(Vinculo vinculo) {
+		Contact contact = vinculo.getContact();
+		Event event = vinculo.getEvent();
+		Vinculo vinculoFound = findVinculoByContactAndEvent(contact, event);
+		if (vinculoFound!=null && !vinculoFound.equals(vinculo)) {
+			throw new BusinessException("Contato já está vinculado ao Evento");
+		}
 	}
 
 
+	public void removeVinculo(Vinculo vinculo) {
+		manager.remove( manager.merge(vinculo) );
+	}
+
+	
+	/**
+	 * Busca um vinculo pelo contact e evento.
+	 * (usando na RN ao salva vinculo)
+	 * @param contact
+	 * @param event
+	 * @return
+	 */
+	private Vinculo findVinculoByContactAndEvent(Contact contact, Event event) {
+		try {
+			return manager.createNamedQuery("findVinculoByContactAndEvent", Vinculo.class)
+					.setParameter("pContact", contact)
+					.setParameter("pEvent", event)
+					.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+
+
+
+	
+	/* **********
+	 * Interações
+	 ************/
+	
+	public Interaction saveInteraction(Interaction interaction) {
+		return manager.merge( interaction );
+	}
+	
+	
+	public void removeInteraction(Interaction interaction) {
+		interaction = manager.find(Interaction.class, interaction.getId() );
+		manager.remove( interaction );
+	}
+	
+	
+	
+	
+	
 	
 
 }

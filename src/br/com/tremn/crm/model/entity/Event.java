@@ -1,7 +1,6 @@
 package br.com.tremn.crm.model.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class Event implements Serializable {
 	
 	
 	@OneToMany(mappedBy="event")
-	private List<VinculoContactEvent> vinculos;
+	private List<Vinculo> vinculos;
 	
 	
 	@ManyToMany
@@ -72,6 +71,11 @@ public class Event implements Serializable {
 		)
 	private List<PaymentMethod> possiblePaymentMethods;
 
+	
+	
+	@OneToMany(mappedBy="event")
+	private List<Interaction> interactions;
+	
 	
 	
 	//logs
@@ -101,16 +105,22 @@ public class Event implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public List<Interaction> getInteractions() {
+		return interactions;
+	}
+	public void setInteractions(List<Interaction> interactions) {
+		this.interactions = interactions;
+	}
 	public List<PaymentMethod> getPossiblePaymentMethods() {
 		return possiblePaymentMethods;
 	}
 	public void setPossiblePaymentMethods(List<PaymentMethod> possiblePaymentMethods) {
 		this.possiblePaymentMethods = possiblePaymentMethods;
 	}
-	public List<VinculoContactEvent> getVinculos() {
+	public List<Vinculo> getVinculos() {
 		return vinculos;
 	}
-	public void setVinculos(List<VinculoContactEvent> vinculos) {
+	public void setVinculos(List<Vinculo> vinculos) {
 		this.vinculos = vinculos;
 	}
 	public String getName() {

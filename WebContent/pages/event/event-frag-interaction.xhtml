@@ -1,0 +1,116 @@
+<!DOCTYPE html > 
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components">
+       
+<h:form>
+	
+		<p:fieldset legend="Nova Interação" toggleable="true" collapsed="true">
+		
+			<h:panelGrid columns="5" cellpadding="10">
+				<h:panelGrid>
+					<p:outputLabel for="inContact" value="Contato" styleClass="req" />
+					<p:autoComplete id="inContact" value="#{eventMB.newInteraction.contact}" converter="#{contactConverter}"
+						completeMethod="#{autoCompleteContactMB.completeContact}" var="contactVar"
+						itemValue="#{contactVar}" itemLabel="#{contactVar.fullName}" required="true"
+						size="40" queryDelay="500" minQueryLength="2" scrollHeight="200" forceSelection="true" >
+							<p:column>
+								<tremn:displayContactImage contact="#{contactVar}" />
+							</p:column>
+							<p:column headerText="Nome completo">
+								#{contactVar.fullName}
+							</p:column>
+							
+							<p:column headerText="Email Principal">
+								#{contactVar.emailPrincipal}
+							</p:column>
+
+							<p:column headerText="Cidade">
+								#{contactVar.address.addressCity}
+							</p:column>
+					</p:autoComplete>
+					<h:outputText value="(use primeiro ou último nome ou cidade)" styleClass="less2" />
+					<p:message for="inContact" />
+				</h:panelGrid>
+				
+				
+				<h:panelGrid>
+					<p:outputLabel value="Responsável" />
+					<h:outputText value="#{eventMB.newInteraction.responsable}" styleClass="destak3" />
+				</h:panelGrid>
+
+
+				<h:panelGrid>
+					<p:outputLabel for="inNote" value="Nota" styleClass="req" />
+					<p:inputTextarea id="inNote" value="#{eventMB.newInteraction.interactionNote}" rows="2" cols="50" required="true" />
+					<p:message for="inNote" />
+				</h:panelGrid>
+				
+			
+				<p:commandButton icon="ui-icon-plus" value="Adicionar" style="font-size:1.25em"
+					action="#{eventMB.addInteraction() }" 
+					update="@form"
+					/>
+			
+			</h:panelGrid>
+		</p:fieldset>
+		
+
+		<p:spacer height="5" />
+
+		
+		<p:panel>
+		
+			<tremn:globalMessages />
+	
+			<h:outputText value="Não há interações" styleClass="warn" 
+				rendered="#{empty eventMB.event.interactions}" 
+				/>
+				
+			<p:dataTable value="#{eventMB.event.interactions}" var="interactionVar" 
+				rendered="#{not empty eventMB.event.interactions}">
+				
+				<p:column styleClass="col10p colCenter">
+					<tremn:displayContactImage contact="#{interactionVar.contact}" />
+				</p:column>
+				
+				<p:column headerText="Nome completo">
+					<h:outputText value="#{interactionVar.contact.fullName}" styleClass="destak3" />
+				</p:column>
+
+				<p:column headerText="Email Principal">
+					<h:outputText value="#{interactionVar.contact.emailPrincipal}" styleClass="less2" />
+				</p:column>
+
+				<p:column headerText="Cidade">
+					<h:outputText value="#{interactionVar.contact.address.addressCity}" styleClass="less2" />
+				</p:column>
+				
+				<p:column headerText="Data">
+					<tremn:outputTimestamp value="#{interactionVar.interactionDate}" styleClass="less2" />
+				</p:column>
+
+				<p:column headerText="Responsável">
+					<h:outputText value="#{interactionVar.responsable}" styleClass="less2" />
+				</p:column>
+
+				<p:column headerText="Nota" styleClass="col30p">
+					<h:outputText value="#{interactionVar.interactionNote}" styleClass="less1 wrapable" />
+				</p:column>
+				
+				<p:column styleClass="col5p colCenter">
+					<p:commandButton icon="ui-icon-trash" 
+						process="@this"
+						action="#{eventMB.removeInteraction(interactionVar) }"
+						update="@form"
+						/>
+				</p:column>
+				
+			</p:dataTable>
+		</p:panel>	
+</h:form>
+
+</ui:fragment>

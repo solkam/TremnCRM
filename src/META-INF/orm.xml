@@ -111,9 +111,22 @@
 			where e.name = :pName
 		</query>
 	</named-query>
+	
+	
+	<!-- Vinculo -->
+	
+	<named-query name="findVinculoByContactAndEvent">
+		<query>
+			select v
+			from Vinculo v
+			where v.contact = :pContact
+			and   v.event   = :pEvent
+		</query>
+	</named-query>
 
 	
 	<!-- area de interesse -->
+	
 	<named-query name="searchInterestArea">
 		<query>
 			select ia
@@ -141,6 +154,7 @@
 	
 	
 	<!-- profissao -->
+	
 	<named-query name="searchProfession">
 		<query>
 			select p
@@ -168,6 +182,7 @@
 	
 	
 	<!-- maturity -->
+	
 	<named-query name="searchMaturity">
 		<query>
 			select m
@@ -178,6 +193,7 @@
 
 
 	<!-- Payment method -->
+	
 	<named-query name="searchPaymentMethod">
 		<query>
 			select pm

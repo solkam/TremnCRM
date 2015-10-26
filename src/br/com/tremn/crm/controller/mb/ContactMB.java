@@ -1,22 +1,25 @@
 package br.com.tremn.crm.controller.mb;
 
 import java.io.IOException;
-
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.FileUploadEvent;
 
+import br.com.tremn.crm.controller.mb.security.SessionHolder;
 import br.com.tremn.crm.controller.util.ImageStreamUtil;
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Contact;
+import br.com.tremn.crm.model.entity.ContactObservation;
 import br.com.tremn.crm.model.entity.InterestArea;
 import br.com.tremn.crm.model.entity.Profession;
 import br.com.tremn.crm.model.service.ContactService;
@@ -37,6 +40,10 @@ public class ContactMB implements Serializable {
 	@EJB InterestAreaService interestAreaService;
 	
 	@EJB ProfessionService professionService;
+	
+	
+	@ManagedProperty("#{sessionHolder}")
+	private SessionHolder sessionHolder;
 
 	
 	private ImageStreamUtil imageStreamUtil = new ImageStreamUtil();
@@ -57,6 +64,7 @@ public class ContactMB implements Serializable {
 		search();
 		populateComboInterestAreas();
 		populateComboProfessions();
+		resetObservation();
 	}
 	
 
@@ -127,6 +135,29 @@ public class ContactMB implements Serializable {
 		JSFUtil.addInfoMessage("Profissões salvas com sucesso");
 	}
 	
+	
+	//observacoes
+	private ContactObservation newObservation;
+	
+	private void resetObservation() {
+		newObservation = new ContactObservation();
+		newObservation.setResponsable( sessionHolder.getUser().getEmail() );
+	}
+	
+	public void saveObservation() {
+		newObservation.setContact(contact);
+		newObservation.setObservationDate( new Date() );
+		contactService.saveContactObservation(newObservation);
+		resetObservation();
+		refresh();
+		JSFUtil.addInfoMessage("Observação salva com sucesso");
+	}
+	
+	public void removeObservation(ContactObservation selectedObs) {
+		contactService.removeContactObservation(selectedObs);
+		refresh();
+		JSFUtil.addInfoMessage("Observação removida");
+	}
 	
 	
 	
@@ -263,6 +294,14 @@ public class ContactMB implements Serializable {
 	public List<Profession> getComboProfessions() {
 		return comboProfessions;
 	}
-	
+	public ContactObservation getNewObservation() {
+		return newObservation;
+	}
+	public void setNewObservation(ContactObservation newObservation) {
+		this.newObservation = newObservation;
+	}
+	public void setSessionHolder(SessionHolder sessionHolder) {
+		this.sessionHolder = sessionHolder;
+	}
 	
 }

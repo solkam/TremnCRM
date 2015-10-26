@@ -17,6 +17,7 @@ import javax.persistence.criteria.Root;
 
 import br.com.tremn.crm.model.entity.Address;
 import br.com.tremn.crm.model.entity.Contact;
+import br.com.tremn.crm.model.entity.ContactObservation;
 import br.com.tremn.crm.model.entity.InterestArea;
 import br.com.tremn.crm.model.entity.Profession;
 import br.com.tremn.crm.model.exception.BusinessException;
@@ -95,6 +96,7 @@ public class ContactService {
 		
 		contact.getInterestAreas().size();
 		contact.getProfessions().size();
+		contact.getObservations().size();
 		
 		return contact;
 	}
@@ -225,6 +227,20 @@ public class ContactService {
 				.setParameter("pProfession", profession)
 				.getResultList();
 	}
+	
+	
+	
+	/* ***********
+	 * Observacoes
+	 *************/
+	public ContactObservation saveContactObservation(ContactObservation obs) {
+		return manager.merge( obs );
+	}
+	
+	public void removeContactObservation(ContactObservation obs) {
+		manager.remove( manager.merge(obs) );
+	}
+	
 
 
 	

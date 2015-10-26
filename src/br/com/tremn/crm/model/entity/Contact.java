@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -157,12 +158,6 @@ public class Contact implements Serializable {
 	@Embedded
 	private SocialNetwork socialNetwork;
 	
-	/**
-	 * Observacoes diversas
-	 */
-	@Size(max=1000)
-	private String observation;
-	
 	
 	//foto
 	@Lob
@@ -171,6 +166,12 @@ public class Contact implements Serializable {
 	@Size(max=5)
 	private String imageExtension;
 	
+	
+	
+	//observacoes
+	
+	@OneToMany(mappedBy="contact")
+	private List<ContactObservation> observations;
 	
 	
 	//logs
@@ -204,6 +205,12 @@ public class Contact implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public List<ContactObservation> getObservations() {
+		return observations;
+	}
+	public void setObservations(List<ContactObservation> observations) {
+		this.observations = observations;
 	}
 	public Date getImportDate() {
 		return importDate;
@@ -337,12 +344,6 @@ public class Contact implements Serializable {
 	}
 	public void setParticipationCategory(ParticipationCategory participationCategory) {
 		this.participationCategory = participationCategory;
-	}
-	public String getObservation() {
-		return observation;
-	}
-	public void setObservation(String observation) {
-		this.observation = observation;
 	}
 	public Date getCreateDate() {
 		return createDate;

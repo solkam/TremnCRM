@@ -20,7 +20,7 @@ import br.com.tremn.crm.model.entity.enumeration.VinculoType;
  * @since 03 MAR 2015
  */
 @Entity
-public class VinculoContactEvent implements Serializable {
+public class Vinculo implements Serializable {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -114,7 +114,7 @@ public class VinculoContactEvent implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		VinculoContactEvent other = (VinculoContactEvent) obj;
+		Vinculo other = (Vinculo) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

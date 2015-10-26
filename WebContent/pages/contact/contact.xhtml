@@ -153,6 +153,10 @@
 					<ui:include src="/pages/contact/contact-frag-vinculo.xhtml" />
 				</p:tab>
 
+				<p:tab title="Observações" rendered="#{not contactMB.contact.transient}" >
+					<ui:include src="/pages/contact/contact-frag-observation.xhtml" />
+				</p:tab>
+
 			</p:tabView>
 			
 		</p:outputPanel>

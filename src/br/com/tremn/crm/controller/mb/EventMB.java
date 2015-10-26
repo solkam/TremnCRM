@@ -2,18 +2,22 @@ package br.com.tremn.crm.controller.mb;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import br.com.tremn.crm.controller.mb.security.SessionHolder;
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Event;
+import br.com.tremn.crm.model.entity.Interaction;
 import br.com.tremn.crm.model.entity.PaymentMethod;
 import br.com.tremn.crm.model.entity.Product;
-import br.com.tremn.crm.model.entity.VinculoContactEvent;
+import br.com.tremn.crm.model.entity.Vinculo;
 import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.service.EventService;
 import br.com.tremn.crm.model.service.PaymentMethodService;
@@ -32,6 +36,9 @@ public class EventMB implements Serializable {
 	@EJB EventService eventService;
 	@EJB ProductService productService;
 	@EJB PaymentMethodService paymentMethodService;
+	
+	@ManagedProperty("#{sessionHolder}")
+	private SessionHolder sessionHolder;
 	
 	private List<Event> events;
 	
@@ -56,6 +63,7 @@ public class EventMB implements Serializable {
 		populateComboPaymentMethods();
 		search();
 		resetVinculo();
+		resetInteraction();
 	}
 
 	private void populateComboPaymentMethods() {
@@ -145,35 +153,64 @@ public class EventMB implements Serializable {
 	/* ********
 	 * Vinculos
 	 **********/
-	private VinculoContactEvent newVinculo;
+	private Vinculo newVinculo;
 	
 	private void resetVinculo() {
-		newVinculo = new VinculoContactEvent();
+		newVinculo = new Vinculo();
 	}
 	
 	public void addVinculo() {
 		newVinculo.setEvent( event );
-		eventService.saveVinculoContactEvent( newVinculo );
+		eventService.saveVinculo( newVinculo );
 		resetVinculo();
 		refresh();
 		JSFUtil.addInfoMessage("Vínculo adicionado com sucesso");
 	}
 	
-	public void removeVinculo(VinculoContactEvent selectedVinculo) {
-		eventService.removeVinculoContactEvent( selectedVinculo );
+	public void removeVinculo(Vinculo selectedVinculo) {
+		eventService.removeVinculo( selectedVinculo );
 		refresh();
 		JSFUtil.addInfoMessage("Vínculo removido");
 	}
 	
 	
+	
+	/* **********
+	 * Interações
+	 ************/
+	private Interaction newInteraction;
+	
+	private void resetInteraction() {
+		newInteraction = new Interaction();
+		newInteraction.setResponsable( sessionHolder.getUser().getEmail() );
+	}
+	
+	public void addInteraction() {
+		newInteraction.setEvent(event);
+		newInteraction.setInteractionDate( new Date() );
+		eventService.saveInteraction(newInteraction);
+		resetInteraction();
+		refresh();
+		JSFUtil.addInfoMessage("Interação salva com sucesso");
+	}
+	
+	
+	public void removeInteraction(Interaction selectedInteraction) {
+		eventService.removeInteraction(selectedInteraction);
+		refresh();
+		JSFUtil.addInfoMessage("Interação removida");
+	}
+	
+	
+	
 	//util
 	private void refresh() {
 		event = eventService.refreshEvent(event);
-		redefinedPaymentMethods();
+		redefinePaymentMethods();
 	}
 
 	
-	private void redefinedPaymentMethods() {
+	private void redefinePaymentMethods() {
 		//redefine possiblePaymentMethods para evitar LIE:
 		List<PaymentMethod> paymentMethodsAsPersistBag = event.getPossiblePaymentMethods();
 		List<PaymentMethod> redefinedPaymentMethods = new ArrayList<PaymentMethod>();
@@ -222,17 +259,30 @@ public class EventMB implements Serializable {
 		return comboProducts;
 	}
 
-	public VinculoContactEvent getNewVinculo() {
+	public Vinculo getNewVinculo() {
 		return newVinculo;
 	}
 
-	public void setNewVinculo(VinculoContactEvent newVinculo) {
+	public void setNewVinculo(Vinculo newVinculo) {
 		this.newVinculo = newVinculo;
 	}
 
 	public List<PaymentMethod> getComboPaymentMethod() {
 		return comboPaymentMethod;
 	}
+
+	public Interaction getNewInteraction() {
+		return newInteraction;
+	}
+
+	public void setNewInteraction(Interaction newInteraction) {
+		this.newInteraction = newInteraction;
+	}
+
+	public void setSessionHolder(SessionHolder sessionHolder) {
+		this.sessionHolder = sessionHolder;
+	}
+	
 	
 	
 }

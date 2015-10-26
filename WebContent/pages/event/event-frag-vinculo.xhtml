@@ -8,7 +8,7 @@
        
 <h:form>
 	
-		<p:fieldset legend="Novo Vínculo" toggleable="true">
+		<p:fieldset legend="Novo Vínculo" toggleable="true" collapsed="true">
 		
 			<h:panelGrid columns="7" cellpadding="10">
 				<h:panelGrid>
@@ -93,27 +93,27 @@
 				</p:column>
 				
 				<p:column headerText="Nome completo">
-					<h:outputText value="#{vinculoVar.contact.fullName}" />
+					<h:outputText value="#{vinculoVar.contact.fullName}" styleClass="destak3" />
 				</p:column>
 
 				<p:column headerText="Email Principal">
-					#{vinculoVar.contact.emailPrincipal}
+					<h:outputText value="#{vinculoVar.contact.emailPrincipal}" styleClass="less2" />
 				</p:column>
 
 				<p:column headerText="Cidade">
-					<h:outputText value="#{vinculoVar.contact.address.addressCity}" />
+					<h:outputText value="#{vinculoVar.contact.address.addressCity}" styleClass="less2" />
 				</p:column>
 
 				<p:column headerText="Tipo de Vínculo">
-					#{vinculoVar.type.description}
+					<h:outputText value="#{vinculoVar.type.description}" styleClass="less2" />
 				</p:column>
 
 				<p:column headerText="Forma de Pagamento">
-					#{vinculoVar.paymentMethod.fullDescription }
+					<h:outputText value="#{vinculoVar.paymentMethod.fullDescription }" styleClass="less2" />
 				</p:column>
 
 				<p:column headerText="Valor da parcela" styleClass="colRight">
-					<tremn:outputCurrency value="#{vinculoVar.paymentParcelValue}" />
+					<tremn:outputCurrency value="#{vinculoVar.paymentParcelValue}" styleClass="less2" />
 				</p:column>
 
 				<p:column headerText="Observação" styleClass="col10p colCenter">
