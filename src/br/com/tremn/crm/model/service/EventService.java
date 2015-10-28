@@ -35,7 +35,11 @@ public class EventService {
 	
 	@PersistenceContext EntityManager manager;
 	
-	
+	/**
+	 * Salva um evento
+	 * @param event
+	 * @return
+	 */
 	public Event saveEvent(Event event) {
 		verifyEventNameUnique(event);
 		return manager.merge( event );
@@ -62,7 +66,6 @@ public class EventService {
 		manager.remove( manager.merge( event ) );
 	}
 	
-
 	
 	/**
 	 * Recarregar evento e suas associacoes
@@ -77,6 +80,16 @@ public class EventService {
 		return event;
 	}
 	
+
+	/**
+	 * Busca um evento pelo PK
+	 * (usando pelo converter)
+	 * @param id
+	 * @return
+	 */
+	public Event findEventById(Long id) {
+		return manager.find(Event.class, id);
+	}
 	
 	
 	/**
@@ -143,12 +156,26 @@ public class EventService {
 		return events;
 	}
 
+	
+	/**
+	 * Pesquisa todos os eventos
+	 * @return
+	 */
+	public List<Event> searchEvent() {
+		return manager.createNamedQuery("searchEvent", Event.class)
+				.getResultList();
+	}
 
+	
 	
 	/* *******
 	 * Vinculo
 	 *********/
-	
+	/**
+	 * Salva um vinculo aplicando RN
+	 * @param vinculo
+	 * @return
+	 */
 	public Vinculo saveVinculo(Vinculo vinculo) {
 		verifyContactAndEvent(vinculo);
 		return manager.merge( vinculo );
@@ -168,7 +195,11 @@ public class EventService {
 		}
 	}
 
-
+	
+	/**
+	 * Remove um vinculo
+	 * @param vinculo
+	 */
 	public void removeVinculo(Vinculo vinculo) {
 		manager.remove( manager.merge(vinculo) );
 	}
@@ -199,21 +230,25 @@ public class EventService {
 	/* **********
 	 * Interações
 	 ************/
-	
+	/**
+	 * Salva um interação
+	 * @param interaction
+	 * @return
+	 */
 	public Interaction saveInteraction(Interaction interaction) {
 		return manager.merge( interaction );
 	}
 	
 	
+	/**
+	 * Remove uma interação
+	 * @param interaction
+	 */
 	public void removeInteraction(Interaction interaction) {
 		interaction = manager.find(Interaction.class, interaction.getId() );
 		manager.remove( interaction );
 	}
-	
-	
-	
-	
-	
-	
 
+
+	
 }

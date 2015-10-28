@@ -220,6 +220,10 @@ public class Event implements Serializable {
 	}
 	
 	
+	//descs
+	public String getFullDesc() {
+		return String.format("%s - %s (%s)", getProduct().getName(), getName(), getStatus().getDescription() );
+	}
 	
 	
 }

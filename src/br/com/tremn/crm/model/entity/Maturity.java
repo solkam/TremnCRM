@@ -105,4 +105,8 @@ public class Maturity implements Serializable {
 		}
 	}
 	
+	public String getFullDesc() {
+		return String.format("%s (de %d a %d)", getName(), getMinAge(), getMaxAge() );
+	}
+	
 }

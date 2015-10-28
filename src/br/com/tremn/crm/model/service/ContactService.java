@@ -19,6 +19,7 @@ import br.com.tremn.crm.model.entity.Address;
 import br.com.tremn.crm.model.entity.Contact;
 import br.com.tremn.crm.model.entity.ContactObservation;
 import br.com.tremn.crm.model.entity.InterestArea;
+import br.com.tremn.crm.model.entity.Maturity;
 import br.com.tremn.crm.model.entity.Profession;
 import br.com.tremn.crm.model.exception.BusinessException;
 
@@ -34,18 +35,31 @@ public class ContactService {
 	private EntityManager manager;
 	
 	@EJB UserService userService;
+	
+	@EJB MaturityService maturityService;
 
 	/**
 	 * Salva contato aplicando RN
-	 * @param c
+	 * @param contact
 	 * @return
 	 */
-	public Contact saveContact(Contact c) {
-		verifyEmailIsUnique(c);
-		return manager.merge( c );
+	public Contact saveContact(Contact contact) {
+		verifyEmailIsUnique(contact);
+		defineMaturity( contact );
+		return manager.merge( contact );
 	}
 	
-	
+
+	/**
+	 * Calcula a maturidade do contato segundo sua idade
+	 * @param contact
+	 */
+	private void defineMaturity(Contact contact) {
+		Maturity maturity = maturityService.findMaturityByAge( contact.getCalculatedAge() );
+		contact.setMaturity(maturity);
+	}
+
+
 	/**
 	 * Salva contato sem aplicado nenhuma RN.
 	 * (usado na importacao de contatos)

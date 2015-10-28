@@ -105,6 +105,13 @@ public class Contact implements Serializable {
 	private Integer birthYear;
 	
 	/**
+	 * Maturidade segundo a idade
+	 */
+	@ManyToOne
+	private Maturity maturity;
+
+	
+	/**
 	 * Sexo
 	 */
 	@Enumerated(EnumType.STRING)
@@ -159,6 +166,20 @@ public class Contact implements Serializable {
 	private SocialNetwork socialNetwork;
 	
 	
+	/**
+	 * Vinculos com eventos
+	 */
+	@OneToMany(mappedBy="contact")
+	private List<Vinculo> vinculos;
+	
+	
+	/**
+	 * Interação com eventos
+	 */
+	@OneToMany(mappedBy="contact")
+	private List<Interaction> interactions;
+	
+	
 	//foto
 	@Lob
 	private byte[] imageBinary;
@@ -205,6 +226,24 @@ public class Contact implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Maturity getMaturity() {
+		return maturity;
+	}
+	public void setMaturity(Maturity maturity) {
+		this.maturity = maturity;
+	}
+	public List<Vinculo> getVinculos() {
+		return vinculos;
+	}
+	public void setVinculos(List<Vinculo> vinculos) {
+		this.vinculos = vinculos;
+	}
+	public List<Interaction> getInteractions() {
+		return interactions;
+	}
+	public void setInteractions(List<Interaction> interactions) {
+		this.interactions = interactions;
 	}
 	public List<ContactObservation> getObservations() {
 		return observations;

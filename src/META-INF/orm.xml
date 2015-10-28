@@ -112,6 +112,15 @@
 		</query>
 	</named-query>
 	
+	<named-query name="searchEvent">
+		<query>
+			select e
+			from Event e
+				join e.product p
+			order by p.name, e.name
+		</query>
+	</named-query>
+	
 	
 	<!-- Vinculo -->
 	
@@ -187,6 +196,15 @@
 		<query>
 			select m
 			from Maturity m
+			order by m.minAge
+		</query>
+	</named-query>
+	
+	<named-query name="findMaturityByAge">
+		<query>
+			select m
+			from Maturity m
+			where :pAge between m.minAge and m.maxAge
 			order by m.minAge
 		</query>
 	</named-query>
