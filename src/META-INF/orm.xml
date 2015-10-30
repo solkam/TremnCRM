@@ -228,6 +228,30 @@
 			order by pm.description
 		</query>
 	</named-query>
+	
+	
+	
+	<!-- business card -->
+	
+	<named-query name="searchContactBusinessCard">
+		<query>
+			select card
+			from ContactBusinessCard card
+			order by card.uploadDate
+		</query>
+	</named-query>
+	
+	
+	
+	<!-- inscription form -->
+	
+	<named-query name="searchContactInscriptionForm">
+		<query>
+			select f
+			from ContactInscriptionForm f
+			order by f.uploadDate
+		</query>
+	</named-query>
 
 
 </entity-mappings>

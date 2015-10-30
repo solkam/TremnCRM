@@ -188,11 +188,21 @@ public class Contact implements Serializable {
 	private String imageExtension;
 	
 	
-	
 	//observacoes
-	
 	@OneToMany(mappedBy="contact")
 	private List<ContactObservation> observations;
+
+	
+	//business card
+	@OneToMany(mappedBy="contact")
+	private List<ContactBusinessCard> businessCards;
+	
+	
+	//fichas de inscrição
+	@OneToMany(mappedBy="contact")
+	private List<ContactInscriptionForm> inscriptionForms;
+	
+	
 	
 	
 	//logs
@@ -226,6 +236,18 @@ public class Contact implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public List<ContactInscriptionForm> getInscriptionForms() {
+		return inscriptionForms;
+	}
+	public void setInscriptionForms(List<ContactInscriptionForm> inscriptionForms) {
+		this.inscriptionForms = inscriptionForms;
+	}
+	public List<ContactBusinessCard> getBusinessCards() {
+		return businessCards;
+	}
+	public void setBusinessCards(List<ContactBusinessCard> businessCards) {
+		this.businessCards = businessCards;
 	}
 	public Maturity getMaturity() {
 		return maturity;
@@ -471,7 +493,7 @@ public class Contact implements Serializable {
 			&& !getImageExtension().trim().isEmpty() 
 			&& getImageBinary()!=null;
 	}
-
+	
 	
 	/**
 	 * Monta o nome da imagem usando o ID e a extensao

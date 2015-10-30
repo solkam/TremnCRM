@@ -145,6 +145,14 @@
 					<ui:include src="/pages/contact/contact-frag-photo.xhtml" />
 				</p:tab>
 
+				<p:tab title="Cartões de Negócio" rendered="#{not contactMB.contact.transient}">
+					<ui:include src="/pages/contact/contact-frag-business-card.xhtml" />
+				</p:tab>
+
+				<p:tab title="Fichas de Inscrição" rendered="#{not contactMB.contact.transient}">
+					<ui:include src="/pages/contact/contact-frag-inscription-form.xhtml" />
+				</p:tab>
+
 				<p:tab title="Áreas de Interesse" rendered="#{not contactMB.contact.transient}">
 					<ui:include src="/pages/contact/contact-frag-interest-area.xhtml" />
 				</p:tab>

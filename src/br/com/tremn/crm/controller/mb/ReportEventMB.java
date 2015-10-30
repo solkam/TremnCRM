@@ -8,8 +8,12 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Event;
+import br.com.tremn.crm.model.entity.PaymentMethod;
 import br.com.tremn.crm.model.entity.Product;
+import br.com.tremn.crm.model.entity.enumeration.EventStatus;
+import br.com.tremn.crm.model.service.PaymentMethodService;
 import br.com.tremn.crm.model.service.ProductService;
 import br.com.tremn.crm.model.service.ReportService;
 
@@ -25,14 +29,18 @@ public class ReportEventMB implements Serializable {
 	@EJB ReportService reportService;
 	
 	@EJB ProductService productService;
+	@EJB PaymentMethodService paymentMethodService;
 	
 	//combos
 	private List<Product> comboProducts;
+	private List<PaymentMethod> comboPaymentMethods;
 	
 	//filter
 	private List<Integer> filterMonths;
 	private Integer filterYear;
 	private List<Product> filterProducts;
+	private List<EventStatus> filterEventStatusList;
+	private List<PaymentMethod> filterPaymentMethods;
 	
 	
 	private List<Event> events;
@@ -40,9 +48,15 @@ public class ReportEventMB implements Serializable {
 
 	@PostConstruct void init() {
 		populateComboProducts();
+		populateComboPaymentMethods();
 	}
 	
 	
+	private void populateComboPaymentMethods() {
+		comboPaymentMethods = paymentMethodService.searchPaymentMethod();
+	}
+
+
 	private void populateComboProducts() {
 		comboProducts = productService.searchProduct();
 	}
@@ -50,7 +64,13 @@ public class ReportEventMB implements Serializable {
 
 
 	public void search() {
-		
+		events = reportService.searchEventByFilter(filterYear
+						                          ,filterMonths
+						                          ,filterProducts
+						                          ,filterEventStatusList
+						                          ,filterPaymentMethods
+						                          );
+		JSFUtil.addMessageAboutResult(events);
 	}
 
 	//acessores...
@@ -79,6 +99,20 @@ public class ReportEventMB implements Serializable {
 	public void setFilterProducts(List<Product> filterProducts) {
 		this.filterProducts = filterProducts;
 	}
+	public List<EventStatus> getFilterEventStatusList() {
+		return filterEventStatusList;
+	}
+	public void setFilterEventStatusList(List<EventStatus> filterEventStatusList) {
+		this.filterEventStatusList = filterEventStatusList;
+	}
+	public List<PaymentMethod> getFilterPaymentMethods() {
+		return filterPaymentMethods;
+	}
+	public void setFilterPaymentMethods(List<PaymentMethod> filterPaymentMethods) {
+		this.filterPaymentMethods = filterPaymentMethods;
+	}
+	public List<PaymentMethod> getComboPaymentMethods() {
+		return comboPaymentMethods;
+	}
 	
-
 }

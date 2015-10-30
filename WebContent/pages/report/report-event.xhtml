@@ -29,17 +29,40 @@
 					</h:panelGrid>
 			</h:panelGrid>
 
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="3" cellpadding="5">
 					<h:panelGrid>
 						<p:outputLabel for="inProds" value="Produtos" styleClass="destak3" />
 						<p:scrollPanel style="height:200px" mode="native">
-							<p:selectManyCheckbox id="inProds" value="#{rEventMB.filterProducts }" converter="#{productConverter}" >
+							<p:selectManyCheckbox id="inProds" value="#{rEventMB.filterProducts }" converter="#{productConverter}" layout="pageDirection" >
 								<f:selectItems value="#{rEventMB.comboProducts }" var="prodVar"
 									itemValue="#{prodVar}" itemLabel="#{prodVar.name }" />
 							</p:selectManyCheckbox>	
 						</p:scrollPanel>
 						<p:message for="inProds" />
 					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inStatus" value="Status do evento" styleClass="destak3" />
+						<p:scrollPanel style="height:200px" mode="native">
+							<p:selectManyCheckbox id="inStatus" value="#{rEventMB.filterEventStatusList }" converter="#{eventStatusConverter}" layout="pageDirection">
+								<f:selectItems value="#{enumHelper.eventStatuses }" var="statusVar"
+									itemValue="#{statusVar}" itemLabel="#{statusVar.description }" />
+							</p:selectManyCheckbox>	
+						</p:scrollPanel>
+						<p:message for="inStatus" />
+					</h:panelGrid>
+
+					<h:panelGrid>
+						<p:outputLabel for="inPayMet" value="Formas de Pagamento" styleClass="destak3" />
+						<p:scrollPanel style="height:200px" mode="native">
+							<p:selectManyCheckbox id="inPayMet" value="#{rEventMB.filterPaymentMethods }" converter="#{paymentMethodConverter}" layout="pageDirection">
+								<f:selectItems value="#{rEventMB.comboPaymentMethods }" var="metVar"
+									itemValue="#{metVar}" itemLabel="#{metVar.fullDescription }" />
+							</p:selectManyCheckbox>	
+						</p:scrollPanel>
+						<p:message for="inPayMet" />
+					</h:panelGrid>
+
 			</h:panelGrid>
 
 
@@ -57,7 +80,7 @@
 
 		<tremn:globalMessages />
 
-		<p:outputPanel rendered="#{false}">
+		<p:outputPanel rendered="#{not empty rEventMB.events}">
 	
 			<p:dataTable value="#{rEventMB.events}" var="eventVar">
 				
@@ -65,8 +88,33 @@
 					#{eventVar.id}
 				</p:column>
 
-				<p:column headerText="Nome" >
+				<p:column headerText="Nome" styleClass="col30p" >
 					<h:outputText value="#{eventVar.name}" styleClass="destak3" />
+				</p:column>
+
+				<p:column headerText="Produto" styleClass="col30p">
+					<h:outputText value="#{eventVar.product.name}" />
+				</p:column>
+
+				<p:column headerText="Status" styleClass="colCenter col10p" >
+					<h:panelGrid columns="2" style="border:1px solid transparent" >
+						<tremn:displayEventStatus event="#{eventVar}" />
+						<h:outputText value="#{eventVar.status.description}" styleClass="less2" />
+					</h:panelGrid>
+				</p:column>
+	
+				<p:column headerText="Data Início" styleClass="colCenter col10p">
+					<tremn:outputDate value="#{eventVar.beginDate}" />
+				</p:column>
+
+				<p:column headerText="Data Término" styleClass="colCenter col10p">
+					<tremn:outputDate value="#{eventVar.endDate}" />
+				</p:column>
+				
+				<p:column headerText="Formas de Pagamento">
+					<p:dataList value="#{eventVar.possiblePaymentMethods}" var="metVar">
+						<h:outputText value="#{metVar.fullDescription}" styleClass="less2" />
+					</p:dataList>
 				</p:column>
 
 			</p:dataTable>

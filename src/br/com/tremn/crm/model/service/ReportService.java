@@ -6,6 +6,7 @@ import static br.com.tremn.crm.model.util.QueryUtil.isNotNegative;
 import static br.com.tremn.crm.model.util.QueryUtil.isNotNull;
 import static br.com.tremn.crm.model.util.QueryUtil.toLikeMatchModeANY;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -24,8 +25,10 @@ import br.com.tremn.crm.model.entity.Event;
 import br.com.tremn.crm.model.entity.InterestArea;
 import br.com.tremn.crm.model.entity.Maturity;
 import br.com.tremn.crm.model.entity.PaymentMethod;
+import br.com.tremn.crm.model.entity.Product;
 import br.com.tremn.crm.model.entity.Profession;
 import br.com.tremn.crm.model.entity.Vinculo;
+import br.com.tremn.crm.model.entity.enumeration.EventStatus;
 import br.com.tremn.crm.model.entity.enumeration.Gender;
 import br.com.tremn.crm.model.entity.enumeration.ParticipationCategory;
 import br.com.tremn.crm.model.entity.enumeration.VinculoType;
@@ -43,13 +46,79 @@ public class ReportService {
 	private EntityManager manager;
 
 	
+	
 	/**
-	 * Pesquisar para o relatorio de Eventos
+	 * Pesquisa eventos pelos filtros usando criteria
+	 * @param filterYear
+	 * @param filterMonths
+	 * @param filterProducts
+	 * @param filterEventStatusList
+	 * @param filterPaymentMethods
 	 * @return
 	 */
-	public List<Event> searchEventByFilter() {
-		return null;
+	public List<Event> searchEventByFilter(Integer filterYear
+										  ,List<Integer> filterMonths
+										  ,List<Product> filterProducts
+										  ,List<EventStatus> filterEventStatusList
+										  ,List<PaymentMethod> filterPaymentMethods
+										  ) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Event> criteria = builder.createQuery(Event.class);
+		Root<Event> rootEvent = criteria.from(Event.class);
+		Predicate conjunction = builder.conjunction();
+		//ano
+		if (isNotNegative(filterYear)) {
+			conjunction = builder.and(conjunction,
+					builder.equal(  
+						 builder.function("YEAR", Integer.class, rootEvent.<Date>get("beginDate"))
+						,filterYear
+						)
+					);
+		}
+		//meses
+		if (isNotEmpty(filterMonths)) {
+			conjunction = builder.and(conjunction,
+					builder.function("MONTH", Integer.class, rootEvent.<Date>get("beginDate")).in( filterMonths )
+					);
+		}
+		//produtos
+		if (isNotEmpty(filterProducts)) {
+			conjunction = builder.and(conjunction, 
+					rootEvent.<Product>get("product").in(filterProducts)
+					);
+		}
+		//status
+		if (isNotEmpty(filterEventStatusList)) {
+			conjunction = builder.and(conjunction,
+					rootEvent.<EventStatus>get("status").in(filterEventStatusList)
+					);
+		}
+		//formas de pagamento
+		if (isNotEmpty(filterPaymentMethods)) {
+			Join<Event, PaymentMethod> joinPaymentMethod = rootEvent.<Event, PaymentMethod>join("possiblePaymentMethods");
+			
+			conjunction = builder.and(conjunction, 
+					joinPaymentMethod.in(filterPaymentMethods) 
+					);
+		}
+		
+		criteria.distinct(true);
+		
+		criteria.where( conjunction );
+		
+		criteria.orderBy( builder.asc(rootEvent.<Date>get("beginDate")) );
+		
+		List<Event> events = manager.createQuery(criteria).getResultList();
+		
+		//eager payment methods
+		for (Event eventVar : events) {
+			eventVar.getPossiblePaymentMethods().size();
+		}
+		
+		return events;
 	}
+	
+	
 	
 	
 	/**
@@ -213,10 +282,5 @@ public class ReportService {
 		
 		return manager.createQuery(criteria).getResultList();
 	}
-	
-	
-	
-	
-	
 
 }

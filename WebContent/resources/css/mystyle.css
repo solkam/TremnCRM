@@ -45,6 +45,9 @@
 	font-size: 1.0em;
 }
 
+.transp {
+	border: 1px solid transparent;
+}
 
 .scrollable1 {
 	height: 500px

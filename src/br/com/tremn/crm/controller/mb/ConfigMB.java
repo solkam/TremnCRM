@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import br.com.tremn.crm.controller.util.ImageStreamUtil;
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Contact;
+import br.com.tremn.crm.model.entity.ContactBusinessCard;
+import br.com.tremn.crm.model.entity.ContactInscriptionForm;
 import br.com.tremn.crm.model.service.ContactService;
 
 /**
@@ -26,11 +28,32 @@ public class ConfigMB {
 	public String saveContactImagesOnFS() throws IOException {
 		ImageStreamUtil util = new ImageStreamUtil();
 		
+		//contacts
 		List<Contact> contacts = contactService.searchContactWithImage();
 		for (Contact contact : contacts) {
 			util.writeInFileSystem(contact.getImageBinary(), contact.getImageName() );
 		}
 		JSFUtil.addInfoMessage("Imagens dos Contatos salvas em disco");
+		
+		
+		//cartoes de negocio
+		List<ContactBusinessCard> cards = contactService.searchContactBusinessCard();
+		for (ContactBusinessCard cardVar : cards) {
+			util.writeInFileSystem(cardVar.getImageBinary(), cardVar.getImageName() );
+		}
+		JSFUtil.addInfoMessage("Imagens dos Cartões de Negócio salvos em disco");
+		
+		
+		//fichas de inscrição
+		List<ContactInscriptionForm> forms = contactService.searchContactInscriptionForm();
+		for (ContactInscriptionForm formVar : forms) {
+			byte[] imageBinary = formVar.getImageBinary();
+			String imageName = formVar.getImageName();
+			util.writeInFileSystem(imageBinary, imageName );
+		}
+		
+		
+		
 		return "home";
 	}
 	

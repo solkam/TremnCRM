@@ -17,6 +17,8 @@ import javax.persistence.criteria.Root;
 
 import br.com.tremn.crm.model.entity.Address;
 import br.com.tremn.crm.model.entity.Contact;
+import br.com.tremn.crm.model.entity.ContactBusinessCard;
+import br.com.tremn.crm.model.entity.ContactInscriptionForm;
 import br.com.tremn.crm.model.entity.ContactObservation;
 import br.com.tremn.crm.model.entity.InterestArea;
 import br.com.tremn.crm.model.entity.Maturity;
@@ -111,6 +113,8 @@ public class ContactService {
 		contact.getInterestAreas().size();
 		contact.getProfessions().size();
 		contact.getObservations().size();
+		contact.getBusinessCards().size();
+		contact.getInscriptionForms().size();
 		
 		return contact;
 	}
@@ -257,8 +261,39 @@ public class ContactService {
 	
 
 
+	/* *************
+	 * Business Card
+	 ***************/
+	public ContactBusinessCard saveContactBusinessCard(ContactBusinessCard card) {
+		return manager.merge( card );
+	}
+	
+	public void removeContactBusinessCard(ContactBusinessCard card) {
+		manager.remove( manager.merge(card) );
+	}
+	
+	public List<ContactBusinessCard> searchContactBusinessCard() {
+		return manager.createNamedQuery("searchContactBusinessCard", ContactBusinessCard.class)
+				.getResultList();
+	}
 	
 	
 	
-
+	/* ***************
+	 * Ficha Inscrição
+	 *****************/
+	public ContactInscriptionForm saveContactInscriptionForm(ContactInscriptionForm form) {
+		return manager.merge( form );
+	}
+	
+	public void removeContactInscriptionForm(ContactInscriptionForm form) {
+		manager.remove( manager.merge(form) );
+	}
+	
+	public List<ContactInscriptionForm> searchContactInscriptionForm() {
+		return manager.createNamedQuery("searchContactInscriptionForm", ContactInscriptionForm.class)
+				.getResultList();
+	}
+	
+	
 }

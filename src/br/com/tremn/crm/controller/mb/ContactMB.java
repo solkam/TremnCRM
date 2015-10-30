@@ -19,6 +19,8 @@ import br.com.tremn.crm.controller.mb.security.SessionHolder;
 import br.com.tremn.crm.controller.util.ImageStreamUtil;
 import br.com.tremn.crm.controller.util.JSFUtil;
 import br.com.tremn.crm.model.entity.Contact;
+import br.com.tremn.crm.model.entity.ContactBusinessCard;
+import br.com.tremn.crm.model.entity.ContactInscriptionForm;
 import br.com.tremn.crm.model.entity.ContactObservation;
 import br.com.tremn.crm.model.entity.InterestArea;
 import br.com.tremn.crm.model.entity.Profession;
@@ -259,6 +261,112 @@ public class ContactMB implements Serializable {
 	
 	
 	
+	/* *****************
+	 * Cartão de Negocio
+	 *******************/
+	public void onBusinessCardUpload(FileUploadEvent event) throws IOException {
+		ContactBusinessCard newBusinessCard = createBusinessCard();
+		
+		redimBusinessCard(event, newBusinessCard);
+		newBusinessCard = saveBusinessCard(newBusinessCard);
+		writeBusinessCardImage(newBusinessCard);
+		
+		JSFUtil.addInfoMessage("Cartão de Negócio salvo com sucesso");
+	}
+
+	
+	private ContactBusinessCard createBusinessCard() {
+		ContactBusinessCard businessCard = new ContactBusinessCard();
+		businessCard.setContact( contact );
+		return businessCard;
+	}
+
+	private void redimBusinessCard(FileUploadEvent event, ContactBusinessCard newBusinessCard) throws IOException {
+		//1.extensao da imagem
+		String imageExtension = imageStreamUtil.extractExtension( event.getFile().getFileName() );
+		newBusinessCard.setImageExtension(imageExtension);
+		//2.conteudo binario da imagem
+		InputStream imageInputStream = event.getFile().getInputstream();
+		int wDim = ContactBusinessCard.W_DIM;
+		int hDim = ContactBusinessCard.H_DIM;
+		byte[] imageBinary = imageStreamUtil.getBinaryDimensionated(imageInputStream, imageExtension, wDim, hDim);
+		newBusinessCard.setImageBinary(imageBinary);
+	}
+	
+	private void writeBusinessCardImage(ContactBusinessCard businessCard) throws IOException {
+		byte[] imageBinary = businessCard.getImageBinary();
+		String imageName = businessCard.getImageName();
+		imageStreamUtil.writeInFileSystem(imageBinary, imageName);
+	}
+	
+	
+	private ContactBusinessCard saveBusinessCard(ContactBusinessCard newBusinessCard) {
+		newBusinessCard = contactService.saveContactBusinessCard(newBusinessCard);
+		refresh();
+		return newBusinessCard;
+	}
+	
+	
+	public void removeBusinessCard(ContactBusinessCard card) {
+		contactService.removeContactBusinessCard(card);
+		refresh();
+		JSFUtil.addInfoMessage("Cartão de Negócio removido");
+	}
+	
+	
+	
+	/* ****************
+	 * Fichas Inscrição  
+	 ******************/
+	public void onInscriptionFormUpload(FileUploadEvent event) throws IOException {
+		ContactInscriptionForm newInscriptionForm = createInscriptionForm();
+		
+		redimInscriptionForm(event, newInscriptionForm);
+		newInscriptionForm = saveInscriptionForm(newInscriptionForm);
+		writeInscriptionFormImage(newInscriptionForm);
+		
+		JSFUtil.addInfoMessage("Formulário de Inscrição salvo com sucesso");
+	}
+	
+	private ContactInscriptionForm createInscriptionForm() {
+		ContactInscriptionForm form = new ContactInscriptionForm();
+		form.setContact( contact );
+		return form;
+	}
+	
+	private void redimInscriptionForm(FileUploadEvent event, ContactInscriptionForm newInscriptionForm) throws IOException {
+		//1.extensao da imagem
+		String imageExtension = imageStreamUtil.extractExtension( event.getFile().getFileName() );
+		newInscriptionForm.setImageExtension(imageExtension);
+		//2.conteudo binario da imagem
+		InputStream imageInputStream = event.getFile().getInputstream();
+		int wDim = ContactInscriptionForm.W_DIM;
+		int hDim = ContactInscriptionForm.H_DIM;
+		byte[] imageBinary = imageStreamUtil.getBinaryDimensionated(imageInputStream, imageExtension, wDim, hDim);
+		newInscriptionForm.setImageBinary(imageBinary);
+	}
+
+	private ContactInscriptionForm saveInscriptionForm(ContactInscriptionForm newInscriptionForm) {
+		newInscriptionForm = contactService.saveContactInscriptionForm(newInscriptionForm);
+		refresh();
+		return newInscriptionForm;
+	}
+	
+	private void writeInscriptionFormImage(ContactInscriptionForm newInscriptionForm) throws IOException {
+		byte[] imageBinary = newInscriptionForm.getImageBinary();
+		String imageName = newInscriptionForm.getImageName();
+		imageStreamUtil.writeInFileSystem(imageBinary, imageName);
+	}
+	
+	
+	public void removeInscriptionForm(ContactInscriptionForm selectedForm) {
+		contactService.removeContactInscriptionForm(selectedForm);
+		refresh();
+		JSFUtil.addInfoMessage("Ficha de inscrição removida");
+	}
+	
+
+
 	//acessores...
 	private static final long serialVersionUID = -1748543442806801025L;
 	public Contact getContact() {

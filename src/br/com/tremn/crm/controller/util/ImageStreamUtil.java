@@ -26,16 +26,31 @@ public class ImageStreamUtil {
 	
 	
 	public byte[] getBinaryDimensionated(InputStream inputStream, String extension) throws IOException {
+		return createBinary(inputStream, extension, DIM_DEFAULT, DIM_DEFAULT);
+	}
+	
+	public byte[] getBinaryDimensionated(InputStream inputStream, String extension, final int W_DIM, final int H_DIM) throws IOException {
+		return createBinary(inputStream, extension, W_DIM, H_DIM);
+	}
+	
+	
+	private byte[] createBinary(InputStream inputStream, String extension, final int W_DIM, final int H_DIM) throws IOException {
 		BufferedImage imagemOriginal = ImageIO.read( inputStream );
 		
-		BufferedImage imagemRedim = new BufferedImage(DIM_DEFAULT, DIM_DEFAULT, BufferedImage.TYPE_INT_RGB);
+		BufferedImage imagemRedim = new BufferedImage(W_DIM, H_DIM, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = imagemRedim.createGraphics();
-		g.drawImage(imagemOriginal, 0, 0, DIM_DEFAULT, DIM_DEFAULT, null);
+		g.drawImage(imagemOriginal, 0, 0, W_DIM, H_DIM, null);
 		
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		ImageIO.write(imagemRedim, extension, outputStream);
 		return outputStream.toByteArray();
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	public void redimensionate(InputStream inputStream, String extension, OutputStream outputStream) throws IOException {
