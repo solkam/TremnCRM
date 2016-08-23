@@ -1,7 +1,7 @@
 package br.com.tremn.crm.model.entity.enumeration;
 
 /**
- * Enum com as categorias de participação
+ * Enum com as categorias de participaï¿½ï¿½o
  * 
  * @author Solkam
  * @since 01 MAR 2015
@@ -15,6 +15,8 @@ public enum ParticipationCategory {
 	PRODUTORCB_LIGHT("Produtor CB - Light")
 	,
 	CLIENT("Cliente")
+	,
+	PROPECT("Prospect")
 	;
 	
 	private final String description;

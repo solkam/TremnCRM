@@ -115,6 +115,8 @@ public class ContactService {
 		contact.getObservations().size();
 		contact.getBusinessCards().size();
 		contact.getInscriptionForms().size();
+		contact.getVinculos().size();
+		contact.getInteractions().size();
 		
 		return contact;
 	}

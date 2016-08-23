@@ -118,26 +118,6 @@ public class Contact implements Serializable {
 	private Gender gender;
 	
 	
-	/**
-	 * Profissoes desempenhadas
-	 */
-	@ManyToMany
-	@JoinTable(name="Contact_x_Profession"
-		,joinColumns=@JoinColumn(name="contact_id")
-		,inverseJoinColumns=@JoinColumn(name="profession_id")
-	)
-	private List<Profession> professions;
-	
-	
-	/**
-	 * Areas de interesse (hobbies)
-	 */
-	@ManyToMany
-	@JoinTable(name="Contact_x_InterestArea"
-		,joinColumns=@JoinColumn(name="contact_id")
-		,inverseJoinColumns=@JoinColumn(name="interestArea_id")
-	)
-	private List<InterestArea> interestAreas;
 
 
 	/**
@@ -165,6 +145,32 @@ public class Contact implements Serializable {
 	@Embedded
 	private SocialNetwork socialNetwork;
 	
+
+	
+	/* RELACIONAMENTOs */
+	/* *************** */
+	
+	/**
+	 * Profissoes desempenhadas
+	 */
+	@ManyToMany
+	@JoinTable(name="Contact_x_Profession"
+		,joinColumns=@JoinColumn(name="contact_id")
+		,inverseJoinColumns=@JoinColumn(name="profession_id")
+	)
+	private List<Profession> professions;
+	
+	
+	/**
+	 * Areas de interesse (hobbies)
+	 */
+	@ManyToMany
+	@JoinTable(name="Contact_x_InterestArea"
+		,joinColumns=@JoinColumn(name="contact_id")
+		,inverseJoinColumns=@JoinColumn(name="interestArea_id")
+	)
+	private List<InterestArea> interestAreas;
+	
 	
 	/**
 	 * Vinculos com eventos
@@ -180,29 +186,38 @@ public class Contact implements Serializable {
 	private List<Interaction> interactions;
 	
 	
-	//foto
+	
+	/** 
+	 *  Observacoes catalogadas para o contato
+	 */
+	@OneToMany(mappedBy="contact")
+	private List<ContactObservation> observations;
+
+	
+	/**
+	 * Cartão de negocio do contto
+	 */
+	@OneToMany(mappedBy="contact")
+	private List<ContactBusinessCard> businessCards;
+	
+	
+	/**
+	 * Fichas de inscrição no eventos
+	 */
+	@OneToMany(mappedBy="contact")
+	private List<ContactInscriptionForm> inscriptionForms;
+	
+	
+	
+	
+	/* FOTOS */
+	/* ***** */
+	
 	@Lob
 	private byte[] imageBinary;
 	
 	@Size(max=5)
 	private String imageExtension;
-	
-	
-	//observacoes
-	@OneToMany(mappedBy="contact")
-	private List<ContactObservation> observations;
-
-	
-	//business card
-	@OneToMany(mappedBy="contact")
-	private List<ContactBusinessCard> businessCards;
-	
-	
-	//fichas de inscrição
-	@OneToMany(mappedBy="contact")
-	private List<ContactInscriptionForm> inscriptionForms;
-	
-	
 	
 	
 	//logs

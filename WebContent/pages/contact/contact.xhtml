@@ -161,8 +161,12 @@
 					<ui:include src="/pages/contact/contact-frag-profession.xhtml" />
 				</p:tab>
 
-				<p:tab title="Vínculos" rendered="false">
+				<p:tab title="Cursos Realizados" rrendered="#{not contactMB.contact.transient}">
 					<ui:include src="/pages/contact/contact-frag-vinculo.xhtml" />
+				</p:tab>
+
+				<p:tab title="Interações Realizadas" rrendered="#{not contactMB.contact.transient}">
+					<ui:include src="/pages/contact/contact-frag-interacao.xhtml" />
 				</p:tab>
 
 				<p:tab title="Observações" rendered="#{not contactMB.contact.transient}" >

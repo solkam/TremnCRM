@@ -54,7 +54,7 @@ public class TremnExceptionHandler extends ExceptionHandlerWrapper {
 		}
 
 		/**
-		 * Simulando chamadas recursivas, entra nas exception internas até
+		 * Simulando chamadas recursivas, entra nas exception internas ate
 		 * encontrar ou null ou a mesma externa.
 		 * @param t
 		 * @return

@@ -9,7 +9,47 @@
 <h:form id="formContactVinculo">
 	<p:panel>
 
-		em construcao
+		<tremn:globalMessages />
+
+		<h:outputText value="Não há cursos" styleClass="warn" 
+			rendered="#{empty contactMB.contact.vinculos}" 
+			/>
+		
+			
+		<p:outputPanel rendered="#{not empty contactMB.contact.vinculos}">
+		
+			<p:dataTable value="#{contactMB.contact.vinculos}" var="vinculoVar">
+				
+				<p:column headerText="Evento" styleClass="col20p" >
+					<h:outputText value="#{vinculoVar.event.name}" />
+				</p:column>
+	
+				<p:column headerText="Início" styleClass="col10p colCenter" >
+					<tremn:outputDate value="#{vinculoVar.event.beginDate }" styleClass="less2" />
+				</p:column>
+			
+				<p:column headerText="Fim" styleClass="col10p colCenter" >
+					<tremn:outputDate value="#{vinculoVar.event.endDate }" styleClass="less2" />
+				</p:column>
+	
+				<p:column headerText="Tipo Vínculo" styleClass="col10p colCenter" >
+					<h:outputText value="#{vinculoVar.type.description}" styleClass="less2" />
+				</p:column>
+	
+				<p:column headerText="Meio Pagamento" styleClass="col10p colCenter" >
+					<h:outputText value="#{vinculoVar.paymentMethod.description}" styleClass="less2" />
+				</p:column>
+	
+				<p:column headerText="Valor Parcela" styleClass="col10p" >
+					<h:outputText value="#{vinculoVar.paymentParcelValue }" styleClass="less2" />
+				</p:column>
+	
+				<p:column headerText="Observação" styleClass="col10p colCenter" >
+					<tremn:displayNote value="#{vinculoVar.observation}" />
+				</p:column>
+			</p:dataTable>
+			
+		</p:outputPanel>
 	
 	</p:panel>
 </h:form>

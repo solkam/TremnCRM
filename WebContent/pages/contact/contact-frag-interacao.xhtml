@@ -1,0 +1,44 @@
+<!DOCTYPE html > 
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:tremn="http://java.sun.com/jsf/composite/components">
+       
+<h:form id="formContactInteracao">
+	<p:panel>
+
+		<tremn:globalMessages />
+
+		<h:outputText value="Não há interações" styleClass="warn" 
+			rendered="#{empty contactMB.contact.interactions}" />
+		
+			
+		<p:outputPanel rendered="#{not empty contactMB.contact.interactions}">
+		
+			<p:dataTable value="#{contactMB.contact.interactions}" var="interacaoVar">
+				
+				<p:column headerText="Evento" styleClass="col30p" >
+					<h:outputText value="#{interacaoVar.event.name }" />
+				</p:column>
+	
+				<p:column headerText="Data" styleClass="col10p colCenter" >
+					<tremn:outputDate value="#{interacaoVar.interactionDate }" styleClass="less2" />
+				</p:column>
+			
+				<p:column headerText="Responsável" styleClass="col20p" >
+					<h:outputText value="#{interacaoVar.responsable }" styleClass="less2" />
+				</p:column>
+	
+				<p:column headerText="Nota" styleClass="col50p" >
+					<h:outputText value="#{interacaoVar.interactionNote}" styleClass="less2" />
+				</p:column>
+			</p:dataTable>
+			
+		</p:outputPanel>
+	
+	</p:panel>
+</h:form>
+
+</ui:fragment>
